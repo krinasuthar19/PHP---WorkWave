@@ -298,6 +298,12 @@
                         <span data-key="t-dashboard"><?php echo $language["Dashboard"]; ?></span>
                     </a>
                 </li>
+                <li>
+                    <a href="add_emp.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Add Employees" ?></span>
+                    </a>
+                </li>
                              
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
