@@ -8,7 +8,7 @@
                         <img src="assets/images/logo.png" alt="" height="26">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo.png" alt="" height="26"> <span class="logo-txt">Agevole Innovation</span>
+                        <img src="assets/images/wwlogo.jpeg" alt="" height="26"> <span class="logo-txt">Work Wave</span>
                     </span>
                 </a>
 
@@ -17,7 +17,7 @@
                         <img src="assets/images/logo-sm.svg" alt="" height="26">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo-sm.svg" alt="" height="26"> <span class="logo-txt">Agevole Innovation</span>
+                        <img src="assets/images/wwlogo.jpeg" alt="" height="26"> <span class="logo-txt">Work Wave</span>
                     </span>
                 </a>
             </div>
@@ -302,6 +302,18 @@
                     <a href="add_emp.php">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard"><?php echo "Add Employees" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="view_emp.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "View Employees" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="attendance.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
                     </a>
                 </li>
                              
