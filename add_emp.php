@@ -3,7 +3,7 @@
 <?php require 'layouts/config.php'; ?>
 
 <?php
-include 'db.php';
+// include 'db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = $_POST['FirstName'];
