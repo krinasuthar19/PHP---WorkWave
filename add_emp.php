@@ -167,6 +167,27 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="Department">Department</label>
+                                            <select class="form-control" id="Department" name="Department">
+                                                <option value="select" disabled selected hidden>Select Department
+                                                </option>
+                                                <option value="Department 1">Department 1</option>
+                                                <option value="Department 2">Department 2</option>
+                                                <option value="Department 3">Department 3</option>
+                                                <option value="Department 4">Department 4</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="col-md-3 mb-3">
+                                            <label for="Password">Password</label>
+                                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Enter Password">
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="Confirm Password">Confirm Password</label>
+                                            <input type="password" class="form-control" id="confirm Password" name="confirm Password" placeholder="Confirm Password">
+                                        </div>
 
                                     <div class="row">
                                     <div class="col-md-3 mb-3">
