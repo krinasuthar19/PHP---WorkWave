@@ -183,18 +183,16 @@
                                     </div>
 
                                     <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                            <div>
+                                                <br>
+                                                <label for="imageInput" class="btn btn-primary form-control" id="button2" style="margin-top: 8px;">Select Image</label>
+                                                <input type="file" id="imageInput" style="display: none;" onchange="displayImage()">
+                                            </div>
+                                        </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Salary">Salary</label>
                                             <input type="text" class="form-control" id="Salary" name="Salary">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Position">Position</label>
-                                            <select class="form-control" id="Position" name="Position">
-                                                <option value="select" disabled selected hidden>Select Position</option>
-                                                <option value="position1">Position 1</option>
-                                                <option value="position2">Position 2</option>
-                                                <!-- Add more positions as needed -->
-                                            </select>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="DateOfJoining">Date of Joining</label>
@@ -206,13 +204,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3 mb-3">
-                                            <div>
-                                                <br>
-                                                <label for="imageInput" class="btn btn-primary form-control" id="button2" style="margin-top: 8px;">Select Image</label>
-                                                <input type="file" id="imageInput" style="display: none;" onchange="displayImage()">
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </form>
 
