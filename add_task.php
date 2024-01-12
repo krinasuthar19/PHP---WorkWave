@@ -2,12 +2,14 @@
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
-    <title><?php echo $language["Dashboard"]; ?> | Minia - Admin & Dashboard Template</title>
+    <title>
+        <?php echo $language["Dashboard"]; ?> | Minia - Admin & Dashboard Template
+    </title>
 
     <?php include 'layouts/head.php'; ?>
 
     <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-    
+
     <?php include 'layouts/head-style.php'; ?>
     <style>
         .form-content {
@@ -93,7 +95,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- end page title -->     
+                <!-- end page title -->
                 <!-- start form -->
                 <div class="form-content">
                     <div class="row">
@@ -104,178 +106,117 @@
 
 
                                     <div class="row">
-                                        <div class="col-md-3 mb-3">
-                                            <label for="FirstName">First Name</label>
-                                            <input type="text" class="form-control" id="FirstName" name="FirstName">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="Title">Title</label>
+                                            <input type="text" class="form-control" id="Title" name="Title">
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="LastName">Last Name</label>
-                                            <input type="text" class="form-control" id="LastName" name="LastName">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Email">Email</label>
-                                            <input type="email" class="form-control" id="Email" name="Email">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="MobileNumber">Mobile Number</label>
-                                            <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="Description">Description</label>
+                                            <input type="text" class="form-control" id="Description" name="Descriptipon">
                                         </div>
                                     </div>
-
                                     <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="Department">Department</label>
+                                            <select class="form-control" id="Department" name="Department">
+                                                <option value="select" disabled selected hidden>Select Department
+                                                </option>
+                                                <option value="Department 1">Department 1</option>
+                                                <option value="Department 2">Department 2</option>
+                                                <option value="Department 3">Department 3</option>
+                                                <option value="Department 4">Department 4</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="startdate">Start Date</label>
 
-                                        <div class="col-md-3 mb-3">
-                                            <label for="DateOfBirth">Date of Birth</label>
-                                            <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth">
+                                            <input type="date" class="form-control" id="Deadline" name="Deadline">
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Gender">Gender</label>
-                                            <select class="form-control" id="Gender" name="Gender">
-                                                <option value="select" disabled selected hidden>Select Gender</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                                <!-- Add more options as needed -->
-                                            </select>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="enddate">End Date</label>
+
+                                            <input type="date" class="form-control" id="Deadline" name="Deadline">
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Address">Address</label>
-                                            <input type="text" class="form-control" id="Address" name="Address">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="City">City</label>
-                                            <select class="form-control" id="City" name="City">
-                                                <option value="select" disabled selected hidden>Select City</option>
-                                                <option value="city1">City 1</option>
-                                                <option value="city2">City 2</option>
-                                                <!-- Add more cities as needed -->
-                                            </select>
-                                        </div>
+                                        
                                     </div>
-
                                     <div class="row">
-                                        <div class="col-md-3 mb-3">
-                                            <label for="State">State</label>
-                                            <select class="form-control" id="State" name="State">
-                                                <option value="select" disabled selected hidden>Select State</option>
-                                                <option value="state1">State 1</option>
-                                                <option value="state2">State 2</option>
-                                                <!-- Add more states as needed -->
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Pincode">Pincode</label>
-                                            <input type="text" class="form-control" id="Pincode" name="Pincode">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Country">Country</label>
-                                            <select class="form-control" id="Country" name="Country">
-                                                <option value="select" disabled selected hidden>Select Country</option>
-                                                <option value="country1">Country 1</option>
-                                                <option value="country2">Country 2</option>
-                                                <!-- Add more countries as needed -->
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Role">Role</label>
-                                            <select class="form-control" id="Role" name="Role">
-                                                <option value="select" disabled selected hidden>Select Role</option>
-                                                <option value="employee">Employee</option>
-                                                <option value="manager">Manager</option>
-                                                <option value="admin">Admin</option>
-                                                <!-- Add more roles as needed -->
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Salary">Salary</label>
-                                            <input type="text" class="form-control" id="Salary" name="Salary">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Position">Position</label>
-                                            <select class="form-control" id="Position" name="Position">
-                                                <option value="select" disabled selected hidden>Select Position</option>
-                                                <option value="position1">Position 1</option>
-                                                <option value="position2">Position 2</option>
-                                                <!-- Add more positions as needed -->
-                                            </select>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="DateOfJoining">Date of Joining</label>
-                                            <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
+                                    <div class="col-md-4 mb-3">
                                             <br>
-                                            <button type="submit" class="btn btn-primary form-control" id="button1" style="margin-top: 8px;">Add Employee</button>
+                                            <button type="submit" class="btn btn-primary form-control" id="button1" style="margin-top: 8px;">Add Task
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-3 mb-3">
-                                            <div>
-                                                <br>
-                                                <label for="imageInput" class="btn btn-primary form-control" id="button2" style="margin-top: 8px;">Select Image</label>
-                                                <input type="file" id="imageInput" style="display: none;" onchange="displayImage()">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
 
 
 
-                                <div class="col-md-3 mb-3">
-                                    <div class="image-container" id="displayContainer">
-                                        <img id="displayImage" alt="Your Image">
-                                    </div>
 
-                                </div>
 
-                                <script>
-                                    function displayImage() {
-                                        var input = document.getElementById('imageInput');
-                                        var container = document.getElementById('displayContainer');
-                                        var image = document.getElementById('displayImage');
 
-                                        var file = input.files[0];
 
-                                        if (file) {
-                                            var reader = new FileReader();
 
-                                            reader.onload = function(e) {
-                                                image.src = e.target.result;
-                                                container.style.display = 'block'; // Show the image container
-                                            };
 
-                                            reader.readAsDataURL(file);
-                                        }
-                                    }
-                                </script>
 
+
+
+
+
+
+
+                                    </select>
                             </div>
 
-
                         </div>
-                        <!-- end form -->
+
+                        </form>
+
+
+
+
+                        <script>
+                            function displayImage() {
+                                var input = document.getElementById('imageInput');
+                                var container = document.getElementById('displayContainer');
+                                var image = document.getElementById('displayImage');
+
+                                var file = input.files[0];
+
+                                if (file) {
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(e) {
+                                        image.src = e.target.result;
+                                        container.style.display = 'block'; // Show the image container
+                                    };
+
+                                    reader.readAsDataURL(file);
+                                }
+                            }
+                        </script>
 
                     </div>
-                </div> <!-- container-fluid -->
-            </div>                        
 
-                
-                
-                    
-                    
-                   
-                    
+
+                </div>
+                <!-- end form -->
 
             </div>
-            <!-- container-fluid -->
-        </div>
-        <!-- End Page-content -->
-
-        <?php include 'layouts/footer.php'; ?>
+        </div> <!-- container-fluid -->
     </div>
-    <!-- end main content-->
+
+
+
+
+
+
+
+
+</div>
+<!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+
+<?php include 'layouts/footer.php'; ?>
+</div>
+<!-- end main content-->
 
 </div>
 <!-- END layout-wrapper -->
