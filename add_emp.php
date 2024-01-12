@@ -2,42 +2,6 @@
 <?php include 'layouts/head-main.php'; ?>
 <?php require 'layouts/config.php'; ?>
 
-<?php
-// include 'db.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstName = $_POST['FirstName'];
-    $lastName = $_POST['LastName'];
-    // $password = $_POST['password'];
-    $email = $_POST['Email'];
-    $mobileNumber = $_POST['MobileNumber'];
-    $dateOfBirth = $_POST['DateOfBirth'];
-    $gender = $_POST['Gender'];
-    $address = $_POST['Address'];
-    $city = $_POST['City'];
-    $state = $_POST['State'];
-    $pincode = $_POST['Pincode'];
-    $country = $_POST['Country'];
-    $role = $_POST['Role'];
-    // $project_id = $_POST['project_id'];
-    // $d_id = $_POST['d_id'];
-    $image = $_FILES['imageInput']['name'];
-    $salary = $_POST['Salary'];
-    $dateOfJoining = $_POST['DateOfJoining'];
-
-    // You might want to validate and sanitize the input data before inserting into the database
-
-    $sql = "INSERT INTO users (u_id, username, password, profile_image, firstname, lastname, email, Phone, dob, role, project_id, d_id, salary, address, city, state, pincode, country, session_token, gender, position, date_of_joining, attendance) 
-            VALUES ('', `$firstName $lastName`, /* '$password' */,'$image', '$firstName','$lastName', '$email','$mobileNumber', '$dateOfBirth', '$role', /* '$project_id' */, /* '$d_id' */, '$salary', '$address', '$city', '$state', '$pincode', '$country', /* session token*/, '$gender', /* position */ , /* date of joining */, /* attendance */)";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Record inserted successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-}
-
-?>
 
 <head>
     <title>Starter Page | Minia - Admin & Dashboard Template</title>
