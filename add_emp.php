@@ -1,5 +1,43 @@
 <?php include 'layouts/session.php'; ?>
 <?php include 'layouts/head-main.php'; ?>
+<?php require 'layouts/config.php'; ?>
+
+<?php
+include 'db.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstName = $_POST['FirstName'];
+    $lastName = $_POST['LastName'];
+    // $password = $_POST['password'];
+    $email = $_POST['Email'];
+    $mobileNumber = $_POST['MobileNumber'];
+    $dateOfBirth = $_POST['DateOfBirth'];
+    $gender = $_POST['Gender'];
+    $address = $_POST['Address'];
+    $city = $_POST['City'];
+    $state = $_POST['State'];
+    $pincode = $_POST['Pincode'];
+    $country = $_POST['Country'];
+    $role = $_POST['Role'];
+    // $project_id = $_POST['project_id'];
+    // $d_id = $_POST['d_id'];
+    $image = $_FILES['imageInput']['name'];
+    $salary = $_POST['Salary'];
+    $dateOfJoining = $_POST['DateOfJoining'];
+
+    // You might want to validate and sanitize the input data before inserting into the database
+
+    $sql = "INSERT INTO users (u_id, username, password, profile_image, firstname, lastname, email, Phone, dob, role, project_id, d_id, salary, address, city, state, pincode, country, session_token, gender, position, date_of_joining, attendance) 
+            VALUES ('', `$firstName $lastName`, /* '$password' */,'$image', '$firstName','$lastName', '$email','$mobileNumber', '$dateOfBirth', '$role', /* '$project_id' */, /* '$d_id' */, '$salary', '$address', '$city', '$state', '$pincode', '$country', /* session token*/, '$gender', /* position */ , /* date of joining */, /* attendance */)";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record inserted successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+?>
 
 <head>
     <title>Starter Page | Minia - Admin & Dashboard Template</title>
@@ -95,7 +133,7 @@
                         <div class="col-md-12">
 
                             <div class="row">
-                                <form>
+                                <form action="">
 
 
                                     <div class="row">
@@ -138,24 +176,14 @@
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="City">City</label>
-                                            <select class="form-control" id="City" name="City">
-                                                <option value="select" disabled selected hidden>Select City</option>
-                                                <option value="city1">City 1</option>
-                                                <option value="city2">City 2</option>
-                                                <!-- Add more cities as needed -->
-                                            </select>
+                                            <input type="text" class="form-control" id="City" name="City">
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label for="State">State</label>
-                                            <select class="form-control" id="State" name="State">
-                                                <option value="select" disabled selected hidden>Select State</option>
-                                                <option value="state1">State 1</option>
-                                                <option value="state2">State 2</option>
-                                                <!-- Add more states as needed -->
-                                            </select>
+                                            <input type="text" class="form-control" id="State" name="State">
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Pincode">Pincode</label>
@@ -163,12 +191,7 @@
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Country">Country</label>
-                                            <select class="form-control" id="Country" name="Country">
-                                                <option value="select" disabled selected hidden>Select Country</option>
-                                                <option value="country1">Country 1</option>
-                                                <option value="country2">Country 2</option>
-                                                <!-- Add more countries as needed -->
-                                            </select>
+                                            <input type="text" class="form-control" id="Country" name="Country">
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Role">Role</label>
@@ -263,6 +286,8 @@
     <!-- JAVASCRIPT -->
     <?php include 'layouts/vendor-scripts.php'; ?>
     <script src="assets/js/app.js"></script>
+
+    <?php $conn->close(); ?>
 
     </body>
 
