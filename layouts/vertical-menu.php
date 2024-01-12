@@ -316,6 +316,12 @@
                         <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
                     </a>
                 </li>
+                <li>
+                    <a href="add_task.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Add Task" ?></span>
+                    </a>
+                </li>
                              
                 
 
