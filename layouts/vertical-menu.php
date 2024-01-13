@@ -322,6 +322,30 @@
                         <span data-key="t-dashboard"><?php echo "Add Task" ?></span>
                     </a>
                 </li>
+                <li>
+                    <a href="approve_leave.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Approv Leave" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="leave_history.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Leave History" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="add_leave.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "add leave" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="leave_status.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo " leave status" ?></span>
+                    </a>
+                </li>
                              
                 
 
