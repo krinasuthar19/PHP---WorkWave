@@ -42,106 +42,106 @@
                     </div>
                 </div>
                 <!-- end page title -->
-                    <!-- Content Header -->
+                <!-- Content Header -->
 
-                    <!-- Main Content -->
-                    <section class="content">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="box box-info">
-                                    <div class="box-header">
-                                    </div>
-                                    <div class="box-body">
-                                        <div class="table-responsive">
-                                            <div class="row">
-                                                
-                                            </div>
-                                            <!-- DataTable -->
-                                            <table id="example1" class="table table-bordered table-striped dataTable no-footer">
-                                                <thead>
-                                                    <tr role="row">
-                                                        <!-- Table Headers -->
-                                                        <th>#</th>
-                                                        <th>Emp ID</th>
-                                                        <th>Reason</th>
-                                                        <th>From</th>
-                                                        <th>To</th>
-                                                        <th>Status</th>
-                                                        <th>Applied On</th>
-                                                        <th>Description</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    // Include database connection or configuration file
-                                                    include 'layouts/config.php';
+                <!-- Main Content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-info">
+                                <div class="box-header">
+                                </div>
+                                <div class="box-body">
+                                    <div class="table-responsive">
+                                        <div class="row">
 
-                                                    // Fetch leave data from the database
-                                                    $query = "SELECT * FROM leave_tbl";
-                                                    $result = mysqli_query($link, $query);
-
-                                                    // Check if there are rows in the result
-                                                    if (mysqli_num_rows($result) > 0) {
-                                                        $rowNumber = 1; // Variable to track the row number in the table
-                                                        while ($row = mysqli_fetch_assoc($result)) {
-                                                            // Output each row in the table
-                                                            echo '<tr>';
-                                                            echo '<td>' . $rowNumber . '</td>';
-                                                            echo '<td>' . $row['staff_id'] . '</td>';
-                                                            // Add other fields accordingly
-                                                            echo '<td>' . $row['leave_reason'] . '</td>';
-                                                            echo '<td>' . $row['leave_from'] . '</td>';
-                                                            echo '<td>' . $row['leave_to'] . '</td>';
-                                                            $status = $row['status'];
-                                                            $statusColor = ($status == 0) ? 'red' : 'green';
-                                                            echo '<td style="color: ' . $statusColor . ';">';
-                                                            echo ($status == 0) ? 'Rejected' : 'Approved';
-                                                            echo '</td>';
-
-                                                            echo '<td>' . $row['applied_on'] . '</td>';
-                                                            echo '<td>' . $row['description'] . '</td>';
-
-                                                            // Add status check for color
-
-                                                            echo '</tr>';
-
-                                                            $rowNumber++;
-                                                        }
-                                                    } else {
-                                                        // If no data is available
-                                                        echo '<tr><td colspan="8">No data available in the table</td></tr>';
-                                                    }
-
-                                                    // Close the database connection
-                                                    mysqli_close($link);
-                                                    ?>
-                                                </tbody>
-                                            </table>
                                         </div>
+                                        <!-- DataTable -->
+                                        <table id="example1" class="table table-bordered table-striped dataTable no-footer">
+                                            <thead>
+                                                <tr role="row">
+                                                    <!-- Table Headers -->
+                                                    <th>#</th>
+                                                    <th>Emp ID</th>
+                                                    <th>Reason</th>
+                                                    <th>From</th>
+                                                    <th>To</th>
+                                                    <th>Status</th>
+                                                    <th>Applied On</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                // Include database connection or configuration file
+                                                include 'layouts/config.php';
+
+                                                // Fetch leave data from the database
+                                                $query = "SELECT * FROM leave_tbl";
+                                                $result = mysqli_query($link, $query);
+                                                // Check if there are rows in the result
+                                                if (mysqli_num_rows($result) > 0) {
+                                                    $rowNumber = 1; // Variable to track the row number in the table
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        // Output each row in the table
+                                                        echo '<tr>';
+                                                        echo '<td>' . $rowNumber . '</td>';
+                                                        echo '<td>' . $row['staff_id'] . '</td>';
+                                                        // Add other fields accordingly
+                                                        echo '<td>' . $row['leave_reason'] . '</td>';
+                                                        echo '<td>' . $row['leave_from'] . '</td>';
+                                                        echo '<td>' . $row['leave_to'] . '</td>';
+                                                        $status = $row['status'];
+                                                        $statusColor = ($status == 0) ? 'red' : (($status == 1) ? 'green' : 'blue'); // Added 'yellow' for pending
+                                                        echo '<td style="color: ' . $statusColor . ';">';
+                                                        echo ($status == 0) ? 'Rejected' : (($status == 1) ? 'Approved' : 'Pending');
+                                                        echo '</td>';
+
+                                                        echo '<td>' . $row['applied_on'] . '</td>';
+                                                        echo '<td>' . $row['description'] . '</td>';
+
+                                                        // Add status check for color
+
+                                                        echo '</tr>';
+
+                                                        $rowNumber++;
+                                                    }
+                                                } else {
+                                                    // If no data is available
+                                                    echo '<tr><td colspan="8">No data available in the table</td></tr>';
+                                                }
+
+                                                // Close the database connection
+                                                mysqli_close($link);
+                                                ?>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                </div>
-
-                
-                <!-- Footer -->
-                <footer class="main-footer">
-                    <div class="pull-right hidden-xs">
-                        <b>Version</b> 3.4.13
                     </div>
-                    <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-                </footer>
-
+                </section>
             </div>
 
-        </div>
-        <!-- End Page-content -->
 
-        <?php include 'layouts/footer.php'; ?>
+            <!-- Footer -->
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 3.4.13
+                </div>
+                <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
+            </footer>
+
+        </div>
+
     </div>
-    <!-- end main content-->
+    <!-- End Page-content -->
+
+    <?php include 'layouts/footer.php'; ?>
+</div>
+<!-- end main content-->
 </div>
 <!-- END layout-wrapper -->
 

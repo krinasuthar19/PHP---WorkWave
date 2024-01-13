@@ -6,10 +6,10 @@
 
     <?php include 'layouts/head.php'; ?>
 
-    
-  
+
+
     <?php include 'layouts/head-style.php'; ?>
-    
+
 </head>
 
 <?php include 'layouts/body.php'; ?>
@@ -43,65 +43,134 @@
                         </div>
                     </div>
                 </div>
-                <!-- end page title -->  
+                <!-- end page title -->
 
                 <!-- Add the content and functionality of the "Approve Leave" page here -->
                 <div class="content-wrapper" style="min-height: 637.2px;">
-    <!-- Content Header -->
+                    <!-- Content Header -->
 
-    <!-- Main Content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box box-info">
-            <div class="box-header">
+                    <!-- Main Content -->
+                    <section class="content">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="box box-info">
+                                    <div class="box-header">
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="table-responsive">
+                                            <!-- DataTable -->
+                                            <table id="example1" class="table table-bordered table-striped dataTable no-footer">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <!-- Table Headers -->
+                                                        <th>#</th>
+                                                        <th>Staff_id</th>
+                                                        <th>Reason</th>
+                                                        <th>From</th>
+                                                        <th>To</th>
+                                                        <th>Description</th>
+                                                        <th>Applied On</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Leave Data Goes Here -->
+                                                    <?php
+                                                    include 'layouts/session.php';
+                                                    include 'layouts/config.php';
+
+
+
+
+
+
+                                                    // Fetch leave records with pending status
+                                                    $sql = "SELECT * FROM leave_tbl WHERE status = 2";
+                                                    $result = $link->query($sql);
+
+                                                    // Check if there are any leave records
+                                                    if ($result->num_rows > 0) {
+                                                        $rowNumber = 1;
+
+                                                        while ($row = $result->fetch_assoc()) {
+                                                            echo '<tr>';
+                                                            echo '<td>' . $rowNumber . '</td>';
+                                                            echo '<td>' . $row['staff_id'] . '</td>';
+                                                            // Add other fields accordingly
+                                                            echo '<td>' . $row['leave_reason'] . '</td>';
+                                                            echo '<td>' . $row['leave_from'] . '</td>';
+                                                            echo '<td>' . $row['leave_to'] . '</td>';
+                                                            echo '<td>' . $row['description'] . '</td>';
+                                                            echo '<td>' . $row['applied_on'] . '</td>';
+                                                            echo '<td>
+                                                                    <form action="" method="post">
+                                                                        <input type="hidden" name="leave_id" value="' . $row['id'] . '">
+                                                                        <button type="submit" name="approve" class="btn btn-success">Approve</button>
+                                                                        <button type="submit" name="reject" class="btn btn-danger">Reject</button>
+                                                                    </form>
+                                                                </td>';
+                                                            echo '</tr>';
+
+                                                            $rowNumber++;
+                                                        }
+                                                    } else {
+                                                        echo '<tr class="odd">
+                                                                    <td valign="top" colspan="10">No pending leave requests found.</td>
+                                                                </tr>';
+                                                    }
+                                                    // Handle approval and rejection actions
+                                                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                                                        if (isset($_POST['approve'])) {
+                                                            // Update status to 1 (approved) in the database
+                                                            $leaveId = $_POST['leave_id'];
+                                                            $updateSql = "UPDATE leave_tbl SET status = 1 WHERE id = $leaveId";
+                                                            if ($link->query($updateSql) === TRUE) {
+                                                                echo"updated";
+                                                            } else {
+                                                                echo "Error updating record: " . $link->error;
+                                                            }
+                                                        }
+
+                                                        if (isset($_POST['reject'])) {
+                                                            // Update status to 0 (rejected) in the database
+                                                            $leaveId = $_POST['leave_id'];
+                                                            $updateSql = "UPDATE leave_tbl SET status = 0 WHERE id = $leaveId";
+                                                            if ($link->query($updateSql) === TRUE) {
+                                                                
+                                                                echo"updated";
+                                                            } else {
+                                                                echo "Error updating record: " . $link->error;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    // Close database connection
+                                                    $link->close();
+                                                    ?>
+
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Footer -->
+                <footer class="main-footer">
+                    <div class="pull-right hidden-xs">
+                        <b>Version</b> 3.4.13
+                    </div>
+                    <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
+                </footer>
+
             </div>
-            <div class="box-body">
-              <div class="table-responsive">
-                <!-- DataTable -->
-                <table id="example1" class="table table-bordered table-striped dataTable no-footer">
-                  <thead>
-                    <tr role="row">
-                      <!-- Table Headers -->
-                      <th>#</th>
-                      <th>Staff</th>
-                      <th>Photo</th>
-                      <th>Department</th>
-                      <th>Reason</th>
-                      <th>From</th>
-                      <th>To</th>
-                      <th>Description</th>
-                      <th>Applied On</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Leave Data Goes Here -->
-                    <tr class="odd">
-                      <td valign="top" colspan="10" class="dataTables_empty">No data available in the table</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Footer -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 3.4.13
-    </div>
-    <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-  </footer>
-
-</div>
 
 
 
-</body>
+            </body>
 
-</html>
+            </html>
