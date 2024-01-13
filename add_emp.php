@@ -114,7 +114,8 @@
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="MobileNumber">Mobile Number</label>
-                                            <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber">
+                                            <input type="tel" class="form-control" id="MobileNumber"
+                                                name="MobileNumber">
                                         </div>
                                     </div>
 
@@ -161,14 +162,15 @@
                                             <select class="form-control" id="Role" name="Role">
                                                 <option value="select" disabled selected hidden>Select Role</option>
                                                 <option value="employee">Employee</option>
-                                                <option value="manager">Manager</option>
+                                                <option value="project manager">Project Manager</option>
                                                 <option value="admin">Admin</option>
+                                                <option value="HR">HR</option>
                                                 <!-- Add more roles as needed -->
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <label for="Department">Department</label>
                                             <select class="form-control" id="Department" name="Department">
                                                 <option value="select" disabled selected hidden>Select Department
@@ -179,23 +181,11 @@
                                                 <option value="Department 4">Department 4</option>
                                             </select>
                                         </div>
-                                        
+
                                         <div class="col-md-3 mb-3">
                                             <label for="Password">Password</label>
-                                            <input type="password" class="form-control" id="Password" name="Password" placeholder="Enter Password">
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="Confirm Password">Confirm Password</label>
-                                            <input type="password" class="form-control" id="confirm Password" name="confirm Password" placeholder="Confirm Password">
-                                        </div>
-
-                                    <div class="row">
-                                    <div class="col-md-3 mb-3">
-                                            <div>
-                                                <br>
-                                                <label for="imageInput" class="btn btn-primary form-control" id="button2" style="margin-top: 8px;">Select Image</label>
-                                                <input type="file" id="imageInput" style="display: none;" onchange="displayImage()">
-                                            </div>
+                                            <input type="text" class="form-control" id="Password" name="Password"
+                                                placeholder="Enter Password">
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Salary">Salary</label>
@@ -203,23 +193,38 @@
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="DateOfJoining">Date of Joining</label>
-                                            <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining">
+                                            <input type="date" class="form-control" id="DateOfJoining"
+                                                name="DateOfJoining">
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <br>
-                                            <button type="submit" class="btn btn-primary form-control" id="button1" style="margin-top: 8px;">Add Employee</button>
+
+
+                                        <div class="row">
+                                            <div class="col-md-3 mb-3">
+                                                <div>
+                                                    <br>
+                                                    <label for="imageInput" class="btn btn-primary form-control"
+                                                        id="button2" style="margin-top: 8px;">Select Image</label>
+                                                    <input type="file" id="imageInput" style="display: none;"
+                                                        onchange="displayImage()">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 mb-3">
+                                                <br>
+                                                <button type="submit" class="btn btn-primary form-control" id="button1"
+                                                    style="margin-top: 8px;">Add Employee</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        
-                                    </div>
+                                        <div class="row">
+
+                                        </div>
                                 </form>
 
 
 
                                 <div class="col-md-3 mb-3">
                                     <div class="image-container" id="displayContainer">
-                                        <img id="displayImage" alt="Your Image">
+                                        <img id="displayImage" alt="profile Image">
                                     </div>
 
                                 </div>
@@ -235,7 +240,7 @@
                                         if (file) {
                                             var reader = new FileReader();
 
-                                            reader.onload = function(e) {
+                                            reader.onload = function (e) {
                                                 image.src = e.target.result;
                                                 container.style.display = 'block'; // Show the image container
                                             };
