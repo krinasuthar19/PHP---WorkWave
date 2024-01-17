@@ -1,5 +1,7 @@
 <?php include 'layouts/session.php'; ?>
 <?php include 'layouts/head-main.php'; ?>
+
+
 <?php
 include 'layouts/config.php';
 
@@ -80,8 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $imagePath = ''; // Set a default image path or leave it empty based on your requirements
     }
 
-    $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, city, state, pincode, country, role, d_id, password, salary, date_of_joining, profile_image) 
-            VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$salary', '$dateOfJoining', '$imagePath')";
+    $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, city, state, pincode, country, role, d_id, password, date_of_joining, profile_image) 
+            VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath')";
 
     if ($link->query($sql) === TRUE) {
         // echo "Record inserted successfully";
@@ -96,7 +98,7 @@ $link->close();
 
 
 <head>
-    <title>Starter Page | Minia - Admin & Dashboard Template</title>
+    <title>Add Employee</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
     <style>
@@ -195,20 +197,20 @@ $link->close();
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label for="FirstName">First Name</label>
-                                            <input type="text" class="form-control" id="FirstName" name="FirstName">
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" autocomplete="off"  required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="LastName">Last Name</label>
-                                            <input type="text" class="form-control" id="LastName" name="LastName">
+                                            <input type="text" class="form-control" id="LastName" name="LastName"autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Email">Email</label>
-                                            <input type="email" class="form-control" id="Email" name="Email">
+                                            <input type="email" class="form-control" id="Email" name="Email"autocomplete="off" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="MobileNumber">Mobile Number</label>
                                             <input type="tel" class="form-control" id="MobileNumber"
-                                                name="MobileNumber">
+                                                name="MobileNumber"autocomplete="off" pattern="[0-9]{10}" required title="Please enter a 10-digit number">
                                         </div>
                                     </div>
 
@@ -216,7 +218,7 @@ $link->close();
 
                                         <div class="col-md-3 mb-3">
                                             <label for="DateOfBirth">Date of Birth</label>
-                                            <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth">
+                                            <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Gender">Gender</label>
@@ -229,36 +231,53 @@ $link->close();
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Address">Address</label>
-                                            <input type="text" class="form-control" id="Address" name="Address">
+                                            <input type="text" class="form-control" id="Address" name="Address"autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="City">City</label>
-                                            <input type="text" class="form-control" id="City" name="City">
+                                            <input type="text" class="form-control" id="City" name="City"autocomplete="off" required>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label for="State">State</label>
-                                            <input type="text" class="form-control" id="State" name="State">
+                                            <input type="text" class="form-control" id="State" name="State"autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Pincode">Pincode</label>
-                                            <input type="text" class="form-control" id="Pincode" name="Pincode">
+                                            <input type="text" class="form-control" id="Pincode" name="Pincode"autocomplete="off" pattern="[0-9]{6}" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Country">Country</label>
-                                            <input type="text" class="form-control" id="Country" name="Country">
+                                            <input type="text" class="form-control" id="Country" name="Country"autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Role">Role</label>
                                             <select class="form-control" id="Role" name="Role">
                                                 <option value="select" disabled selected hidden>Select Role</option>
-                                                <option value="Employee">Employee</option>
+                                                <!-- <option value="Employee">Employee</option> -->
                                                 <!-- <option value="project manager">Project Manager</option> -->
-                                                <option value="admin">Admin</option>
-                                                <option value="HR">HR</option>
-                                                <!-- Add more roles as needed -->
+                                                <!-- <option value="admin">Admin</option> -->
+                                                <!-- <option value="HR">HR</option> -->
+                                                <?php
+                                                include 'layouts/config.php';
+
+                                                // Assuming you have a connection to your database
+                                                $sql = "SELECT r_name FROM role";
+                                                $result = $link->query($sql);
+
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        $roleName = $row['r_name'];
+                                                        echo "<option value=\"$roleName\">$roleName</option>";
+                                                    }
+                                                } else {
+                                                    echo "<option value=\"\">No roles found</option>";
+                                                }
+                                                $link->close();
+
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -268,26 +287,44 @@ $link->close();
                                             <select class="form-control" id="Department" name="Department">
                                                 <option value="select" disabled selected hidden>Select Department
                                                 </option>
-                                                <option value="Department 1">Department 1</option>
+                                                <!-- <option value="Department 1">Department 1</option>
                                                 <option value="Department 2">Department 2</option>
                                                 <option value="Department 3">Department 3</option>
-                                                <option value="Department 4">Department 4</option>
+                                                <option value="Department 4">Department 4</option> -->
+                                                <?php
+                                                include 'layouts/config.php';
+
+                                                // Assuming you have a connection to your database
+                                                $sql = "SELECT d_name FROM department";
+                                                $result = $link->query($sql);
+
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        $depName = $row['d_name'];
+                                                        echo "<option value=\"$depName\">$depName</option>";
+                                                    }
+                                                } else {
+                                                    echo "<option value=\"\">No roles found</option>";
+                                                }
+                                                $link->close();
+
+                                                ?>
                                             </select>
                                         </div>
 
                                         <div class="col-md-3 mb-3">
                                             <label for="Password">Password</label>
                                             <input type="text" class="form-control" id="Password" name="Password"
-                                                placeholder="Enter Password">
+                                                placeholder="Enter Password"  required>
                                         </div>
-                                        <div class="col-md-3 mb-3">
+                                        <!-- <div class="col-md-3 mb-3">
                                             <label for="Salary">Salary</label>
                                             <input type="text" class="form-control" id="Salary" name="Salary">
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-3 mb-3">
                                             <label for="DateOfJoining">Date of Joining</label>
                                             <input type="date" class="form-control" id="DateOfJoining"
-                                                name="DateOfJoining">
+                                                name="DateOfJoining"  required>
                                         </div>
 
 
@@ -297,8 +334,8 @@ $link->close();
                                                     <br>
                                                     <label for="imageInput" class="btn btn-primary form-control"
                                                         id="button2" style="margin-top: 8px;">Select Image</label>
-                                                    <input type="file" id="imageInput" name="imageInput" style=""
-                                                        onchange="displayImage()">
+                                                    <input type="file" id="imageInput" name="imageInput" style="display:none;"
+                                                        onchange="displayImage()"  required>
                                                 </div>
                                             </div>
 
