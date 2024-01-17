@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2024 at 06:42 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Jan 17, 2024 at 01:07 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -145,7 +145,8 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`r_id`, `r_name`) VALUES
 (1, 'admin'),
-(2, 'HR');
+(2, 'HR'),
+(3, 'employee');
 
 -- --------------------------------------------------------
 
@@ -167,7 +168,7 @@ CREATE TABLE `salaries` (
 --
 
 INSERT INTO `salaries` (`salary_id`, `u_id`, `basic_salary`, `bonus`, `total_salary`, `payment_date`) VALUES
-(3, 1000, 12000.00, 1000.00, 13000.00, '2024-01-13');
+(3, 1000, '12000.00', '1000.00', '13000.00', '2024-01-13');
 
 -- --------------------------------------------------------
 
@@ -216,17 +217,20 @@ CREATE TABLE `users` (
   `country` varchar(30) NOT NULL,
   `session_token` varchar(255) NOT NULL,
   `gender` varchar(10) NOT NULL,
-  `date_of_joining` date NOT NULL,
-  `attendance` int(20) NOT NULL
+  `date_of_joining` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`u_id`, `username`, `password`, `profile_image`, `firstname`, `lastname`, `email`, `phone`, `dob`, `role`, `project_id`, `d_id`, `salary`, `address`, `city`, `state`, `pincode`, `country`, `session_token`, `gender`, `date_of_joining`, `attendance`) VALUES
-(1000, 'admin', 'admin', '', 'Admin', 'Admin', 'admin@123', 1111111111, '2005-01-06', 1, 1, 1, 12000, '', '', '', 0, '', '', '', '0000-00-00', 0),
-(1001, 'krina', '123', '', 'krina', 'suthar', 'krina@123', 1234567890, '2005-01-05', 2, 1, 2, 20000, '', '', '', 0, '', '', '', '0000-00-00', 0);
+INSERT INTO `users` (`u_id`, `username`, `password`, `profile_image`, `firstname`, `lastname`, `email`, `phone`, `dob`, `role`, `project_id`, `d_id`, `salary`, `address`, `city`, `state`, `pincode`, `country`, `session_token`, `gender`, `date_of_joining`) VALUES
+(1000, 'admin', 'admin', '', 'Admin', 'Admin', 'admin@123', 1111111111, '2005-01-06', 1, 1, 1, 12000, '', '', '', 0, '', '', '', '0000-00-00'),
+(1001, 'krina', '123', '', 'krina', 'suthar', 'krina@123', 1234567890, '2005-01-05', 2, 1, 2, 20000, '', '', '', 0, '', '', '', '0000-00-00'),
+(1014, '', '$2y$10$THHxLsn4IDOZh', 'profile_images/img_65a7c0bd1f44e.png', 'Yash', 'Rana', 'efacec@ijeac.com', 987654321, '2024-01-01', 1, 0, 2, 6969696, 'america', 'vaeaefvQE', 'qdw', 380060, 'India', '', 'male', '2024-01-01'),
+(1015, '', '$2y$10$KIkPE7afdVdOB', 'profile_images/img_65a7c1091b901.png', 'Yash', 'Rana', 'efacec@ijeac.com', 987654321, '2024-01-01', 1, 0, 2, 6969696, 'america', 'vaeaefvQE', 'qdw', 380060, 'India', '', 'male', '2024-01-01'),
+(1016, '', '$2y$10$8XaXI32Jakwt7', 'profile_images/img_65a7c22a8c4d2.png', 'Yash', 'Rana', 'efacec@ijeac.com', 987654321, '2024-01-01', 1, 0, 2, 6969696, 'america', 'vaeaefvQE', 'qdw', 380060, 'India', '', 'male', '2024-01-01'),
+(1017, 'Yash Rana', '$2y$10$U4xdPquQcSJ.g', 'profile_images/img_65a7c26a7c02a.png', 'Yash', 'Rana', 'efacec@ijeac.com', 987654321, '2024-01-01', 1, 0, 2, 6969696, 'america', 'vaeaefvQE', 'qdw', 380060, 'India', '', 'male', '2024-01-01');
 
 --
 -- Indexes for dumped tables
@@ -282,8 +286,7 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`u_id`),
   ADD KEY `project ref` (`project_id`),
   ADD KEY `role ref` (`role`),
-  ADD KEY `department ref` (`d_id`),
-  ADD KEY `attendance ref` (`attendance`);
+  ADD KEY `department ref` (`d_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -317,7 +320,7 @@ ALTER TABLE `project`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `r_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `r_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `salaries`
@@ -335,7 +338,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1002;
+  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1018;
 
 --
 -- Constraints for dumped tables
