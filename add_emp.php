@@ -155,7 +155,7 @@ $link->close();
             height: auto;
         }
     </style>
-  
+
 </head>
 
 <?php include 'layouts/body.php'; ?>
@@ -201,20 +201,19 @@ $link->close();
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label for="FirstName">First Name</label>
-                                            <input type="text" class="form-control" id="FirstName" name="FirstName" autocomplete="off"  required>
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="LastName">Last Name</label>
-                                            <input type="text" class="form-control" id="LastName" name="LastName"autocomplete="off" required>
+                                            <input type="text" class="form-control" id="LastName" name="LastName" autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Email">Email</label>
-                                            <input type="email" class="form-control" id="Email" name="Email"autocomplete="off" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+                                            <input type="email" class="form-control" id="Email" name="Email" autocomplete="off" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="MobileNumber">Mobile Number</label>
-                                            <input type="tel" class="form-control" id="MobileNumber"
-                                                name="MobileNumber"autocomplete="off" pattern="[0-9]{10}" required title="Please enter a 10-digit number">
+                                            <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber" autocomplete="off" pattern="[0-9]{10}" required title="Please enter a 10-digit number">
                                         </div>
                                     </div>
 
@@ -235,26 +234,26 @@ $link->close();
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Address">Address</label>
-                                            <input type="text" class="form-control" id="Address" name="Address"autocomplete="off" required>
+                                            <input type="text" class="form-control" id="Address" name="Address" autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="City">City</label>
-                                            <input type="text" class="form-control" id="City" name="City"autocomplete="off" required>
+                                            <input type="text" class="form-control" id="City" name="City" autocomplete="off" required>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-3 mb-3">
                                             <label for="State">State</label>
-                                            <input type="text" class="form-control" id="State" name="State"autocomplete="off" required>
+                                            <input type="text" class="form-control" id="State" name="State" autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Pincode">Pincode</label>
-                                            <input type="text" class="form-control" id="Pincode" name="Pincode"autocomplete="off" pattern="[0-9]{6}" required>
+                                            <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Country">Country</label>
-                                            <input type="text" class="form-control" id="Country" name="Country"autocomplete="off" required>
+                                            <input type="text" class="form-control" id="Country" name="Country" autocomplete="off" required>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="Role">Role</label>
@@ -327,8 +326,7 @@ $link->close();
                                         </div> -->
                                         <div class="col-md-3 mb-3">
                                             <label for="DateOfJoining">Date of Joining</label>
-                                            <input type="date" class="form-control" id="DateOfJoining"
-                                                name="DateOfJoining"  required>
+                                            <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
                                         </div>
 
 
@@ -336,17 +334,14 @@ $link->close();
                                             <div class="col-md-3 mb-3">
                                                 <div>
                                                     <br>
-                                                    <label for="imageInput" class="btn btn-primary form-control"
-                                                        id="button2" style="margin-top: 8px;">Select Image</label>
-                                                    <input type="file" id="imageInput" name="imageInput" style="display:none;"
-                                                        onchange="displayProfileImage()"  required>
+                                                    <label for="imageInput" class="btn btn-primary form-control" id="button2" style="margin-top: 8px;">Select Image</label>
+                                                    <input type="file" id="imageInput" name="imageInput" style="display:none;" onchange="displayProfileImage()" required>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3 mb-3">
                                                 <br>
-                                                <button type="submit" class="btn btn-primary form-control" id="button1"
-                                                    style="margin-top: 8px;">Add Employee</button>
+                                                <button type="submit" class="btn btn-primary form-control" id="button1" style="margin-top: 8px;">Add Employee</button>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -387,30 +382,30 @@ $link->close();
 
     <!-- JAVASCRIPT -->
     <?php include 'layouts/vendor-scripts.php'; ?>
-  
+
     <script src="assets/js/app.js"></script>
 
     <!-- Add this script at the end of your HTML, just before the closing </body> tag -->
     <script>
-    function displayProfileImage() {
-        var input = document.getElementById('imageInput');
-        var container = document.getElementById('displayContainer');
-        var image = document.getElementById('displayImage');
+        function displayProfileImage() {
+            var input = document.getElementById('imageInput');
+            var container = document.getElementById('displayContainer');
+            var image = document.getElementById('displayImage');
 
-        var file = input.files[0];
+            var file = input.files[0];
 
-        if (file) {
-            var reader = new FileReader();
+            if (file) {
+                var reader = new FileReader();
 
-            reader.onload = function (e) {
-                image.src = e.target.result;
-                container.style.display = 'block'; // Show the image container
-            };
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                    container.style.display = 'block'; // Show the image container
+                };
 
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            }
         }
-    }
-</script>
+    </script>
 
 
     </body>
