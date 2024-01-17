@@ -155,6 +155,7 @@ $link->close();
             height: auto;
         }
     </style>
+  
 </head>
 
 <?php include 'layouts/body.php'; ?>
@@ -338,7 +339,7 @@ $link->close();
                                                     <label for="imageInput" class="btn btn-primary form-control"
                                                         id="button2" style="margin-top: 8px;">Select Image</label>
                                                     <input type="file" id="imageInput" name="imageInput" style="display:none;"
-                                                        onchange="displayImage()"  required>
+                                                        onchange="displayProfileImage()"  required>
                                                 </div>
                                             </div>
 
@@ -359,7 +360,6 @@ $link->close();
                                     <div class="image-container" id="displayContainer">
                                         <img id="displayImage" alt="profile Image">
                                     </div>
-
                                 </div>
 
 
@@ -387,11 +387,12 @@ $link->close();
 
     <!-- JAVASCRIPT -->
     <?php include 'layouts/vendor-scripts.php'; ?>
+  
     <script src="assets/js/app.js"></script>
 
-<!-- Add this script at the end of your HTML, just before the closing </body> tag -->
-<script>
-    function displayImage() {
+    <!-- Add this script at the end of your HTML, just before the closing </body> tag -->
+    <script>
+    function displayProfileImage() {
         var input = document.getElementById('imageInput');
         var container = document.getElementById('displayContainer');
         var image = document.getElementById('displayImage');
