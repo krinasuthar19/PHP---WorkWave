@@ -148,10 +148,28 @@ $link->close();
                       <select class="form-control" id="department" name="department">
                         <option value="select" disabled selected hidden>Select Department
                         </option>
-                        <option value="Department 1">Department 1</option>
+                        <!-- <option value="Department 1">Department 1</option>
                         <option value="Department 2">Department 2</option>
                         <option value="Department 3">Department 3</option>
-                        <option value="Department 4">Department 4</option>
+                        <option value="Department 4">Department 4</option> -->
+                        <?php
+                        include 'layouts/config.php';
+
+                        // Assuming you have a connection to your database
+                        $sql = "SELECT d_name FROM department";
+                        $result = $link->query($sql);
+
+                        if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                            $depName = $row['d_name'];
+                            echo "<option value=\"$depName\">$depName</option>";
+                          }
+                        } else {
+                          echo "<option value=\"\">No roles found</option>";
+                        }
+                        $link->close();
+
+                        ?>
                       </select>
                     </div>
                     <div class="col-md-4 mb-3">

@@ -24,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $salary = $_POST['Salary'];
     $dateOfJoining = $_POST['DateOfJoining'];
-    $role = $_POST['Role'];
 
+    $role = $_POST['Role'];
     // Perform a query to retrieve the role_id for the specified user
     $sql = "SELECT r_id FROM role WHERE r_name = '$role'";
     $result = $link->query($sql);
@@ -33,14 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         // Fetch the result as an associative array
         $row = $result->fetch_assoc();
-
         // Store the role_id in a PHP variable
         $roleId = $row['r_id'];
-
         // Now $roleId contains the value of the role_id for the specified user
-        // echo "Role ID for user with ID $role is: $roleId";
     } else {
-        echo "User not found or role_id is not available.";
+        echo "User not found or r_id is not available.";
     }
 
 
@@ -52,17 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         // Fetch the result as an associative array
         $row = $result->fetch_assoc();
-
-        // Store the role_id in a PHP variable
+        // Store the d_id in a PHP variable
         $depId = $row['d_id'];
-
-        // Now $roleId contains the value of the role_id for the specified user
-        // echo "Role ID for user with ID $role is: $roleId";
     } else {
-        echo "User not found or role_id is not available.";
+        echo "User not found or d_id is not available.";
     }
-
-
 
     // Handle image upload
     $image = $_FILES['imageInput'];
@@ -157,8 +148,8 @@ $link->close();
     </style>
 
 </head>
-
 <?php include 'layouts/body.php'; ?>
+
 
 <!-- Begin page -->
 <div id="layout-wrapper">
@@ -353,7 +344,7 @@ $link->close();
 
                                 <div class="col-md-3 mb-3">
                                     <div class="image-container" id="displayContainer">
-                                        <img id="displayImage" alt="profile Image">
+                                        <img id="displayImage" alt="profile Image" src="https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg">
                                     </div>
                                 </div>
 
@@ -404,6 +395,11 @@ $link->close();
 
                 reader.readAsDataURL(file);
             }
+            else {
+        // If no file is selected, display the default image
+        image.src = 'https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg'; // Replace with the actual path to your default image
+        container.style.display = 'block'; // Show the image container
+    }
         }
     </script>
 
