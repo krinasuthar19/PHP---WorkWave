@@ -18,6 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $state = $_POST['State'];
     $pincode = $_POST['Pincode'];
     $country = $_POST['Country'];
+
+    $pass = $firstName . '' . $lastName . '' . substr((string) $mobileNumber, -4);
+    $password = password_hash($pass, PASSWORD_DEFAULT); // Hash the password for security
+
+    $salary = $_POST['Salary'];
+    $dateOfJoining = $_POST['DateOfJoining'];
     $role = $_POST['Role'];
 
     // Perform a query to retrieve the role_id for the specified user
@@ -57,9 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 
-    $password = password_hash($_POST['Password'], PASSWORD_DEFAULT); // Hash the password for security
-    $salary = $_POST['Salary'];
-    $dateOfJoining = $_POST['DateOfJoining'];
 
     // Handle image upload
     $image = $_FILES['imageInput'];
@@ -312,11 +315,11 @@ $link->close();
                                             </select>
                                         </div>
 
-                                        <div class="col-md-3 mb-3">
+                                        <!-- <div class="col-md-3 mb-3">
                                             <label for="Password">Password</label>
                                             <input type="text" class="form-control" id="Password" name="Password"
                                                 placeholder="Enter Password"  required>
-                                        </div>
+                                        </div> -->
                                         <!-- <div class="col-md-3 mb-3">
                                             <label for="Salary">Salary</label>
                                             <input type="text" class="form-control" id="Salary" name="Salary">
@@ -359,26 +362,6 @@ $link->close();
 
                                 </div>
 
-                                <script>
-                                    function displayImage() {
-                                        var input = document.getElementById('imageInput');
-                                        var container = document.getElementById('displayContainer');
-                                        var image = document.getElementById('displayImage');
-
-                                        var file = input.files[0];
-
-                                        if (file) {
-                                            var reader = new FileReader();
-
-                                            reader.onload = function (e) {
-                                                image.src = e.target.result;
-                                                container.style.display = 'block'; // Show the image container
-                                            };
-
-                                            reader.readAsDataURL(file);
-                                        }
-                                    }
-                                </script>
 
                             </div>
 
@@ -405,6 +388,28 @@ $link->close();
     <!-- JAVASCRIPT -->
     <?php include 'layouts/vendor-scripts.php'; ?>
     <script src="assets/js/app.js"></script>
+
+<!-- Add this script at the end of your HTML, just before the closing </body> tag -->
+<script>
+    function displayImage() {
+        var input = document.getElementById('imageInput');
+        var container = document.getElementById('displayContainer');
+        var image = document.getElementById('displayImage');
+
+        var file = input.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                image.src = e.target.result;
+                container.style.display = 'block'; // Show the image container
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 
 
     </body>
