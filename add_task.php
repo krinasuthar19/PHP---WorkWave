@@ -10,11 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $department = $_POST['department'];
   $startDate = $_POST['startDate'];
   $endDate = $_POST['endDate'];
-  $status = NULL;
+  // $status = NULL;
 
 
-  $sql = "INSERT INTO task (t_title, t_description,department, start_date, end_date, status) 
-            VALUES ('$title','$desc','$department','$startDate','$endDate', '$status')";
+  $sql = "INSERT INTO task (t_title, t_description, department, start_date, end_date) 
+            VALUES ('$title','$desc','$department','$startDate','$endDate')";
 
   if ($link->query($sql) === TRUE) {
     // echo "Record inserted successfully";
