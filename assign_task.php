@@ -1,14 +1,94 @@
 <?php include 'layouts/session.php'; ?>
 <?php include 'layouts/head-main.php'; ?>
 
+<?php
+include 'layouts/config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $title = $_POST['title'];
+    $desc = $_POST['description'];
+    $department = $_POST['department'];
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    // $status = NULL;
+
+
+    $sql = "INSERT INTO task (t_title, t_description, department, start_date, end_date) 
+            VALUES ('$title','$desc','$department','$startDate','$endDate')";
+
+    if ($link->query($sql) === TRUE) {
+        // echo "Record inserted successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $link->error;
+    }
+}
+
+$link->close();
+?>
+
+
+
 <head>
-    <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
+    <title>
+        <?php echo $language["Dashboard"]; ?> | Minia - Admin & Dashboard Template
+    </title>
 
     <?php include 'layouts/head.php'; ?>
-    <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+
     <?php include 'layouts/head-style.php'; ?>
+    <style>
+        .form-content {
+            padding: 25px;
+            /* Adjust padding as needed */
+            border-radius: 15px;
+            /* Increase border-radius for rounded corners */
+            margin: 10px;
+            /* Center the content horizontally */
+            box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
+            /* Darker shadow */
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        th {
+            border-bottom: 2px solid #ddd;
+            /* Add a bottom border to th and td elements */
+        }
+
+        #button1 {
+            width: 100%;
+            font-weight: bold;
+        }
+
+        #button2 {
+            width: 100%;
+            border-color: blue;
+            /* Set border color to blue */
+            background-color: white;
+            color: blue;
+            /* Set font color to blue */
+            font-weight: bold;
+        }
+
+        .image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 
 <?php include 'layouts/body.php'; ?>
@@ -38,110 +118,98 @@
                                     <li class="breadcrumb-item active">Assign Task</li>
                                 </ol>
                             </div>
+
                         </div>
                     </div>
                 </div>
                 <!-- end page title -->
-                <!-- Content Header -->
-
-                <!-- Main Content -->
-                <section class="content">
+                <!-- start form -->
+                <div class="form-content">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box box-info">
-                                <div class="box-header">
-                                </div>
-                                <div class="box-body">
-                                    <div class="table-responsive">
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <form action="" method="POST" enctype="multipart/form-data">
+
+
+
+                                    <div class="employee-container">
                                         <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label for="Department">Employee</label>
+                                                <select class="form-control" id="department" name="department">
+                                                    <option value="select" disabled selected hidden>Select Employee</option>
+                                                    <?php
+                                                    include 'layouts/config.php';
 
-                                        </div>
-                                        <!-- DataTable -->
-                                        <table id="example1" class="table table-bordered table-striped dataTable no-footer">
-                                            <thead>
-                                                <tr role="row">
-                                                    <!-- Table Headers -->
-                                                    <th>#</th>
-                                                    <th>Emp ID</th>
-                                                    <th>Reason</th>
-                                                    <th>From</th>
-                                                    <th>To</th>
-                                                    <th>Status</th>
-                                                    <th>Applied On</th>
-                                                    <th>Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                // Include database connection or configuration file
-                                                include 'layouts/config.php';
+                                                    // Assuming you have a connection to your database
+                                                    $sql = "SELECT username FROM users";
+                                                    $result = $link->query($sql);
 
-                                                // Fetch leave data from the database
-                                                $query = "SELECT * FROM leave_tbl";
-                                                $result = mysqli_query($link, $query);
-                                                // Check if there are rows in the result
-                                                if (mysqli_num_rows($result) > 0) {
-                                                    $rowNumber = 1; // Variable to track the row number in the table
-                                                    while ($row = mysqli_fetch_assoc($result)) {
-                                                        // Output each row in the table
-                                                        echo '<tr>';
-                                                        echo '<td>' . $rowNumber . '</td>';
-                                                        echo '<td>' . $row['staff_id'] . '</td>';
-                                                        // Add other fields accordingly
-                                                        echo '<td>' . $row['leave_reason'] . '</td>';
-                                                        echo '<td>' . $row['leave_from'] . '</td>';
-                                                        echo '<td>' . $row['leave_to'] . '</td>';
-                                                        $status = $row['status'];
-                                                        $statusColor = ($status == 0) ? 'red' : (($status == 1) ? 'green' : 'blue'); // Added 'yellow' for pending
-                                                        echo '<td style="color: ' . $statusColor . ';">';
-                                                        echo ($status == 0) ? 'Rejected' : (($status == 1) ? 'Approved' : 'Pending');
-                                                        echo '</td>';
-
-                                                        echo '<td>' . $row['applied_on'] . '</td>';
-                                                        echo '<td>' . $row['description'] . '</td>';
-
-                                                        // Add status check for color
-
-                                                        echo '</tr>';
-
-                                                        $rowNumber++;
+                                                    if ($result->num_rows > 0) {
+                                                        while ($row = $result->fetch_assoc()) {
+                                                            $uName = $row['username'];
+                                                            echo "<option value=\"$uName\">$uName</option>";
+                                                        }
+                                                    } else {
+                                                        echo "<option value=\"\">No roles found</option>";
                                                     }
-                                                } else {
-                                                    // If no data is available
-                                                    echo '<tr><td colspan="8">No data available in the table</td></tr>';
-                                                }
+                                                    $link->close();
 
-                                                // Close the database connection
-                                                mysqli_close($link);
-                                                ?>
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button type="button" class="btn btn-secondary" id="addEmployeeField">+</button>
+                            </div>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <br>
+                                    <button type="submit" class="btn btn-primary form-control" id="submit" name="submit" style="margin-top: 8px;">Assign Task
                                 </div>
                             </div>
                         </div>
+
                     </div>
-                </section>
+
+                </div>
+
+                </form>
+
+
+
+
+
+
             </div>
 
 
-            <!-- Footer -->
-            <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.4.13
-                </div>
-                <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-            </footer>
-
         </div>
+        <!-- end form -->
 
     </div>
-    <!-- End Page-content -->
+</div> <!-- container-fluid -->
+</div>
 
-    <?php include 'layouts/footer.php'; ?>
+
+
+
+
+
+
+
+</div>
+<!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+
+<?php include 'layouts/footer.php'; ?>
 </div>
 <!-- end main content-->
+
 </div>
 <!-- END layout-wrapper -->
 
@@ -150,34 +218,37 @@
 <!-- /Right-bar -->
 
 <!-- JAVASCRIPT -->
-<?php include 'layouts/vendor-scripts.php'; ?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- apexcharts -->
-<script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
-
-<!-- Plugins js-->
-<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
-
-<!-- DataTables js -->
-<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<!-- DataTables js -->
-<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
-<!-- Datatable -->
 <script>
     $(document).ready(function() {
-        $('#example1').DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true
+        $("#addEmployeeField").click(function() {
+            // Clone the first employee selection field
+            var clone = $(".employee-container .col-md-4:first").clone();
+
+            // Clear selected options in the clone
+            clone.find('option:selected').removeAttr('selected');
+
+            // Append the cloned field to the container
+            $(".employee-container").append(clone);
         });
     });
 </script>
+<?php include 'layouts/vendor-scripts.php'; ?>
+
+<!-- apexcharts -->
+<script src="assets/libs/apexcharts/apexcharts.min.js"></script>
+
+<!-- Plugins js-->
+<script src="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+
+<!-- dashboard init -->
+<script src="assets/js/pages/dashboard.init.js"></script>
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+
+</body>
+
+</html>
