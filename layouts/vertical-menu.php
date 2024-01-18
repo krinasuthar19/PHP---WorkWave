@@ -353,7 +353,12 @@
                         <span data-key="t-dashboard"><?php echo "Tasks" ?></span>
                     </a>
                 </li>
-                
+                <li>
+                    <a href="view_task.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "View Tasks" ?></span>
+                    </a>
+                </li>
 
             </ul>
             
