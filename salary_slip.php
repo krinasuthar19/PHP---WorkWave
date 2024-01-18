@@ -25,7 +25,7 @@ $salaryDetails = array(
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
-    <title><?php echo $language["Salary Slip"]; ?> | Your App Name</title>
+    <title>Salary slip | Your App Name</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 
