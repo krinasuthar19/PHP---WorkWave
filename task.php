@@ -1,5 +1,43 @@
 <?php include 'layouts/session.php'; ?>
 <?php include 'layouts/head-main.php'; ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
+    $task_id = $_GET['task_id'];
+
+    // Include database connection or configuration file
+    include 'layouts/config.php';
+
+    // Fetch task data from the database
+    $query = "SELECT * FROM task WHERE t_id = $task_id";
+    $result = mysqli_query($link, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $status = $row['status'];
+
+        // End Task
+        if ($status == 1 && isset($_GET['action']) && $_GET['action'] == 'end') {
+            $updateQuery = "UPDATE task SET status = 2 WHERE t_id = $task_id";
+            if (mysqli_query($link, $updateQuery)) {
+                // Task ended successfully
+                header("Location: view_task.php"); // Redirect back to view_tasks.php
+                exit();
+            } else {
+                // Error updating task status
+                echo "Error updating task status: " . mysqli_error($link);
+                exit();
+            }
+        }
+    } else {
+        // Task not found
+        echo "Task not found.";
+        exit();
+    }
+
+    // Close the database connection
+    mysqli_close($link);
+}
+?>
 
 <head>
     <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
@@ -85,8 +123,7 @@
                                                     while ($row = mysqli_fetch_assoc($result)) {
                                                         // Output each row in the table
                                                         echo '<tr>';
-                                                        echo '<td>' . $rowNumber . '</td>';// Assuming 'emp_id' is the employee ID column
-                                                        // Add other fields accordingly
+                                                        echo '<td>' . $rowNumber . '</td>';
                                                         echo '<td>' . $row['t_title'] . '</td>';
                                                         echo '<td>' . $row['t_description'] . '</td>';
                                                         echo '<td>' . $row['start_date'] . '</td>';
@@ -94,14 +131,26 @@
                                                         $status = $row['status'];
                                                         $statusColor = ($status == 0) ? 'red' : (($status == 1) ? 'green' : 'blue');
                                                         echo '<td style="color: ' . $statusColor . ';">';
-                                                        echo ($status == 0) ? 'Rejected' : (($status == 1) ? 'Approved' : 'Pending');
+                                                        
+                                                        // Displaying status based on the value
+                                                        echo ($status == 0) ? 'Pending' : (($status == 1) ? 'Working' : 'Completed');
                                                         echo '</td>';
-
-                                                        // Add Assign button with a link to another page
-                                                        echo '<td><a href="assign_task.php?task_id=' . $row['t_id'] . '" class="btn btn-primary">Assign</a></td>';
-
+                                                    
+                                                        // Displaying action buttons based on the status
+                                                        echo '<td>';
+                                                        if ($status == 0) {
+                                                            // Status is Pending
+                                                            echo '<a href="assign_task.php?task_id=' . $row['t_id'] . '" class="btn btn-primary">Assign</a>';
+                                                        } elseif ($status == 1) {
+                                                            // Status is Working
+                                                            echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
+                                                        } elseif ($status == 2) {
+                                                            // Status is Completed, no button
+                                                        }
+                                                        echo '</td>';
+                                                    
                                                         echo '</tr>';
-
+                                                    
                                                         $rowNumber++;
                                                     }
                                                 } else {
