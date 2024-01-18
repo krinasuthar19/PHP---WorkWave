@@ -346,7 +346,13 @@
                         <span data-key="t-dashboard"><?php echo " leave status" ?></span>
                     </a>
                 </li>
-                             
+                     
+                <li>
+                    <a href="task.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Tasks" ?></span>
+                    </a>
+                </li>
                 
 
             </ul>
