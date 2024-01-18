@@ -46,15 +46,57 @@
                 <!-- Employee Dropdown -->
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <label for="employeeDropdown" class="form-label">Select Employee:</label>
-                        <select class="form-select" id="employeeDropdown">
+                        <label for="departmentDropdown" class="form-label">Select Department:</label>
+                        <select class="form-select" id="departmentDropdown" name="departmentDropdown">
                             <!-- Replace the options with actual employee data -->
-                            <option value="1">Employee 1</option>
-                            <option value="2">Employee 2</option>
-                            <option value="3">Employee 3</option>
+                            <?php
+                            include 'layouts/config.php';
+
+                            // Assuming you have a connection to your database
+                            $sql = "SELECT d_name FROM department";
+                            $result = $link->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $depName = $row['d_name'];
+                                    echo "<option value=\"$depName\">$depName</option>";
+                                }
+                            } else {
+                                echo "<option value=\"\">No roles found</option>";
+                            }
+                            $link->close();
+
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="employeeDropdown" class="form-label">Select Employee:</label>
+                        <select class="form-select" id="employeeDropdown" name="Employee">
+                            <!-- Replace the options with actual employee data -->
+                            <?php
+                            include 'layouts/config.php';
+
+
+                            $sql = "SELECT username,u_id FROM users";
+                            $result = $link->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $username = $row['username'];
+                                    $u_id = $row['u_id'];
+                                    echo "<option value=\"$username\">$username</option>";
+                                }
+                            } else {
+                                echo "<option value=\"\">No roles found</option>";
+                            }
+                            $link->close();
+
+
+                            ?>
                         </select>
                     </div>
                 </div>
+                
 
                 <!-- FullCalendar container -->
                 <div class="row">
@@ -108,24 +150,32 @@
                     element.css('background-color', 'yellow');
                 } else {
                     element.css('background-color', 'green'); // Assuming 'P' means presented
-                    element.append('<span class="fc-event-title">P</span>');
+                    element.append('<span class="fc-event-title"></span>');
                 }
             }
         });
 
         // Fetch and populate events dynamically from the backend
         function fetchEmployeeAttendanceDetails(employeeId, start, end, callback) {
-            // Mock data for testing
-            var mockData = [
-                { title: 'Present', start: '2024-01-02', status: 'present' },
-                { title: 'Half Day', start: '2024-01-06', status: 'half-day' },
-                { title: 'Absent', start: '2024-01-08', status: 'absent' },
-            ];
-
-            // Parse the mock data and update the FullCalendar events
-            var events = parseAttendanceData(mockData);
+    // Make an AJAX request to fetch employee attendance data
+    $.ajax({
+        url: 'fetch_attendance.php', // Adjust the file path if needed
+        type: 'GET',
+        data: {
+            employeeId: employeeId,
+            start: start,
+            end: end
+        },
+        success: function (data) {
+            // Parse the attendance data and update the FullCalendar events
+            var events = parseAttendanceData(data);
             callback(events);
+        },
+        error: function (error) {
+            console.error('Error fetching employee attendance data:', error);
         }
+    });
+}
 
         // Parse the attendance data received from the backend
         function parseAttendanceData(data) {
@@ -140,7 +190,6 @@
         }
     });
 </script>
-
 </body>
 
 </html>

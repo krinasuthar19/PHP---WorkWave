@@ -12,7 +12,8 @@ if ($conn->connect_error) {
 }
 
 // Function to calculate status based on in time and out time
-function calculateStatus($inTime, $outTime) {
+function calculateStatus($inTime, $outTime)
+{
     if ($inTime === null) {
         return "Absent";
     } elseif ($inTime > '09:00:00' && $outTime < '17:00:00') {
@@ -35,11 +36,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status = calculateStatus($in_time, $out_time);
 
         // Insert data into the database
-        $sql = "INSERT INTO employee_attendance (emp_id, attendance_date, in_time, out_time, status) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("issis", $emp_id, $attendance_date, $in_time, $out_time, $status);
-        $stmt->execute();
-        $stmt->close();
+        $sql = "INSERT INTO employee_attendance (emp_id, attendance_date, in_time, out_time, status) VALUES ( '$emp_id', '$attendance_date', '$in_time', '$out_time', '$status')";
+        if ($conn->query($sql) === TRUE) {
+            // echo "Record inserted successfully";
+        }
+        // $stmt = $conn->prepare($sql);
+        // $stmt->bind_param("issis", $emp_id, $attendance_date, $in_time, $out_time, $status);
+        // $stmt->execute();
+        // $stmt->close();
     }
 }
 ?>
