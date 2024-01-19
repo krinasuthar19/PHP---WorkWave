@@ -346,7 +346,7 @@ $link->close();
 
                 <div class="col-md-3 mb-3">
                   <div class="image-container" id="displayContainer">
-                    <img id="displayImage" alt="profile Image" src="https://img.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.jpg">
+                    <img id="displayImage" alt="profile Image" src="./profile_images/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_157943-15752.avif">
                   </div>
                 </div>
 
