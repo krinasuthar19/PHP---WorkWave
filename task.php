@@ -1,43 +1,6 @@
 <?php include 'layouts/session.php'; ?>
 <?php include 'layouts/head-main.php'; ?>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
-    $task_id = $_GET['task_id'];
 
-    // Include database connection or configuration file
-    include 'layouts/config.php';
-
-    // Fetch task data from the database
-    $query = "SELECT * FROM task WHERE t_id = $task_id";
-    $result = mysqli_query($link, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $status = $row['status'];
-
-        // End Task
-        if ($status == 1 && isset($_GET['action']) && $_GET['action'] == 'end') {
-            $updateQuery = "UPDATE task SET status = 2 WHERE t_id = $task_id";
-            if (mysqli_query($link, $updateQuery)) {
-                // Task ended successfully
-                header("Location: view_task.php"); // Redirect back to view_tasks.php
-                exit();
-            } else {
-                // Error updating task status
-                echo "Error updating task status: " . mysqli_error($link);
-                exit();
-            }
-        }
-    } else {
-        // Task not found
-        echo "Task not found.";
-        exit();
-    }
-
-    // Close the database connection
-    mysqli_close($link);
-}
-?>
 
 <head>
   <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
@@ -70,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 class="mb-sm-0 font-size-18">Tasks</h4>
 
-<<<<<<< HEAD
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>
@@ -172,98 +134,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                         </div>
                     </div>
                 </section>
-=======
-              <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>
-                  <li class="breadcrumb-item active">Tasks</li>
-                </ol>
-              </div>
->>>>>>> 6ea0b9614c74b780837b120c4480e6894b4026ad
-            </div>
+
+                         </div>
           </div>
         </div>
         <!-- end page title -->
         <!-- Content Header -->
-
-        <!-- Main Content -->
-        <section class="content">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="box box-info">
-                <div class="box-header">
-                </div>
-                <div class="box-body">
-                  <div class="table-responsive">
-                    <div class="row">
-
-                    </div>
-                    <!-- DataTable -->
-                    <table id="example1" class="table table-bordered table-striped dataTable no-footer">
-                      <thead>
-                        <tr role="row">
-                          <!-- Table Headers -->
-                          <th>#</th>
-                          <th>Name</th>
-                          <th>Descripton</th>
-                          <th>Start Date</th>
-                          <th>End Date</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        // Include database connection or configuration file
-                        include 'layouts/config.php';
-
-                        // Fetch task data from the database
-                        $query = "SELECT * FROM task";
-                        $result = mysqli_query($link, $query);
-
-                        // Check if there are rows in the result
-                        if (mysqli_num_rows($result) > 0) {
-                          $rowNumber = 1; // Variable to track the row number in the table
-                          while ($row = mysqli_fetch_assoc($result)) {
-                            // Output each row in the table
-                            echo '<tr>';
-                            echo '<td>' . $rowNumber . '</td>'; // Assuming 'emp_id' is the employee ID column
-                            // Add other fields accordingly
-                            echo '<td>' . $row['t_title'] . '</td>';
-                            echo '<td>' . $row['t_description'] . '</td>';
-                            echo '<td>' . $row['start_date'] . '</td>';
-                            echo '<td>' . $row['end_date'] . '</td>';
-                            $status = $row['status'];
-                            $statusColor = ($status == 0) ? 'red' : (($status == 1) ? 'green' : 'blue');
-                            echo '<td style="color: ' . $statusColor . ';">';
-                            echo ($status == 0) ? 'Rejected' : (($status == 1) ? 'Approved' : 'Pending');
-                            echo '</td>';
-
-                            // Add Assign button with a link to another page
-                            echo '<td><a href="assign_task.php?task_id=' . $row['t_id'] . '" class="btn btn-primary">Assign</a></td>';
-
-                            echo '</tr>';
-
-                            $rowNumber++;
-                          }
-                        } else {
-                          // If no data is available
-                          echo '<tr><td colspan="9">No data available in the table</td></tr>';
-                        }
-
-                        // Close the database connection
-                        mysqli_close($link);
-                        ?>
-
-
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
 
 
