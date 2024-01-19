@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $state = $_POST['State'];
   $pincode = $_POST['Pincode'];
   $country = $_POST['Country'];
+  $salary = $_POST['Salary'];
 
   $pass = $firstName . '' . $lastName . '' . substr((string) $mobileNumber, -4);
   $password = password_hash($pass, PASSWORD_DEFAULT); // Hash the password for security
@@ -321,7 +322,10 @@ $link->close();
                       <label for="DateOfJoining">Date of Joining</label>
                       <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
                     </div>
-
+                    <div class="col-md-3 mb-3">
+                      <label for="Salary">Salary</label>
+                      <input type="text" class="form-control" id="Salary" name="Salary" autocomplete="off" required>
+                    </div>
 
                     <div class="row">
                       <div class="col-md-3 mb-3">
