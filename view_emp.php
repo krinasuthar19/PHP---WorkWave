@@ -61,23 +61,23 @@
                                 <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Sr no.</th>
+                                            <th>Profile Img</th>
+                                            <th>Username</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Role</th>
+                                            <th>Department</th>
+                                            <th>Date of joining</th>
                                         </tr>
                                     </thead>
-
-
                                     <tbody>
                                 
                                         <?php
                                         // Assuming you have a database connection established
                                         include 'layouts/config.php';
 
-                                        $query = "SELECT username, role, city, TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS age, date_of_joining, salary FROM users";
+                                        $query = "SELECT username,role, profile_Img,Email, Mobile, TIMESTAMPDIFF(YEAR, dob, CURDATE()) AS Department, date_of_joining,  FROM users";
                                         $result = mysqli_query($link, $query);
 
                                         while ($row = mysqli_fetch_assoc($result)) {
@@ -92,10 +92,11 @@
                                             echo "<tr>";
                                             echo "<td>{$row['username']}</td>";
                                             echo "<td>{$roleName}</td>";
-                                            echo "<td>{$row['city']}</td>";
-                                            echo "<td>{$row['age']}</td>";
+                                            echo "<td>{$row['profile_Img']}</td>";
+                                            echo "<td>{$row['Email']}</td>";
                                             echo "<td>{$row['date_of_joining']}</td>";
-                                            echo "<td>{$row['salary']}</td>";
+                                            echo "<td>{$row['Mobile']}</td>";
+                                            echo "<td>{$row['Department']}</td>";
                                             echo "</tr>";
                                         }
 
