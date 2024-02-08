@@ -1,7 +1,50 @@
-<?php include 'layouts/session.php'; ?>
-<?php include 'layouts/head-main.php'; ?>
+<?php include 'layouts/session.php';
+session_start(); // Start session to get user role
+if ($_SESSION['role'] == 4) {
+    // Redirect user to another page or show access denied message
+    
+?>
+<?php include 'layouts/head-main.php'; 
 
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
+    $task_id = $_GET['task_id'];
 
+    // Include database connection or configuration file
+    include 'layouts/config.php';
+
+    // Fetch task data from the database
+    $query = "SELECT * FROM task WHERE t_id = $task_id";
+    $result = mysqli_query($link, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $status = $row['status'];
+
+        
+
+        // End Task
+        if ($status == 1) {
+            $updateQuery = "UPDATE task SET status = 2 WHERE t_id = $task_id";
+            if (mysqli_query($link, $updateQuery)) {
+                // Task ended successfully
+                header("Location: task.php"); // Redirect back to view_tasks.php
+                exit();
+            } else {
+                // Error updating task status
+                echo "Error updating task status: " . mysqli_error($link);
+                exit();
+            }
+        }
+    } else {
+        // Task not found
+        echo "Task not found.";
+        exit();
+    }
+
+    // Close the database connection
+    mysqli_close($link);
+}
+?>
 <head>
   <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
 
@@ -198,3 +241,11 @@
     });
   });
 </script>
+<?php 
+} else{
+header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
+?>
+</body>
+</html>

@@ -1,4 +1,11 @@
-<?php include 'layouts/session.php'; ?>
+<?php include 'layouts/session.php'; 
+session_start(); // Start session to get user role
+if ($_SESSION['role'] != 1) {
+    // Redirect user to another page or show access denied message
+    header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
+?>
 <?php include 'layouts/head-main.php'; ?>
 
 

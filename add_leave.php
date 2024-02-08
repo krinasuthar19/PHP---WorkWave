@@ -1,4 +1,10 @@
-<?php include 'layouts/session.php'; ?>
+<?php include 'layouts/session.php';
+session_start(); // Start session to get user role
+if ($_SESSION['role'] == 3 || $_SESSION['role'] == 4) {
+    // Redirect user to another page or show access denied message
+    
+
+?>
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
@@ -123,7 +129,12 @@
 
 <!-- App js -->
 <script src="http://localhost/EMS-CI/assets/js/app.js"></script>
-
+<?php }
+else{
+header("Location: auth-login.php");
+    exit(); 
+}// Stop further execution
+?>
 </body>
 
 </html>

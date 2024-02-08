@@ -1,4 +1,7 @@
 <header id="page-topbar">
+    <?php if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} ?>
     <div class="navbar-header">
         <div class="d-flex">
             <!-- LOGO -->
@@ -284,20 +287,26 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
 
+<?php 
+$user_role = $_SESSION['role'];
+?>
+
     <div data-simplebar class="h-100">
 
         <!--- Sidemenu -->
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
+                
                 <li class="menu-title" data-key="t-menu"><?php echo $language["Menu"]; ?></li>
-
                 <li>
                     <a href="index.php">
                         <i data-feather="home"></i>
-                        <span data-key="t-dashboard"><?php echo $language["Dashboard"]; ?></span>
+                        <span data-key="t-dashboard"><?php echo "Dashboard"; ?></span>
                     </a>
                 </li>
+
+                <?php if ($user_role == 1) { ?>
                 <li>
                     <a href="add_emp.php">
                         <i data-feather="home"></i>
@@ -315,11 +324,33 @@
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
                     </a>
-                </li>
+                </li>      
                 <li>
                     <a href="add_task.php">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard"><?php echo "Add Task" ?></span>
+                    </a>
+                </li>  
+                <li>
+                    <a href="leave_history.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Leave History" ?></span>
+                    </a>
+                </li>   
+                <li>
+                    <a href="admin_salary_confirm.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Confirm Salary" ?></span>
+                    </a>
+                </li>
+
+                
+                <?php } elseif($user_role == 2){ ?>
+                
+                <li>
+                    <a href="view_emp.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "View Employees" ?></span>
                     </a>
                 </li>
                 <li>
@@ -329,9 +360,59 @@
                     </a>
                 </li>
                 <li>
-                    <a href="leave_history.php">
+                    <a href="attendance.php">
                         <i data-feather="home"></i>
-                        <span data-key="t-dashboard"><?php echo "Leave History" ?></span>
+                        <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="hr_salary_confirm.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Confirm Salary" ?></span>
+                    </a>
+                </li>
+                <?php } elseif($user_role == 3){ ?>
+
+
+                <li>
+                    <a href="attendance.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="add_leave.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "add leave" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="leave_status.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo " leave status" ?></span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="view_task.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "View Tasks" ?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="view_emp.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "View Other Employees" ?></span>
+                    </a>
+                </li>
+                <?php } else{ ?>
+
+                
+                
+                <li>
+                    <a href="attendance.php">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
                     </a>
                 </li>
                 <li>
@@ -354,11 +435,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="view_task.php">
+                    <a href="view_emp.php">
                         <i data-feather="home"></i>
-                        <span data-key="t-dashboard"><?php echo "View Tasks" ?></span>
+                        <span data-key="t-dashboard"><?php echo "View Other Employees" ?></span>
                     </a>
                 </li>
+                
+                <?php }?>
 
             </ul>
             

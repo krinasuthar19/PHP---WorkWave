@@ -1,4 +1,8 @@
-<?php include 'layouts/session.php'; ?>
+<?php include 'layouts/session.php'; 
+session_start(); // Start session to get user role
+if ($_SESSION['role'] == 3 ||  $_SESSION['role'] == 4) {
+
+?>
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
@@ -181,3 +185,10 @@
         });
     });
 </script>
+<?php  }else{
+    header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
+?>
+</body>
+</html>

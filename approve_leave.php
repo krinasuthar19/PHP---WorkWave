@@ -1,13 +1,17 @@
-<?php include 'layouts/session.php'; ?>
+<?php include 'layouts/session.php'; 
+session_start(); // Start session to get user role
+if ($_SESSION['role'] != 2) {
+    // Redirect user to another page or show access denied message
+    header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
+?>
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
     <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
 
     <?php include 'layouts/head.php'; ?>
-
-
-
     <?php include 'layouts/head-style.php'; ?>
 
 </head>

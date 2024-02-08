@@ -31,6 +31,7 @@
           <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 class="mb-sm-0 font-size-18">Dashboard - Project Manager</h4>
+              <?php echo $_SESSION['role']; ?> 
 
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">

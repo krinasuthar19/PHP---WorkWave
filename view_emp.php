@@ -74,7 +74,9 @@
                       <th>Mobile</th>
                       <th>Role</th>
                       <th>Department</th>
+                      <?php if ($user_role == 1 || $user_role == 2) { ?>
                       <th>Date of joining</th>
+                      <?php } ?>
                     </tr>
                   </thead>
                   <tbody>
@@ -115,7 +117,8 @@
                       echo "<td>{$row['phone']}</td>";
                       echo "<td>{$roleName}</td>";
                       echo "<td>{$depName}</td>";
-                      echo "<td>{$row['date_of_joining']}</td>";
+                      if ($user_role == 1 || $user_role == 2) { 
+                      echo "<td>{$row['date_of_joining']}</td>";}
                       echo "</tr>";
                       $i++;
                     }

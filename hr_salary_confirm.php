@@ -1,4 +1,10 @@
 <?php
+session_start(); // Start session to get user role
+if ($_SESSION['role'] != 2) {
+    // Redirect user to another page or show access denied message
+    header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
 include 'layouts/head-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
