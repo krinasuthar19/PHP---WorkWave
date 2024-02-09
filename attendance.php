@@ -44,58 +44,47 @@
                 <!-- end page title -->
 
                 <!-- Employee Dropdown -->
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label for="departmentDropdown" class="form-label">Select Department:</label>
-                        <select class="form-select" id="departmentDropdown" name="departmentDropdown">
-                            <!-- Replace the options with actual employee data -->
-                            <?php
-                            include 'layouts/config.php';
+                <?php
+        include 'layouts/config.php';
+        switch ($_SESSION['role']) {
+          case '1':
+          case '2':
+            echo '<div class="row mb-3">';
+            echo '<div class="col-md-4">';
+            echo '<label for="departmentDropdown" class="form-label">Select Department:</label>';
+            echo '<select class="form-select" id="departmentDropdown" name="departmentDropdown">';
+            echo '<option value=\"\">Select Deprtment</option>';
+            $sql = "SELECT d_name,d_id FROM department";
+            $result = $link->query($sql);
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                $depName = $row['d_name'];
+                $d_id = $row['d_id'];
+                echo "<option value=\"$d_id\">$depName</option>";
+              }
+            } else {
+              echo "<option value=\"\">No roles found</option>";
+            }
+            echo '</select>';
+            echo '</div>';
+            echo '<div class="col-md-4">';
+            echo '<label for="employeeDropdown" class="form-label">Select Employee:</label>';
+            echo '<select class="form-select" id="emp_id" name="Employee">';
+            echo '<option value="">Select Employee</option>';
+            echo '</select>';
+            echo '</div>';
+            echo '</div>';
 
-                            // Assuming you have a connection to your database
-                            $sql = "SELECT d_name FROM department";
-                            $result = $link->query($sql);
+            $link->close();
+            break;
 
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $depName = $row['d_name'];
-                                    echo "<option value=\"$depName\">$depName</option>";
-                                }
-                            } else {
-                                echo "<option value=\"\">No roles found</option>";
-                            }
-                            $link->close();
+          case '3':
+          case '4':
+            echo "<input type='hidden' name='emp_id' id='emp_id' value=\"{$_SESSION['u_id']}\">";
+            break;
+        }
+        ?>
 
-                            ?>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="employeeDropdown" class="form-label">Select Employee:</label>
-                        <select class="form-select" id="employeeDropdown" name="Employee">
-                            <!-- Replace the options with actual employee data -->
-                            <?php
-                            include 'layouts/config.php';
-
-
-                            $sql = "SELECT username,u_id FROM users";
-                            $result = $link->query($sql);
-
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $username = $row['username'];
-                                    $u_id = $row['u_id'];
-                                    echo "<option value=\"$u_id\">$username</option>";
-                                }
-                            } else {
-                                echo "<option value=\"\">No roles found</option>";
-                            }
-                            $link->close();
-
-
-                            ?>
-                        </select>
-                    </div>
-                </div>
                 <!-- FullCalendar container -->
                 <div class="row">
                     <div class="col-md-12">
@@ -127,9 +116,44 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 
-<!-- Your custom script to fetch and populate events -->
+
 <script>
 $(document).ready(function() {
+    // Event listener for department dropdown change
+    $('#departmentDropdown').change(function() {
+        var department = $(this).val(); // Get selected department
+        if (department !== '') {
+            // If department is selected, fetch corresponding employees
+            fetchEmployeesByDepartment(department);
+        } else {
+            // If no department selected, clear employee dropdown
+            $('#emp_id').empty().append('<option value="">Select Employee</option>');
+        }
+    });
+
+    // Function to fetch employees based on department
+    function fetchEmployeesByDepartment(department) {
+        $.ajax({
+            url: 'fetch_employees.php', // Path to your PHP script to fetch employees by department
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                department: department
+            },
+            success: function(response) {
+                // Update employee dropdown with fetched employees
+                $('#emp_id').empty().append('<option value="">Select Employee</option>');
+                $.each(response, function(key, value) {
+                    $('#emp_id').append('<option value="' + value.u_id + '">' + value
+                        .username + '</option>');
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching employees:', error);
+            }
+        });
+    }
+
     // Initialize FullCalendar
     var calendar = $('#calendar').fullCalendar({
         header: {
@@ -138,7 +162,7 @@ $(document).ready(function() {
             right: 'month'
         },
         events: function(start, end, timezone, callback) {
-            var selectedEmployeeId = $('#employeeDropdown').val();
+            var selectedEmployeeId = $('#emp_id').val();
             fetchEmployeeAttendanceDetails(selectedEmployeeId, start.format(), end.format(),
                 callback);
         },
@@ -148,14 +172,14 @@ $(document).ready(function() {
                 element.css('background-color', 'red');
             } else if (event.status === 'half-day') {
                 element.css('background-color', 'yellow');
-            } else {
-                element.css('background-color', 'green'); // Assuming 'P' means presented
+            } else if (event.status === 'present') {
+                element.css('background-color', 'green');
             }
         }
     });
 
     // Bind change event to the employee dropdown
-    $('#employeeDropdown').change(function() {
+    $('#emp_id').change(function() {
         // Update calendar when the selected employee changes
         var selectedEmployeeId = $(this).val();
         calendar.fullCalendar('refetchEvents');
@@ -183,7 +207,6 @@ $(document).ready(function() {
         });
     }
 
-    // Parse the attendance data received from the backend
     function parseAttendanceData(data) {
         // Format the data into FullCalendar events array
         return data.map(function(attendance) {
@@ -194,9 +217,9 @@ $(document).ready(function() {
             };
         });
     }
+
 });
 </script>
-
 </body>
 
 </html>
