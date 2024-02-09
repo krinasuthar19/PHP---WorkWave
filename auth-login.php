@@ -61,7 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['loggedin'] = true;
         $_SESSION['u_id'] = $row['u_id'];
         $_SESSION['role'] = $row['role'];
+        $_SESSION['d_id'] = $row['d_id'];
         $_SESSION['email'] = $email;
+
         switch ($_SESSION['role']) {
           case 1:
             header("location: index-admin.php");

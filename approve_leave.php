@@ -1,4 +1,4 @@
-<?php include 'layouts/session.php'; 
+<?php include 'layouts/session.php';
 session_start(); // Start session to get user role
 if ($_SESSION['role'] != 2) {
     // Redirect user to another page or show access denied message
@@ -68,7 +68,7 @@ if ($_SESSION['role'] != 2) {
                                                     <tr role="row">
                                                         <!-- Table Headers -->
                                                         <th>#</th>
-                                                        <th>Staff_id</th>
+                                                        <th>Emp_id</th>
                                                         <th>Reason</th>
                                                         <th>From</th>
                                                         <th>To</th>
@@ -99,7 +99,7 @@ if ($_SESSION['role'] != 2) {
                                                         while ($row = $result->fetch_assoc()) {
                                                             echo '<tr>';
                                                             echo '<td>' . $rowNumber . '</td>';
-                                                            echo '<td>' . $row['staff_id'] . '</td>';
+                                                            echo '<td>' . $row['emp_id'] . '</td>';
                                                             // Add other fields accordingly
                                                             echo '<td>' . $row['leave_reason'] . '</td>';
                                                             echo '<td>' . $row['leave_from'] . '</td>';
@@ -129,7 +129,7 @@ if ($_SESSION['role'] != 2) {
                                                             $leaveId = $_POST['leave_id'];
                                                             $updateSql = "UPDATE leave_tbl SET status = 1 WHERE id = $leaveId";
                                                             if ($link->query($updateSql) === TRUE) {
-                                                                echo"updated";
+                                                                echo "updated";
                                                             } else {
                                                                 echo "Error updating record: " . $link->error;
                                                             }
@@ -140,8 +140,8 @@ if ($_SESSION['role'] != 2) {
                                                             $leaveId = $_POST['leave_id'];
                                                             $updateSql = "UPDATE leave_tbl SET status = 0 WHERE id = $leaveId";
                                                             if ($link->query($updateSql) === TRUE) {
-                                                                
-                                                                echo"updated";
+
+                                                                echo "updated";
                                                             } else {
                                                                 echo "Error updating record: " . $link->error;
                                                             }
@@ -152,7 +152,7 @@ if ($_SESSION['role'] != 2) {
                                                     $link->close();
                                                     ?>
 
-                                                   
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -163,15 +163,21 @@ if ($_SESSION['role'] != 2) {
                     </section>
                 </div>
 
-                <!-- Footer -->
-                <footer class="main-footer">
-                    <div class="pull-right hidden-xs">
-                        <b>Version</b> 3.4.13
-                    </div>
-                    <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-                </footer>
 
             </div>
+            <?php include 'layouts/footer.php'; ?>4
+            <!-- Right Sidebar -->
+            <?php include 'layouts/right-sidebar.php'; ?>
+            <!-- /Right-bar -->
+
+            <!-- JAVASCRIPT -->
+            <?php include 'layouts/vendor-scripts.php'; ?>
+
+            <!-- apexcharts -->
+            <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
+
+            <!-- App js -->
+            <script src="assets/js/app.js"></script>
 
 
 

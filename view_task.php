@@ -62,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 <head>
     <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
     <?php include 'layouts/head.php'; ?>
+    <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
     <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
@@ -124,10 +125,15 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                                                 <?php
                                                 // Include database connection or configuration file
                                                 include 'layouts/config.php';
+                                                $u_id = $_SESSION['u_id'];
 
                                                 // Fetch task data from the database
-                                                $query = "SELECT * FROM task";
+                                                $query = "SELECT * FROM task where t_id IN (Select t_id from assign_task where u_id = $u_id)";
                                                 $result = mysqli_query($link, $query);
+
+                                                if (!$result) {
+                                                    die('Error executing query: ' . mysqli_error($link));
+                                                }
 
                                                 // Check if there are rows in the result
                                                 if (mysqli_num_rows($result) > 0) {
@@ -180,12 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                 </section>
             </div>
             <!-- Footer -->
-            <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.4.13
-                </div>
-                <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-            </footer>
+
         </div>
     </div>
     <!-- End Page-content -->
@@ -211,6 +212,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 <!-- Datatable -->
+
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
 <script>
     $(document).ready(function() {
         $('#example1').DataTable({

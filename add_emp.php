@@ -379,7 +379,8 @@ $link->close();
   <?php include 'layouts/vendor-scripts.php'; ?>
 
   <script src="assets/js/app.js"></script>
-
+<!-- App js -->
+<script src="assets/js/app.js"></script>
   <!-- Add this script at the end of your HTML, just before the closing </body> tag -->
   <script>
     function displayProfileImage() {

@@ -128,9 +128,10 @@ if ($_SESSION['role'] != 4) {
                                                         </option>
                                                         <?php
                                                         include 'layouts/config.php';
+                                                        $d_id=$_SESSION['d_id'];
 
                                                         // Assuming you have a connection to your database
-                                                        $sql = "SELECT username,u_id FROM users";
+                                                        $sql = "SELECT username,u_id FROM users where d_id = $d_id AND role=3";
                                                         $result = $link->query($sql);
 
                                                         if ($result->num_rows > 0) {

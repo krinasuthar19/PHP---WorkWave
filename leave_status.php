@@ -79,9 +79,10 @@ if ($_SESSION['role'] == 3 ||  $_SESSION['role'] == 4) {
                                                 <?php
                                                 // Include database connection or configuration file
                                                 include 'layouts/config.php';
+                                                $u_id=$_SESSION['u_id'];
 
                                                 // Fetch leave data from the database
-                                                $query = "SELECT * FROM leave_tbl";
+                                                $query = "SELECT * FROM leave_tbl where emp_id= $u_id";
                                                 $result = mysqli_query($link, $query);
                                                 // Check if there are rows in the result
                                                 if (mysqli_num_rows($result) > 0) {
@@ -90,7 +91,7 @@ if ($_SESSION['role'] == 3 ||  $_SESSION['role'] == 4) {
                                                         // Output each row in the table
                                                         echo '<tr>';
                                                         echo '<td>' . $rowNumber . '</td>';
-                                                        echo '<td>' . $row['staff_id'] . '</td>';
+                                                        echo '<td>' . $row['emp_id'] . '</td>';
                                                         // Add other fields accordingly
                                                         echo '<td>' . $row['leave_reason'] . '</td>';
                                                         echo '<td>' . $row['leave_from'] . '</td>';
@@ -130,14 +131,6 @@ if ($_SESSION['role'] == 3 ||  $_SESSION['role'] == 4) {
             </div>
 
 
-            <!-- Footer -->
-            <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.4.13
-                </div>
-                <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-            </footer>
-
         </div>
 
     </div>
@@ -170,7 +163,8 @@ if ($_SESSION['role'] == 3 ||  $_SESSION['role'] == 4) {
 <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
+<!-- App js -->
+<script src="assets/js/app.js"></script>
 <!-- Datatable -->
 <script>
     $(document).ready(function() {

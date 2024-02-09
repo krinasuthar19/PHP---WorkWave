@@ -118,9 +118,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                                             <?php
                                                 // Include database connection or configuration file
                                                 include 'layouts/config.php';
+                                                $d_id=$_SESSION['d_id'];
 
                                                 // Fetch task data from the database
-                                                $query = "SELECT * FROM task";
+                                                $query = "SELECT * FROM task where department = $d_id";
                                                 $result = mysqli_query($link, $query);
 
                                                 // Check if there are rows in the result
@@ -226,7 +227,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
+<!-- App js -->
+<script src="assets/js/app.js"></script>
 <!-- Datatable -->
 <script>
   $(document).ready(function() {

@@ -1,4 +1,8 @@
+<?php
+session_start(); // Start session to get user role
+if ($_SESSION['role'] == 1 ||  $_SESSION['role'] == 2) {
 
+?>
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
@@ -86,7 +90,7 @@
                                                         // Output each row in the table
                                                         echo '<tr>';
                                                         echo '<td>' . $rowNumber . '</td>';
-                                                        echo '<td>' . $row['staff_id'] . '</td>';
+                                                        echo '<td>' . $row['emp_id'] . '</td>';
                                                         // Add other fields accordingly
                                                         echo '<td>' . $row['leave_reason'] . '</td>';
                                                         echo '<td>' . $row['leave_from'] . '</td>';
@@ -126,14 +130,7 @@
             </div>
 
 
-            <!-- Footer -->
-            <footer class="main-footer">
-                <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.4.13
-                </div>
-                <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-            </footer>
-
+           
         </div>
 
     </div>
@@ -166,7 +163,8 @@
 <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
+<!-- App js -->
+<script src="assets/js/app.js"></script>
 <!-- Datatable -->
 <script>
     $(document).ready(function() {
@@ -181,3 +179,10 @@
         });
     });
 </script>
+<?php  }else{
+    header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
+?>
+</body>
+</html>
