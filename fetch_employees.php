@@ -2,6 +2,7 @@
 // fetch_employees.php
 
 // Assuming you have included/configured your database connection
+include 'layouts/config.php';
 
 // Check if the department parameter is set
 if (isset($_POST['department'])) {
@@ -9,7 +10,7 @@ if (isset($_POST['department'])) {
 
   // Perform a database query to fetch employees based on the selected department
   // Replace this with your actual database query
-  $sql = "SELECT u_id, username FROM users WHERE department = ?";
+  $sql = "SELECT u_id, username FROM users WHERE d_id = '$department'";
   $stmt = $link->prepare($sql);
   $stmt->bind_param("s", $department);
   $stmt->execute();
