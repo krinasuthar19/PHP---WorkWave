@@ -1,35 +1,36 @@
 <?php
-// fetch_employees.php
 
-// Assuming you have included/configured your database connection
 include 'layouts/config.php';
 
-// Check if the department parameter is set
-if (isset($_POST['department'])) {
-  $department = $_POST['department'];
-
-  // Perform a database query to fetch employees based on the selected department
-  // Replace this with your actual database query
-  $sql = "SELECT u_id, username FROM users WHERE d_id = '$department'";
+// Check if departmentId is set in the POST request
+if (isset($_POST['departmentId'])) {
+  $departmentId = $_POST['departmentId'];
+  
+  // Perform SQL query to fetch employees based on departmentId
+  $sql = "SELECT * FROM users WHERE d_id = $departmentId";
   $stmt = $link->prepare($sql);
-  $stmt->bind_param("s", $department);
+  $stmt->bind_param("i", $departmentId);
   $stmt->execute();
   $result = $stmt->get_result();
 
-  // Store the fetched employees in an array
+  // Fetch and store the result in an array
   $employees = array();
   while ($row = $result->fetch_assoc()) {
-    $employees[] = $row;
+    $employees[] = array(
+      'id' => $row['u_id'],
+      'name' => $row['username']
+      // Add other fields as needed
+    );
   }
 
-  // Close the database connection
+  // Close statement and database connection
   $stmt->close();
-  $link->close();
+  $link->close(); // Close connection if not needed elsewhere
 
-  // Return the list of employees as JSON
-  header('Content-Type: application/json');
+  // Return the array of employees as JSON
   echo json_encode($employees);
-} else {
-  // Return an empty response if department parameter is not set
-  echo json_encode(array());
-}
+} 
+// else {
+//   // If departmentId is not set in the POST request, return an error message
+//   echo json_encode(array('error' => 'Department ID not provided'));
+// }
