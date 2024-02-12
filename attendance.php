@@ -49,44 +49,44 @@ include 'layouts/config.php';
                 <!-- Employee Dropdown -->
                 <?php
 
-        switch ($_SESSION['role']) {
-          case '1':
-          case '2':
-            echo '<div class="row mb-3">';
-            echo '<div class="col-md-4">';
-            echo '<label for="departmentDropdown" class="form-label">Select Department:</label>';
-            echo '<select class="form-select" id="departmentDropdown" name="departmentDropdown">';
-            echo '<option value=\'\'>Select Deprtment</option>';
-            $sql = "SELECT d_name,d_id FROM department";
-            $result = $link->query($sql);
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                $depName = $row['d_name'];
-                $d_id = $row['d_id'];
-                echo "<option value=\"$d_id\">$depName</option>";
-              }
-            } else {
-              echo "<option>No roles found</option>";
-            }
-            echo '</select>';
-            echo '</div>';
-            echo '<div class="col-md-4">';
-            echo '<label for="employeeDropdown" class="form-label">Select Employee:</label>';
-            echo '<select class="form-select" id="emp_id" name="Employee">';
-            echo '<option value=\'\'>Select Employee</option>';
-            echo '</select>';
-            echo '</div>';
-            echo '</div>';
+                switch ($_SESSION['role']) {
+                    case '1':
+                    case '2':
+                        echo '<div class="row mb-3">';
+                        echo '<div class="col-md-4">';
+                        echo '<label for="departmentDropdown" class="form-label">Select Department:</label>';
+                        echo '<select class="form-select" id="departmentDropdown" name="departmentDropdown">';
+                        echo '<option value=\'\'>Select Deprtment</option>';
+                        $sql = "SELECT d_name,d_id FROM department";
+                        $result = $link->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $depName = $row['d_name'];
+                                $d_id = $row['d_id'];
+                                echo "<option value=\"$d_id\">$depName</option>";
+                            }
+                        } else {
+                            echo "<option>No roles found</option>";
+                        }
+                        echo '</select>';
+                        echo '</div>';
+                        echo '<div class="col-md-4">';
+                        echo '<label for="employeeDropdown" class="form-label">Select Employee:</label>';
+                        echo '<select class="form-select" id="emp_id" name="Employee">';
+                        echo '<option value=\'\'>Select Employee</option>';
+                        echo '</select>';
+                        echo '</div>';
+                        echo '</div>';
 
-            $link->close();
-            break;
+                        $link->close();
+                        break;
 
-          case '3':
-          case '4':
-            echo "<input type='hidden' name='emp_id' id='emp_id' value=\"{$_SESSION['u_id']}\">";
-            break;
-        }
-        ?>
+                    case '3':
+                    case '4':
+                        echo "<input type='hidden' name='emp_id' id='emp_id' value=\"{$_SESSION['u_id']}\">";
+                        break;
+                }
+                ?>
 
                 <!-- FullCalendar container -->
                 <div class="row">
@@ -179,7 +179,8 @@ $(document).ready(function() {
     //? Function to populate employee dropdown
     function populateEmployeesDropdown(employees) {
         var empDropdown = $('#emp_id');
-        // empDropdown.empty(); // Clear existing options
+        empDropdown.empty();
+        empDropdown.append($('<option></option>').attr('value', "").text("Select Employee"))
         $.each(employees, function(index, employee) {
             empDropdown.append($('<option></option>').attr('value', employee.id).text(employee.name));
         });
