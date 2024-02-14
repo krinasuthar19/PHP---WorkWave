@@ -121,113 +121,113 @@ include 'layouts/config.php';
 
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function () {
 
-    //! Initialize FullCalendar
-    var calendar = $('#calendar').fullCalendar({
-        header: {
-            left: null,
-            center: 'title',
-            right: 'prev,next today'
-        },
-        events: function(start, end, timezone, callback) {
-            var selectedEmployeeId = $('#emp_id').val();
-            fetchEmployeeAttendanceDetails(selectedEmployeeId, start.format(), end.format(),
-                callback);
-        },
-        eventRender: function(event, element) {
-            // Customize the rendering based on attendance status
-            if (event.status === 'absent') {
-                element.css('background-color', 'red');
-            } else if (event.status === 'half-day') {
-                element.css('background-color', '#e69138');
-            } else if (event.status === 'present') {
-                element.css('background-color', 'green');
+        //! Initialize FullCalendar
+        var calendar = $('#calendar').fullCalendar({
+            header: {
+                left: null,
+                center: 'title',
+                right: 'prev,next today'
+            },
+            events: function (start, end, timezone, callback) {
+                var selectedEmployeeId = $('#emp_id').val();
+                fetchEmployeeAttendanceDetails(selectedEmployeeId, start.format(), end.format(),
+                    callback);
+            },
+            eventRender: function (event, element) {
+                // Customize the rendering based on attendance status
+                if (event.status === 'absent') {
+                    element.css('background-color', 'red');
+                } else if (event.status === 'half-day') {
+                    element.css('background-color', '#e69138');
+                } else if (event.status === 'present') {
+                    element.css('background-color', 'green');
+                }
             }
+        });
+
+        //? Bind change event to the department dropdown
+        $('#departmentDropdown').change(function () {
+            var selectedDepartmentId = $(this).val();
+            if (selectedDepartmentId !== '') {
+                fetchEmployees(selectedDepartmentId);
+            } else {
+                $('#emp_id').empty(); // Clear employee dropdown if no department is selected
+            }
+        });
+
+        //? Function to fetch employees based on department
+        function fetchEmployees(departmentId) {
+            $.ajax({
+                url: 'fetch_employees.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    departmentId: departmentId
+                },
+                success: function (response) {
+                    // Populate employee dropdown with fetched employees
+                    populateEmployeesDropdown(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching employees:', error);
+                }
+            });
         }
-    });
 
-    //? Bind change event to the department dropdown
-    $('#departmentDropdown').change(function() {
-        var selectedDepartmentId = $(this).val();
-        if (selectedDepartmentId !== '') {
-            fetchEmployees(selectedDepartmentId);
-        } else {
-            $('#emp_id').empty(); // Clear employee dropdown if no department is selected
+        //? Function to populate employee dropdown
+        function populateEmployeesDropdown(employees) {
+            var empDropdown = $('#emp_id');
+            empDropdown.empty();
+            empDropdown.append($('<option></option>').attr('value', "").text("Select Employee"))
+            $.each(employees, function (index, employee) {
+                empDropdown.append($('<option></option>').attr('value', employee.id).text(employee.name));
+            });
         }
+
+
+        // Bind change event to the employee dropdown
+        $('#emp_id').change(function () {
+            // Update calendar when the selected employee changes
+            var selectedEmployeeId = $(this).val();
+            calendar.fullCalendar('refetchEvents');
+        });
+
+        //! Fetch and populate events dynamically from the backend
+        function fetchEmployeeAttendanceDetails(employeeId, start, end, callback) {
+            $.ajax({
+                url: 'fetch_attendance.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    employeeId: employeeId,
+                    start: start,
+                    end: end
+                },
+                success: function (response) {
+                    // Parse the response data and update the FullCalendar events
+                    var events = parseAttendanceData(response);
+                    callback(events);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching attendance data:', error);
+                }
+            });
+        }
+
+        function parseAttendanceData(data) {
+            // Format the data into FullCalendar events array
+            return data.map(function (attendance) {
+                return {
+                    title: attendance.title,
+                    start: attendance.start,
+                    status: attendance.status // Additional property for custom rendering
+                };
+            });
+        }
+
     });
-
-    //? Function to fetch employees based on department
-    function fetchEmployees(departmentId) {
-        $.ajax({
-            url: 'fetch_employees.php',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                departmentId: departmentId
-            },
-            success: function(response) {
-                // Populate employee dropdown with fetched employees
-                populateEmployeesDropdown(response);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching employees:', error);
-            }
-        });
-    }
-
-    //? Function to populate employee dropdown
-    function populateEmployeesDropdown(employees) {
-        var empDropdown = $('#emp_id');
-        empDropdown.empty();
-        empDropdown.append($('<option></option>').attr('value', "").text("Select Employee"))
-        $.each(employees, function(index, employee) {
-            empDropdown.append($('<option></option>').attr('value', employee.id).text(employee.name));
-        });
-    }
-
-
-    //! Bind change event to the employee dropdown
-    $('#emp_id').change(function() {
-        // Update calendar when the selected employee changes
-        var selectedEmployeeId = $(this).val();
-        calendar.fullCalendar('refetchEvents');
-    });
-
-    //! Fetch and populate events dynamically from the backend
-    function fetchEmployeeAttendanceDetails(employeeId, start, end, callback) {
-        $.ajax({
-            url: 'fetch_attendance.php',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                employeeId: employeeId,
-                start: start,
-                end: end
-            },
-            success: function(response) {
-                // Parse the response data and update the FullCalendar events
-                var events = parseAttendanceData(response);
-                callback(events);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching attendance data:', error);
-            }
-        });
-    }
-
-    function parseAttendanceData(data) {
-        // Format the data into FullCalendar events array
-        return data.map(function(attendance) {
-            return {
-                title: attendance.title,
-                start: attendance.start,
-                status: attendance.status // Additional property for custom rendering
-            };
-        });
-    }
-
-});
 </script>
 </body>
 
