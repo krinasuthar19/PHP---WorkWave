@@ -168,13 +168,13 @@
               <span data-key="t-dashboard"><?php echo " leave status" ?></span>
             </a>
           </li>
-
           <li>
-            <a href="view_task.php">
+            <a href="task.php">
               <i data-feather="file-text"></i>
-              <span data-key="t-dashboard"><?php echo "View Tasks" ?></span>
+              <span data-key="t-dashboard"><?php echo "Tasks" ?></span>
             </a>
           </li>
+
           <li>
             <a href="view_emp.php">
               <i data-feather="users"></i>
@@ -204,10 +204,11 @@
             </a>
           </li>
 
+          
           <li>
-            <a href="task.php">
+            <a href="view_task.php">
               <i data-feather="file-text"></i>
-              <span data-key="t-dashboard"><?php echo "Tasks" ?></span>
+              <span data-key="t-dashboard"><?php echo "View Tasks" ?></span>
             </a>
           </li>
           <li>

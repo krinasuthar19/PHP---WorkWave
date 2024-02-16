@@ -1,6 +1,14 @@
 <?php
 session_start(); // Start session to get user role
+<<<<<<< Updated upstream
 require 'layouts/check_pm.php';
+=======
+if ($_SESSION['role'] != 4) {
+    // Redirect user to another page or show access denied message
+    header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
+>>>>>>> Stashed changes
 include 'layouts/head-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {

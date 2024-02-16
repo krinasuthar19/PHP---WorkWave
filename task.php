@@ -22,8 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
         // End Task
         if ($status == 1) {
             $updateQuery = "UPDATE task SET status = 2 WHERE t_id = $task_id";
-            if (mysqli_query($link, $updateQuery)) {
-                // Task ended successfully
+            $updateQuery2 = "UPDATE assign_task SET status = 2 WHERE t_id = $task_id";
+            
+            if (mysqli_query($link, $updateQuery) &&  mysqli_query($link, $updateQuery2)){
                 header("Location: task.php"); // Redirect back to view_tasks.php
                 exit();
             } else {

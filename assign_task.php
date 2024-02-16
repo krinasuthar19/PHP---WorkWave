@@ -1,7 +1,17 @@
+<<<<<<< Updated upstream
 <?php
 session_start();
 require 'layouts/check_pm.php';
 include 'layouts/head-main.php';
+=======
+<?php 
+session_start(); // Start session to get user role
+if ($_SESSION['role'] != 3) {
+    // Redirect user to another page or show access denied message
+    header("Location: auth-login.php");
+    exit(); // Stop further execution
+}
+>>>>>>> Stashed changes
 ?>
 
 <head>
@@ -91,6 +101,108 @@ include 'layouts/head-main.php';
                 </ol>
               </div>
 
+<<<<<<< Updated upstream
+=======
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Assign Task</a></li>
+                                    <li class="breadcrumb-item active">Assign Task</li>
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <!-- start form -->
+                <div class="form-content">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <form action="assign_task_bcknd.php" method="POST" enctype="multipart/form-data">
+
+
+                                    <div class="form-data" id="form-data">
+
+                                        <div class="employee-container">
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="Department">Employee</label>
+                                                    <select class="form-control" id="task_emp" name="task_emp[]">
+                                                        <option value="select" disabled selected hidden>Select Employee
+                                                        </option>
+                                                        <?php
+                                                        include 'layouts/config.php';
+                                                        $d_id=$_SESSION['d_id'];
+
+                                                        // Assuming you have a connection to your database
+                                                        $sql = "SELECT username,u_id FROM users where d_id = $d_id AND role=4";
+                                                        $result = $link->query($sql);
+
+                                                        if ($result->num_rows > 0) {
+                                                          while ($row = $result->fetch_assoc()) {
+                                                            $uName = $row['username'];
+                                                            $u_id = $row['u_id'];
+                                                            echo "<option value=\"$u_id\">$uName</option>";
+                                                          }
+                                                        } else {
+                                                          echo "<option value=\"\">No roles found</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+
+                                                    <!-- find department id using task id -->
+                                                    <?php
+                                                    $task_id = $_GET['task_id'];
+                                                    $query = "SELECT department FROM task where t_id='$task_id'";
+                                                    $result = mysqli_query($link, $query);
+                                                    if (mysqli_num_rows($result) > 0) {
+                                                      $row = mysqli_fetch_assoc($result);
+                                                      $d_name = $row['department'];
+                                                    }
+                                                    $query = "SELECT d_id FROM department where d_name='$d_name'";
+                                                    $result = mysqli_query($link, $query);
+
+                                                    if (mysqli_num_rows($result) > 0) {
+                                                      $row = mysqli_fetch_assoc($result);
+                                                      $d_id = $row['d_id'];
+                                                    }
+                                                    ?>
+                                                    <?php //echo $task_id ?>
+                                                    <?php //echo $d_name ?>
+                                                    <input type="hidden" name="t_id[]" value="<?php echo $task_id ?>">
+                                                    <input type="hidden" name="d_id[]" value="<?php echo $d_id ?>">
+                                                </div>
+                                                <!-- <div class="col-md-4 mt-4 mb-3">
+                                                <div class="col-md-12 mt-1">
+                                                    <button type="submit" name="remove"
+                                                    class="btn btn-danger">Remove</button>
+                                                </div>
+                                              </div> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <button type="button" class="btn btn-secondary"
+                                                id="addEmployeeField">+</button>
+                                        </div>
+                                        <div class="paste-new-form" id="paste-new-form"></div>
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <br>
+                                                <button type="submit" class="btn btn-primary form-control" id="submit"
+                                                    name="submit" style="margin-top: 8px;">Assign Task
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </form>
+                </div>
+>>>>>>> Stashed changes
             </div>
           </div>
         </div>

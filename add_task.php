@@ -159,13 +159,14 @@ $link->close();
                         include 'layouts/config.php';
 
                         // Assuming you have a connection to your database
-                        $sql = "SELECT d_name FROM department";
+                        $sql = "SELECT d_name,d_id FROM department";
                         $result = $link->query($sql);
 
                         if ($result->num_rows > 0) {
                           while ($row = $result->fetch_assoc()) {
                             $depName = $row['d_name'];
-                            echo "<option value=\"$depName\">$depName</option>";
+                            $dep_id=$row['d_id'];
+                            echo "<option value=\"$dep_id\">$depName</option>";
                           }
                         } else {
                           echo "<option value=\"\">No roles found</option>";
