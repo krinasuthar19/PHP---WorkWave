@@ -301,37 +301,37 @@
         <?php if ($user_role == 1) { ?>
           <li>
             <a href="add_emp.php">
-              <i data-feather="home"></i>
+              <i data-feather="user-plus"></i>
               <span data-key="t-dashboard"><?php echo "Add Employees" ?></span>
             </a>
           </li>
           <li>
             <a href="view_emp.php">
-              <i data-feather="home"></i>
+              <i data-feather="users"></i>
               <span data-key="t-dashboard"><?php echo "View Employees" ?></span>
             </a>
           </li>
           <li>
             <a href="attendance.php">
-              <i data-feather="home"></i>
+              <i data-feather="calendar"></i>
               <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
             </a>
           </li>
           <li>
             <a href="add_task.php">
-              <i data-feather="home"></i>
+              <i data-feather="plus-circle"></i>
               <span data-key="t-dashboard"><?php echo "Add Task" ?></span>
             </a>
           </li>
           <li>
             <a href="leave_history.php">
-              <i data-feather="home"></i>
+              <i data-feather="file-text"></i>
               <span data-key="t-dashboard"><?php echo "Leave History" ?></span>
             </a>
           </li>
           <li>
             <a href="admin_salary_confirm.php">
-              <i data-feather="home"></i>
+              <i data-feather="check-circle"></i>
               <span data-key="t-dashboard"><?php echo "Confirm Salary" ?></span>
             </a>
           </li>
@@ -341,25 +341,25 @@
 
           <li>
             <a href="view_emp.php">
-              <i data-feather="home"></i>
+              <i data-feather="users"></i>
               <span data-key="t-dashboard"><?php echo "View Employees" ?></span>
             </a>
           </li>
           <li>
             <a href="approve_leave.php">
-              <i data-feather="home"></i>
-              <span data-key="t-dashboard"><?php echo "Approv Leave" ?></span>
+              <i data-feather="user-check"></i>
+              <span data-key="t-dashboard"><?php echo "Employee Leave" ?></span>
             </a>
           </li>
           <li>
             <a href="attendance.php">
-              <i data-feather="home"></i>
+              <i data-feather="calender"></i>
               <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
             </a>
           </li>
           <li>
             <a href="hr_salary_confirm.php">
-              <i data-feather="home"></i>
+              <i data-feather="check-circle"></i>
               <span data-key="t-dashboard"><?php echo "Confirm Salary" ?></span>
             </a>
           </li>
@@ -368,19 +368,19 @@
 
           <li>
             <a href="attendance.php">
-              <i data-feather="home"></i>
+              <i data-feather="calender"></i>
               <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
             </a>
           </li>
           <li>
             <a href="add_leave.php">
-              <i data-feather="home"></i>
+              <i data-feather="plus-circle"></i>
               <span data-key="t-dashboard"><?php echo "add leave" ?></span>
             </a>
           </li>
           <li>
             <a href="leave_status.php">
-              <i data-feather="home"></i>
+              <i data-feather="file-text"></i>
               <span data-key="t-dashboard"><?php echo " leave status" ?></span>
             </a>
           </li>
