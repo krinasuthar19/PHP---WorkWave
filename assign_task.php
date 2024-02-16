@@ -1,17 +1,7 @@
-<<<<<<< Updated upstream
 <?php
 session_start();
 require 'layouts/check_pm.php';
 include 'layouts/head-main.php';
-=======
-<?php 
-session_start(); // Start session to get user role
-if ($_SESSION['role'] != 3) {
-    // Redirect user to another page or show access denied message
-    header("Location: auth-login.php");
-    exit(); // Stop further execution
-}
->>>>>>> Stashed changes
 ?>
 
 <head>
