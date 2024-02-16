@@ -20,9 +20,6 @@
 
     <?php include 'layouts/horizontal-menu.php'; ?>
 
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->
         <div class="main-content">
 
             <div class="page-content">

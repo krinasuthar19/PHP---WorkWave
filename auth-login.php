@@ -213,18 +213,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           I ultricies enim
                           at malesuada nibh diam on tortor neaded to throw curve balls.”
                         </h4>
-                        <div class="mt-4 pt-3 pb-5">
-                          <div class="d-flex align-items-start">
-                            <!-- <div class="flex-shrink-0">
-                                                            <img src="assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                        </div> -->
-                            <!-- <div class="flex-grow-1 ms-3 mb-4">
-                                                            <h5 class="font-size-18 text-white">Richard Drews
-                                                            </h5>
-                                                            <p class="mb-0 text-white-50">Web Designer</p>
-                                                        </div> -->
-                          </div>
-                        </div>
                       </div>
                     </div>
 
@@ -238,18 +226,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           creatures and
                           the whole of quis consectetur nunc sit amet semper justo. nature
                           and its beauty.”</h4>
-                        <div class="mt-4 pt-3 pb-5">
-                          <div class="d-flex align-items-start">
-                            <!-- <div class="flex-shrink-0">
-                                                            <img src="assets/images/users/avatar-2.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
-                                                        </div> -->
-                            <!-- <div class="flex-grow-1 ms-3 mb-4">
-                                                            <h5 class="font-size-18 text-white">Rosanna French
-                                                            </h5>
-                                                            <p class="mb-0 text-white-50">Web Developer</p>
-                                                        </div> -->
-                          </div>
-                        </div>
                       </div>
                     </div>
 
@@ -263,16 +239,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           but people will never forget
                           how donec in efficitur lectus, nec lobortis metus you made them
                           feel.”</h4>
-                        <div class="mt-4 pt-3 pb-5">
-                          <div class="d-flex align-items-start">
-                            <!-- <img src="assets/images/users/avatar-3.jpg" class="avatar-md img-fluid rounded-circle" alt="..."> -->
-                            <!-- <div class="flex-1 ms-3 mb-4">
-                                                            <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
-                                                            <p class="mb-0 text-white-50">Manager
-                                                            </p>
-                                                        </div> -->
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
