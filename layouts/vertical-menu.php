@@ -29,12 +29,12 @@
         <i class="fa fa-fw fa-bars"></i>
       </button>
 
-      <!-- App Search-->
+      <!-- App Search
       <form class="app-search d-none d-lg-block">
         <div class="position-relative">
           <input type="text" class="form-control" placeholder="<?php echo $language["Search"]; ?>">
           <button class="btn btn-primary" type="button"><i class="bx bx-search-alt align-middle"></i></button>
-        </div>
+        </div>-->
       </form>
     </div>
 
@@ -46,7 +46,7 @@
         </button>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-search-dropdown">
 
-          <form class="p-3">
+         <!-- <form class="p-3">
             <div class="form-group m-0">
               <div class="input-group">
                 <input type="text" class="form-control" placeholder="<?php echo $language["Search"]; ?>" aria-label="Search Result">
@@ -61,7 +61,7 @@
       <div class="dropdown d-none d-sm-inline-block">
         <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <?php if ($lang == 'en') { ?>
-            <img class="me-2" src="assets/images/flags/us.jpg" alt="Header Language" height="16">
+          <!--  <img class="me-2" src="assets/images/flags/us.jpg" alt="Header Language" height="16">
           <?php } ?>
           <?php if ($lang == 'es') { ?>
             <img class="me-2" src="assets/images/flags/spain.jpg" alt="Header Language" height="16">
@@ -78,29 +78,29 @@
         </button>
         <div class="dropdown-menu dropdown-menu-end">
 
-          <!-- item-->
+          <!-- item->
           <a href="?lang=en" class="dropdown-item notify-item language">
             <img src="assets/images/flags/us.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> English </span>
           </a>
 
           <!-- item-->
           <a href="?lang=de" class="dropdown-item notify-item language">
-            <img src="assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> German </span>
+           <!-- <img src="assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> German </span>
           </a>
 
           <!-- item-->
           <a href="?lang=it" class="dropdown-item notify-item language">
-            <img src="assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Italian </span>
+          <!--  <img src="assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Italian </span>
           </a>
 
           <!-- item-->
           <a href="?lang=es" class="dropdown-item notify-item language">
-            <img src="assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Spanish </span>
+          <!--  <img src="assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Spanish </span>
           </a>
 
           <!-- item-->
           <a href="?lang=ru" class="dropdown-item notify-item language">
-            <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Russian </span>
+           <!-- <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle"> Russian </span>-->
           </a>
         </div>
       </div>
@@ -112,7 +112,7 @@
         </button>
       </div>
 
-      <div class="dropdown d-none d-lg-inline-block ms-1">
+     <!-- <div class="dropdown d-none d-lg-inline-block ms-1">
         <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="grid" class="icon-lg"></i>
         </button>
@@ -161,9 +161,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
-      <div class="dropdown d-inline-block">
+    <!--  <div class="dropdown d-inline-block">
         <button type="button" class="btn header-item noti-icon position-relative" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i data-feather="bell" class="icon-lg"></i>
           <span class="badge bg-danger rounded-pill">5</span>
@@ -252,9 +252,9 @@
 
       <div class="dropdown d-inline-block">
         <button type="button" class="btn header-item right-bar-toggle me-2">
-          <i data-feather="settings" class="icon-lg"></i>
+          <!--<i data-feather="settings" class="icon-lg"></i>
         </button>
-      </div>
+      </div>-->
 
       <div class="dropdown d-inline-block">
         <button type="button" class="btn header-item bg-light-subtle border-start border-end" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
