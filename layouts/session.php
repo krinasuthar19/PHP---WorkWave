@@ -1,9 +1,23 @@
 <?php
-// Initialize the session
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+  switch ($_SESSION['role']) {
+    case 1:
+      header("location: index.php");
+      break;
+    case 2:
+      header("location: index.php");
+      break;
+    case 3:
+      header("location: index.php");
+      break;
+    case 4:
+      header("location: index.php");
+      break;
 
-// Check if the user is logged in, if not then redirect him to login page
-// if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-//     header("location: auth-login.php");
-//     exit;
-// }
+    default:
+      header("location: auth-login.php");
+      break;
+  }
+  exit;
+}
 ?>

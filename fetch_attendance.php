@@ -51,4 +51,3 @@ if (isset($_POST['employeeId'], $_POST['start'], $_POST['end'])) {
   // If any of the required parameters is not set, return an error message
   echo json_encode(array('error' => 'One or more required parameters are missing.'));
 }
-?>

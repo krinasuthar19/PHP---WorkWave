@@ -1,10 +1,6 @@
 <?php include 'layouts/session.php'; 
 session_start(); // Start session to get user role
-if ($_SESSION['role'] != 1) {
-    // Redirect user to another page or show access denied message
-    header("Location: auth-login.php");
-    exit(); // Stop further execution
-}
+require "layouts/check_admin.php";
 ?>
 <?php include 'layouts/head-main.php'; ?>
 

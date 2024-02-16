@@ -1,15 +1,8 @@
-<?php include 'layouts/session.php'; 
-session_start(); // Start session to get user role
-if ($_SESSION['role'] != 1) {
-    // Redirect user to another page or show access denied message
-    header("Location: auth-login.php");
-    exit(); // Stop further execution
-}
-?>
-<?php include 'layouts/head-main.php'; ?>
-
-
 <?php
+session_start();
+require "layouts/check_admin.php";
+include 'layouts/session.php';
+include 'layouts/head-main.php';
 include 'layouts/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -85,8 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imagePath = 'profile_images/user_default_img.jpg'; // Set a default image path or leave it empty based on your requirements
   }
 
-
-
   $query = "SELECT email FROM users where email='$email'";
   $result = mysqli_query($link, $query);
 
@@ -96,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "<script>alert('user already exsist')</script>";
     } else {
       $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, city, state, pincode, country, role, d_id, password, date_of_joining, profile_image) 
-            VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath')";
+              VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath')";
     }
   }
   if ($link->query($sql) === TRUE) {
@@ -176,9 +167,6 @@ $link->close();
 
   <?php include 'layouts/menu.php'; ?>
 
-  <!-- ============================================================== -->
-  <!-- Start right Content here -->
-  <!-- ============================================================== -->
   <div class="main-content">
 
     <div class="page-content">
@@ -315,7 +303,7 @@ $link->close();
 
                         ?>
                       </select>
-                      </div>
+                    </div>
                     <div class="col-md-3 mb-3">
                       <label for="DateOfJoining">Date of Joining</label>
                       <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
@@ -379,8 +367,8 @@ $link->close();
   <?php include 'layouts/vendor-scripts.php'; ?>
 
   <script src="assets/js/app.js"></script>
-<!-- App js -->
-<script src="assets/js/app.js"></script>
+  <!-- App js -->
+  <script src="assets/js/app.js"></script>
   <!-- Add this script at the end of your HTML, just before the closing </body> tag -->
   <script>
     function displayProfileImage() {
@@ -413,7 +401,6 @@ $link->close();
       }
     }
   </script>
-
 
   </body>
 

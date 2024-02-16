@@ -1,11 +1,8 @@
 <?php include 'layouts/session.php';
 session_start(); // Start session to get user role
-if ($_SESSION['role'] == 4) {
+if ($_SESSION['role'] == 3) {
     // Redirect user to another page or show access denied message
-    
-?>
-<?php include 'layouts/head-main.php'; 
-
+    include 'layouts/head-main.php'; 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
     $task_id = $_GET['task_id'];
 
