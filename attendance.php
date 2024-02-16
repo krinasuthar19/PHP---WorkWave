@@ -49,44 +49,44 @@ include 'layouts/config.php';
                 <!-- Employee Dropdown -->
                 <?php
 
-        switch ($_SESSION['role']) {
-          case '1':
-          case '2':
-            echo '<div class="row mb-3">';
-            echo '<div class="col-md-4">';
-            echo '<label for="departmentDropdown" class="form-label">Select Department:</label>';
-            echo '<select class="form-select" id="departmentDropdown" name="departmentDropdown">';
-            echo '<option value=\'\'>Select Deprtment</option>';
-            $sql = "SELECT d_name,d_id FROM department";
-            $result = $link->query($sql);
-            if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                $depName = $row['d_name'];
-                $d_id = $row['d_id'];
-                echo "<option value=\"$d_id\">$depName</option>";
-              }
-            } else {
-              echo "<option>No roles found</option>";
-            }
-            echo '</select>';
-            echo '</div>';
-            echo '<div class="col-md-4">';
-            echo '<label for="employeeDropdown" class="form-label">Select Employee:</label>';
-            echo '<select class="form-select" id="emp_id" name="Employee">';
-            echo '<option value=\'\'>Select Employee</option>';
-            echo '</select>';
-            echo '</div>';
-            echo '</div>';
+                switch ($_SESSION['role']) {
+                    case '1':
+                    case '2':
+                        echo '<div class="row mb-3">';
+                        echo '<div class="col-md-4">';
+                        echo '<label for="departmentDropdown" class="form-label">Select Department:</label>';
+                        echo '<select class="form-select" id="departmentDropdown" name="departmentDropdown">';
+                        echo '<option value=\'\'>Select Deprtment</option>';
+                        $sql = "SELECT d_name,d_id FROM department";
+                        $result = $link->query($sql);
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $depName = $row['d_name'];
+                                $d_id = $row['d_id'];
+                                echo "<option value=\"$d_id\">$depName</option>";
+                            }
+                        } else {
+                            echo "<option>No roles found</option>";
+                        }
+                        echo '</select>';
+                        echo '</div>';
+                        echo '<div class="col-md-4">';
+                        echo '<label for="employeeDropdown" class="form-label">Select Employee:</label>';
+                        echo '<select class="form-select" id="emp_id" name="Employee">';
+                        echo '<option value=\'\'>Select Employee</option>';
+                        echo '</select>';
+                        echo '</div>';
+                        echo '</div>';
 
-            $link->close();
-            break;
+                        $link->close();
+                        break;
 
-          case '3':
-          case '4':
-            echo "<input type='hidden' name='emp_id' id='emp_id' value=\"{$_SESSION['u_id']}\">";
-            break;
-        }
-        ?>
+                    case '3':
+                    case '4':
+                        echo "<input type='hidden' name='emp_id' id='emp_id' value=\"{$_SESSION['u_id']}\">";
+                        break;
+                }
+                ?>
 
                 <!-- FullCalendar container -->
                 <div class="row">
@@ -121,112 +121,113 @@ include 'layouts/config.php';
 
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function () {
 
-    //! Initialize FullCalendar
-    var calendar = $('#calendar').fullCalendar({
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month'
-        },
-        events: function(start, end, timezone, callback) {
-            var selectedEmployeeId = $('#emp_id').val();
-            fetchEmployeeAttendanceDetails(selectedEmployeeId, start.format(), end.format(),
-                callback);
-        },
-        eventRender: function(event, element) {
-            // Customize the rendering based on attendance status
-            if (event.status === 'absent') {
-                element.css('background-color', 'red');
-            } else if (event.status === 'half-day') {
-                element.css('background-color', 'yellow');
-            } else if (event.status === 'present') {
-                element.css('background-color', 'green');
+        //! Initialize FullCalendar
+        var calendar = $('#calendar').fullCalendar({
+            header: {
+                left: null,
+                center: 'title',
+                right: 'prev,next today'
+            },
+            events: function (start, end, timezone, callback) {
+                var selectedEmployeeId = $('#emp_id').val();
+                fetchEmployeeAttendanceDetails(selectedEmployeeId, start.format(), end.format(),
+                    callback);
+            },
+            eventRender: function (event, element) {
+                // Customize the rendering based on attendance status
+                if (event.status === 'absent') {
+                    element.css('background-color', 'red');
+                } else if (event.status === 'half-day') {
+                    element.css('background-color', '#e69138');
+                } else if (event.status === 'present') {
+                    element.css('background-color', 'green');
+                }
             }
+        });
+
+        //? Bind change event to the department dropdown
+        $('#departmentDropdown').change(function () {
+            var selectedDepartmentId = $(this).val();
+            if (selectedDepartmentId !== '') {
+                fetchEmployees(selectedDepartmentId);
+            } else {
+                $('#emp_id').empty(); // Clear employee dropdown if no department is selected
+            }
+        });
+
+        //? Function to fetch employees based on department
+        function fetchEmployees(departmentId) {
+            $.ajax({
+                url: 'fetch_employees.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    departmentId: departmentId
+                },
+                success: function (response) {
+                    // Populate employee dropdown with fetched employees
+                    populateEmployeesDropdown(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching employees:', error);
+                }
+            });
         }
-    });
 
-    //? Bind change event to the department dropdown
-    $('#departmentDropdown').change(function() {
-        var selectedDepartmentId = $(this).val();
-        if (selectedDepartmentId !== '') {
-            fetchEmployees(selectedDepartmentId);
-        } else {
-            $('#emp_id').empty(); // Clear employee dropdown if no department is selected
+        //? Function to populate employee dropdown
+        function populateEmployeesDropdown(employees) {
+            var empDropdown = $('#emp_id');
+            empDropdown.empty();
+            empDropdown.append($('<option></option>').attr('value', "").text("Select Employee"))
+            $.each(employees, function (index, employee) {
+                empDropdown.append($('<option></option>').attr('value', employee.id).text(employee.name));
+            });
         }
+
+
+        // Bind change event to the employee dropdown
+        $('#emp_id').change(function () {
+            // Update calendar when the selected employee changes
+            var selectedEmployeeId = $(this).val();
+            calendar.fullCalendar('refetchEvents');
+        });
+
+        //! Fetch and populate events dynamically from the backend
+        function fetchEmployeeAttendanceDetails(employeeId, start, end, callback) {
+            $.ajax({
+                url: 'fetch_attendance.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    employeeId: employeeId,
+                    start: start,
+                    end: end
+                },
+                success: function (response) {
+                    // Parse the response data and update the FullCalendar events
+                    var events = parseAttendanceData(response);
+                    callback(events);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching attendance data:', error);
+                }
+            });
+        }
+
+        function parseAttendanceData(data) {
+            // Format the data into FullCalendar events array
+            return data.map(function (attendance) {
+                return {
+                    title: attendance.title,
+                    start: attendance.start,
+                    status: attendance.status // Additional property for custom rendering
+                };
+            });
+        }
+
     });
-
-    //? Function to fetch employees based on department
-    function fetchEmployees(departmentId) {
-        $.ajax({
-            url: 'fetch_employees.php',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                departmentId: departmentId
-            },
-            success: function(response) {
-                // Populate employee dropdown with fetched employees
-                populateEmployeesDropdown(response);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching employees:', error);
-            }
-        });
-    }
-
-    //? Function to populate employee dropdown
-    function populateEmployeesDropdown(employees) {
-        var empDropdown = $('#emp_id');
-        // empDropdown.empty(); // Clear existing options
-        $.each(employees, function(index, employee) {
-            empDropdown.append($('<option></option>').attr('value', employee.id).text(employee.name));
-        });
-    }
-
-
-    //! Bind change event to the employee dropdown
-    $('#emp_id').change(function() {
-        // Update calendar when the selected employee changes
-        var selectedEmployeeId = $(this).val();
-        calendar.fullCalendar('refetchEvents');
-    });
-
-    //! Fetch and populate events dynamically from the backend
-    function fetchEmployeeAttendanceDetails(employeeId, start, end, callback) {
-        $.ajax({
-            url: 'fetch_attendance.php',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                employeeId: employeeId,
-                start: start,
-                end: end
-            },
-            success: function(response) {
-                // Parse the response data and update the FullCalendar events
-                var events = parseAttendanceData(response);
-                callback(events);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching attendance data:', error);
-            }
-        });
-    }
-
-    function parseAttendanceData(data) {
-        // Format the data into FullCalendar events array
-        return data.map(function(attendance) {
-            return {
-                title: attendance.title,
-                start: attendance.start,
-                status: attendance.status // Additional property for custom rendering
-            };
-        });
-    }
-
-});
 </script>
 </body>
 

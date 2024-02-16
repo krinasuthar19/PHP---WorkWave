@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2024 at 06:56 AM
+-- Generation Time: Feb 13, 2024 at 07:11 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -35,14 +35,6 @@ CREATE TABLE `assign_task` (
   `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `assign_task`
---
-
-INSERT INTO `assign_task` (`id`, `u_id`, `t_id`, `d_id`, `status`) VALUES
-(2, 1026, 17, 5, ''),
-(3, 1027, 17, 5, '');
-
 -- --------------------------------------------------------
 
 --
@@ -59,9 +51,13 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`d_id`, `d_name`) VALUES
-(1, 'Department 1'),
-(4, 'IT'),
-(5, 'Billing');
+(1, 'Finance'),
+(2, 'Marketing'),
+(3, 'Sales'),
+(4, 'Operations'),
+(5, 'Production'),
+(6, 'Distribution'),
+(7, 'Administration');
 
 -- --------------------------------------------------------
 
@@ -83,13 +79,41 @@ CREATE TABLE `employee_attendance` (
 --
 
 INSERT INTO `employee_attendance` (`id`, `emp_id`, `attendance_date`, `in_time`, `out_time`, `status`) VALUES
-(8, 1026, '2024-01-01', '19:12:00', '20:00:18', 'Present'),
-(9, 1026, '2024-01-02', '18:12:00', '22:00:22', 'Present'),
-(10, 1027, '2024-01-16', '09:12:00', '19:00:23', 'Present'),
-(11, 1027, '2024-01-17', '08:12:00', '21:00:22', 'Present'),
-(13, 1027, '2024-01-17', '08:12:00', '23:00:22', 'Present'),
-(14, 1026, '2024-01-01', '19:25:00', '21:00:23', 'Present'),
-(15, 1026, '2024-01-01', '19:25:00', '23:25:00', 'Present');
+(1, 1035, '2024-02-01', NULL, NULL, 'present'),
+(2, 1035, '2024-02-02', NULL, NULL, 'absent'),
+(3, 1036, '2024-02-03', NULL, NULL, 'half-day'),
+(4, 1036, '2024-02-04', NULL, NULL, 'absent'),
+(5, 1037, '2024-02-05', NULL, NULL, 'present'),
+(6, 1037, '2024-02-06', NULL, NULL, 'present'),
+(7, 1038, '2024-02-07', NULL, NULL, 'present'),
+(8, 1038, '2024-02-08', NULL, NULL, 'half-day'),
+(16, 1038, '2024-02-01', NULL, NULL, 'present'),
+(17, 1038, '2024-02-02', NULL, NULL, 'present'),
+(18, 1038, '2024-02-03', NULL, NULL, 'present'),
+(19, 1038, '2024-02-04', NULL, NULL, 'present'),
+(20, 1038, '2024-02-05', NULL, NULL, 'present'),
+(21, 1038, '2024-02-06', NULL, NULL, 'present'),
+(22, 1038, '2024-02-09', NULL, NULL, 'present'),
+(23, 1038, '2024-02-10', NULL, NULL, 'absent'),
+(24, 1038, '2024-02-11', NULL, NULL, 'present'),
+(25, 1038, '2024-02-12', NULL, NULL, 'present'),
+(26, 1038, '2024-02-13', NULL, NULL, 'present'),
+(27, 1038, '2024-02-14', NULL, NULL, 'present'),
+(28, 1038, '2024-02-15', NULL, NULL, 'present'),
+(29, 1038, '2024-02-16', NULL, NULL, 'half-day'),
+(30, 1038, '2024-02-17', NULL, NULL, 'absent'),
+(31, 1038, '2024-02-18', NULL, NULL, 'present'),
+(32, 1038, '2024-02-19', NULL, NULL, 'present'),
+(33, 1038, '2024-02-20', NULL, NULL, 'present'),
+(34, 1038, '2024-02-21', NULL, NULL, 'present'),
+(35, 1038, '2024-02-22', NULL, NULL, 'present'),
+(36, 1038, '2024-02-23', NULL, NULL, 'present'),
+(37, 1038, '2024-02-24', NULL, NULL, 'present'),
+(38, 1038, '2024-02-25', NULL, NULL, 'absent'),
+(39, 1038, '2024-02-26', NULL, NULL, 'present'),
+(40, 1038, '2024-02-27', NULL, NULL, 'present'),
+(41, 1038, '2024-02-28', NULL, NULL, 'present'),
+(42, 1038, '2024-02-29', NULL, NULL, 'present');
 
 -- --------------------------------------------------------
 
@@ -99,7 +123,7 @@ INSERT INTO `employee_attendance` (`id`, `emp_id`, `attendance_date`, `in_time`,
 
 CREATE TABLE `leave_tbl` (
   `id` int(11) NOT NULL,
-  `staff_id` int(11) NOT NULL,
+  `emp_id` int(20) NOT NULL,
   `leave_reason` varchar(90) NOT NULL,
   `description` text NOT NULL,
   `status` int(11) NOT NULL DEFAULT 0,
@@ -113,8 +137,9 @@ CREATE TABLE `leave_tbl` (
 -- Dumping data for table `leave_tbl`
 --
 
-INSERT INTO `leave_tbl` (`id`, `staff_id`, `leave_reason`, `description`, `status`, `leave_from`, `leave_to`, `updated_on`, `applied_on`) VALUES
-(1, 0, 'Bimaar', 'edAC', 2, '2024-01-12', '2024-01-19', '0000-00-00', '0000-00-00');
+INSERT INTO `leave_tbl` (`id`, `emp_id`, `leave_reason`, `description`, `status`, `leave_from`, `leave_to`, `updated_on`, `applied_on`) VALUES
+(2, 1036, 'i am pm and i am asking for 5 days leave', 'mane maja nathi', 1, '2024-02-09', '2024-02-14', '0000-00-00', '0000-00-00'),
+(3, 1038, 'maja nathi', 'jeel viradiya', 1, '2024-02-12', '2024-02-14', '0000-00-00', '2024-02-13');
 
 -- --------------------------------------------------------
 
@@ -131,13 +156,6 @@ CREATE TABLE `project` (
   `status` char(10) NOT NULL,
   `u_id` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `project`
---
-
-INSERT INTO `project` (`project_id`, `project_name`, `description`, `start_date`, `end_date`, `status`, `u_id`) VALUES
-(1, 'test', '', '0000-00-00', '0000-00-00', '', 0);
 
 -- --------------------------------------------------------
 
@@ -156,9 +174,9 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`r_id`, `r_name`) VALUES
 (1, 'admin'),
-(2, 'HR'),
-(3, 'employee'),
-(4, 'project_manager');
+(2, 'hr'),
+(3, 'pm'),
+(4, 'emp');
 
 -- --------------------------------------------------------
 
@@ -185,7 +203,7 @@ CREATE TABLE `task` (
   `t_id` int(11) NOT NULL,
   `t_title` varchar(255) NOT NULL,
   `t_description` varchar(255) NOT NULL,
-  `department` varchar(255) NOT NULL,
+  `department` int(20) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL,
   `status` varchar(255) NOT NULL
@@ -196,31 +214,10 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`t_id`, `t_title`, `t_description`, `department`, `start_date`, `end_date`, `status`) VALUES
-(10, 'Parva', 'Parva ne kaam karavo', 'Department 2', '2024-01-01', '2024-01-31', ''),
-(11, 'Prviiii', 'eqhuadsghxuhaxuaUP', 'Department 1', '2024-01-25', '2024-01-01', ''),
-(13, 'Run', 'Bhagooo', 'IT', '2024-01-02', '2024-01-03', '2'),
-(15, 'HW', 'complete HW', 'IT', '2024-01-01', '2024-01-31', '0'),
-(17, 'Project', 'Complete Project', 'Billing', '2024-01-01', '2024-01-31', '0');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `user`
---
-
-CREATE TABLE `user` (
-  `id` int(20) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `username`, `password`) VALUES
-(1, 'admin', 'admin'),
-(2, 'krina', '123');
+(18, 'E-commerce Website Development', 'Develop an e-commerce website where users can browse products, add them to their cart, and make purchases.', 1, '2024-02-09', '2024-02-29', '1'),
+(19, 'Task Management App', 'Create a web or mobile app for managing tasks and to-do lists.', 2, '2024-02-10', '2024-02-20', '0'),
+(20, 'Weather Forecasting System', 'Build a system that predicts weather conditions based on historical data and current atmospheric conditions', 3, '2024-02-01', '2024-02-11', '1'),
+(21, 'Recipe Sharing Platform', 'Create a platform where users can share and discover recipes', 4, '2024-02-29', '2024-03-09', '0');
 
 -- --------------------------------------------------------
 
@@ -231,8 +228,8 @@ INSERT INTO `user` (`id`, `username`, `password`) VALUES
 CREATE TABLE `users` (
   `u_id` int(20) NOT NULL,
   `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `profile_image` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `profile_image` varchar(255) NOT NULL,
   `firstname` char(20) NOT NULL,
   `lastname` char(20) NOT NULL,
   `email` varchar(50) NOT NULL,
@@ -246,7 +243,6 @@ CREATE TABLE `users` (
   `state` varchar(30) NOT NULL,
   `pincode` int(20) NOT NULL,
   `country` varchar(30) NOT NULL,
-  `session_token` varchar(255) NOT NULL,
   `gender` varchar(10) NOT NULL,
   `date_of_joining` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -255,10 +251,12 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`u_id`, `username`, `password`, `profile_image`, `firstname`, `lastname`, `email`, `phone`, `dob`, `role`, `d_id`, `salary`, `address`, `city`, `state`, `pincode`, `country`, `session_token`, `gender`, `date_of_joining`) VALUES
-(1026, 'Yash Rana', '$2y$10$ci6nOPhlpJBqr', 'profile_images/img_65a91c2cb784a.jpg', 'Yash', 'Rana', 'yashrana123@gmail.com', 1234567899, '2024-01-01', 3, 4, 0, 'LJ', 'Ahmedabad', 'Gujarat', 380061, 'India', '', 'male', '2024-01-01'),
-(1027, 'Jeel Viradiya', '$2y$10$m0JpDd8Op5Evx', 'profile_images/img_65a91c68a0b82.jpg', 'Jeel', 'Viradiya', 'jeelvir123@gmail.com', 2147483647, '2024-01-01', 2, 5, 0, 'LJ', 'Ahmedabad', 'Gujarat', 380051, 'India', '', 'male', '2024-01-02'),
-(1029, 'Neha Soni', '$2y$10$g6/iI5dfDN8aB', 'profile_images/img_65acad197b00f.jpg', 'Neha', 'Soni', 'nehasoni@gmail.com', 2147483647, '2024-01-01', 4, 1, 0, 'ahm', 'ahm', 'guj', 333333, 'ind', '', 'female', '2024-01-16');
+INSERT INTO `users` (`u_id`, `username`, `password`, `profile_image`, `firstname`, `lastname`, `email`, `phone`, `dob`, `role`, `d_id`, `salary`, `address`, `city`, `state`, `pincode`, `country`, `gender`, `date_of_joining`) VALUES
+(1035, 'username_admin', 'admin', 'profile_images/user_default_img.jpg', 'admin', 'admin', 'admin@gmail.com', 1234567890, '2024-02-08', 1, 1, 0, 'qwe', 'ahmedabad', 'gujarat', 123456, 'india', 'male', '2024-02-09'),
+(1036, 'username_hr', 'hr', 'profile_images/user_default_img.jpg', 'hr', 'hr', 'hr@gmail.com', 1234567890, '2024-02-08', 2, 2, 0, 'qwe', 'ahmedabad', 'gujarat', 123456, 'india', 'male', '2024-02-09'),
+(1037, 'username_pm', 'pm', 'profile_images/user_default_img.jpg', 'pm', 'pm', 'pm@gmail.com', 1234567890, '2024-02-08', 3, 3, 0, 'qwe', 'ahmedabad', 'gujarat', 123456, 'india', 'male', '2024-02-09'),
+(1038, 'username_emp', 'emp', 'profile_images/user_default_img.jpg', 'emp', 'emp', 'emp@gmail.com', 1234567890, '2024-02-08', 4, 4, 0, 'qwe', 'ahmedabad', 'gujarat', 123456, 'india', 'male', '2024-02-09'),
+(1039, 'jeel viradiya', 'jeelviradiya1258', 'profile_images/img_65caff427567b.jpg', 'jeel', 'viradiya', 'jeel@gmail.com', 2147483647, '2024-02-13', 4, 5, 0, 'q', 'q', 'q', 123456, 'q', 'male', '2024-03-01');
 
 --
 -- Indexes for dumped tables
@@ -290,7 +288,8 @@ ALTER TABLE `employee_attendance`
 -- Indexes for table `leave_tbl`
 --
 ALTER TABLE `leave_tbl`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `emp_id` (`emp_id`);
 
 --
 -- Indexes for table `project`
@@ -315,13 +314,8 @@ ALTER TABLE `salaries`
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
-  ADD PRIMARY KEY (`t_id`);
-
---
--- Indexes for table `user`
---
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`t_id`),
+  ADD KEY `department` (`department`);
 
 --
 -- Indexes for table `users`
@@ -345,19 +339,19 @@ ALTER TABLE `assign_task`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `d_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `d_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employee_attendance`
 --
 ALTER TABLE `employee_attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `leave_tbl`
 --
 ALTER TABLE `leave_tbl`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `project`
@@ -381,19 +375,13 @@ ALTER TABLE `salaries`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `t_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `t_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1030;
+  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1040;
 
 --
 -- Constraints for dumped tables
@@ -413,10 +401,22 @@ ALTER TABLE `employee_attendance`
   ADD CONSTRAINT `user ref` FOREIGN KEY (`emp_id`) REFERENCES `users` (`u_id`);
 
 --
+-- Constraints for table `leave_tbl`
+--
+ALTER TABLE `leave_tbl`
+  ADD CONSTRAINT `emp_id` FOREIGN KEY (`emp_id`) REFERENCES `users` (`u_id`);
+
+--
 -- Constraints for table `salaries`
 --
 ALTER TABLE `salaries`
   ADD CONSTRAINT `salaries_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`u_id`);
+
+--
+-- Constraints for table `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `department` FOREIGN KEY (`department`) REFERENCES `department` (`d_id`);
 
 --
 -- Constraints for table `users`
