@@ -21,10 +21,7 @@ include 'layouts/head-main.php';
 <div id="layout-wrapper">
 
   <?php include 'layouts/menu.php'; ?>
-
-  <!-- ============================================================== -->
-  <!-- Start right Content here -->
-  <!-- ============================================================== -->
+  
   <div class="main-content">
 
     <div class="page-content">
