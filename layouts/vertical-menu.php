@@ -319,7 +319,7 @@
           </li>
           <li>
             <a href="add_task.php">
-              <i data-feather="plus-circle"></i>
+              <i data-feather="plus-square"></i>
               <span data-key="t-dashboard"><?php echo "Add Task" ?></span>
             </a>
           </li>
@@ -353,7 +353,7 @@
           </li>
           <li>
             <a href="attendance.php">
-              <i data-feather="calender"></i>
+              <i data-feather="calendar"></i>
               <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
             </a>
           </li>
@@ -368,7 +368,7 @@
 
           <li>
             <a href="attendance.php">
-              <i data-feather="calender"></i>
+              <i data-feather="calendar"></i>
               <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
             </a>
           </li>
@@ -380,20 +380,20 @@
           </li>
           <li>
             <a href="leave_status.php">
-              <i data-feather="file-text"></i>
+              <i data-feather="file"></i>
               <span data-key="t-dashboard"><?php echo " leave status" ?></span>
             </a>
           </li>
 
           <li>
             <a href="view_task.php">
-              <i data-feather="home"></i>
+              <i data-feather="file-text"></i>
               <span data-key="t-dashboard"><?php echo "View Tasks" ?></span>
             </a>
           </li>
           <li>
             <a href="view_emp.php">
-              <i data-feather="home"></i>
+              <i data-feather="users"></i>
               <span data-key="t-dashboard"><?php echo "View Other Employees" ?></span>
             </a>
           </li>
@@ -403,32 +403,32 @@
 
           <li>
             <a href="attendance.php">
-              <i data-feather="home"></i>
+              <i data-feather="calendar"></i>
               <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
             </a>
           </li>
           <li>
             <a href="add_leave.php">
-              <i data-feather="home"></i>
+              <i data-feather="plus-circle"></i>
               <span data-key="t-dashboard"><?php echo "add leave" ?></span>
             </a>
           </li>
           <li>
             <a href="leave_status.php">
-              <i data-feather="home"></i>
+              <i data-feather="file"></i>
               <span data-key="t-dashboard"><?php echo " leave status" ?></span>
             </a>
           </li>
 
           <li>
             <a href="task.php">
-              <i data-feather="home"></i>
+              <i data-feather="file-text"></i>
               <span data-key="t-dashboard"><?php echo "Tasks" ?></span>
             </a>
           </li>
           <li>
             <a href="view_emp.php">
-              <i data-feather="home"></i>
+              <i data-feather="users"></i>
               <span data-key="t-dashboard"><?php echo "View Other Employees" ?></span>
             </a>
           </li>
