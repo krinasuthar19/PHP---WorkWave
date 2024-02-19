@@ -24,7 +24,7 @@
           </span>
         </a>
       </div>
-
+      <!-- vertical manu colleps button -->
       <!-- <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
         <i class="fa fa-fw fa-bars"></i>
       </button> -->
@@ -48,10 +48,12 @@
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
+          <!-- profile option dropdown -->
           <!-- item-->
           <!-- <a class="dropdown-item" href="apps-contacts-profile.php"><i class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i> <?php echo $language["Profile"]; ?></a> -->
           <!-- <a class="dropdown-item" href="auth-lock-screen.php"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> <?php echo $language["Lock_screen"]; ?> </a> -->
-          <div class="dropdown-divider"></div>
+          <!-- divider between content and logout -->
+          <!-- <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="logout.php"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> <?php echo $language["Logout"]; ?></a>
         </div>
       </div>
@@ -78,148 +80,21 @@
         <li>
           <a href="index.php">
             <i data-feather="home"></i>
-            <span data-key="t-dashboard"><?php echo "Dashboard"; ?></span>
+            <span data-key="t-dashboard">Dashboard</span>
           </a>
         </li>
 
-        <?php if ($user_role == 1) { ?>
-          <li>
-            <a href="add_emp.php">
-              <i data-feather="user-plus"></i>
-              <span data-key="t-dashboard"><?php echo "Add Employees" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard"><?php echo "View Employees" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="add_task.php">
-              <i data-feather="plus-square"></i>
-              <span data-key="t-dashboard"><?php echo "Add Task" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="leave_history.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard"><?php echo "Leave History" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="admin_salary_confirm.php">
-              <i data-feather="check-circle"></i>
-              <span data-key="t-dashboard"><?php echo "Confirm Salary" ?></span>
-            </a>
-          </li>
-
-
-        <?php } elseif ($user_role == 2) { ?>
-
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard"><?php echo "View Employees" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="approve_leave.php">
-              <i data-feather="user-check"></i>
-              <span data-key="t-dashboard"><?php echo "Employee Leave" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="hr_salary_confirm.php">
-              <i data-feather="check-circle"></i>
-              <span data-key="t-dashboard"><?php echo "Confirm Salary" ?></span>
-            </a>
-          </li>
-        <?php } elseif ($user_role == 3) { ?>
-
-
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="add_leave.php">
-              <i data-feather="plus-circle"></i>
-              <span data-key="t-dashboard"><?php echo "add leave" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="leave_status.php">
-              <i data-feather="file"></i>
-              <span data-key="t-dashboard"><?php echo " leave status" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="task.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard"><?php echo "Tasks" ?></span>
-            </a>
-          </li>
-
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard"><?php echo "View Other Employees" ?></span>
-            </a>
-          </li>
-        <?php } else { ?>
-
-
-
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard"><?php echo "Attendance" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="add_leave.php">
-              <i data-feather="plus-circle"></i>
-              <span data-key="t-dashboard"><?php echo "add leave" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="leave_status.php">
-              <i data-feather="file"></i>
-              <span data-key="t-dashboard"><?php echo " leave status" ?></span>
-            </a>
-          </li>
-
-          
-          <li>
-            <a href="view_task.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard"><?php echo "View Tasks" ?></span>
-            </a>
-          </li>
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard"><?php echo "View Other Employees" ?></span>
-            </a>
-          </li>
-
-        <?php } ?>
-
+        <?php
+        if ($user_role == 1) {
+          include "layouts/vertical-menu-admin.php";
+        } elseif ($user_role == 2) {
+          include "layouts/vertical-menu-hr.php";
+        } elseif ($user_role == 3) {
+          include "layouts/vertical-menu-pm.php";
+        } else {
+          include "layouts/vertical-menu-emp.php";
+        }
+        ?>
       </ul>
 
     </div>
