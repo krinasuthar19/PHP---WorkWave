@@ -1,6 +1,9 @@
 <?php
 session_start();
-require "layouts/session_check.php";
+// require "layouts/session_check.php";
+if (!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)) {
+  header("location: auth-login.php");
+}
 include 'layouts/head-main.php';
 ?>
 

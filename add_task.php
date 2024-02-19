@@ -1,4 +1,4 @@
-<?php include 'layouts/session.php'; 
+<?php  
 session_start(); // Start session to get user role
 require "layouts/check_admin.php";
 ?>
