@@ -1,4 +1,4 @@
-<?php  
+<?php
 session_start(); // Start session to get user role
 require "layouts/check_admin.php";
 ?>
@@ -16,13 +16,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $status = 0;
 
 
-  $sql = "INSERT INTO task (t_title, t_description, department, start_date, end_date, status) 
-            VALUES ('$title','$desc','$department','$startDate','$endDate', '$status')";
-
-  if ($link->query($sql) === TRUE) {
-    // echo "Record inserted successfully";
+  if (empty($title) || empty($desc) || empty($department) || empty($startDate) || empty($endDate)) {
+    echo "Please fill in all fields.";
   } else {
-    echo "Error: " . $sql . "<br>" . $link->error;
+    $startDate = date('Y-m-d', strtotime($startDate)); // Format the date
+    $endDate = date('Y-m-d', strtotime($endDate)); // Format the date
+
+    // Check if end date is before start date
+    if ($endDate < $startDate) {
+      echo "End date cannot be before the start date.";
+    } else {
+      // Check if start date is before today's date
+      $today = date('Y-m-d');
+      if ($startDate < $today) {
+        echo "Start date cannot be before today's date.";
+      } else {
+        // Check if year is greater than 3000
+        if (date('Y', strtotime($startDate)) > 3000 || date('Y', strtotime($endDate)) > 3000) {
+          echo "Select an appropriate year. Year should not exceed 3000.";
+        } else {
+          // Insert data into the database
+          $sql = "INSERT INTO task (t_title, t_description, department, start_date, end_date, status) 
+                            VALUES ('$title','$desc','$department','$startDate','$endDate', '$status')";
+
+          if ($link->query($sql) === TRUE) {
+            echo "Record inserted successfully";
+          } else {
+            echo "Error: " . $sql . "<br>" . $link->error;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -38,7 +62,8 @@ $link->close();
 
   <?php include 'layouts/head.php'; ?>
 
-  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet"
+    type="text/css" />
 
   <?php include 'layouts/head-style.php'; ?>
   <style>
@@ -132,7 +157,7 @@ $link->close();
             <div class="col-md-12">
 
               <div class="row">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data" is="taskForm">
 
 
                   <div class="row">
@@ -165,7 +190,7 @@ $link->close();
                         if ($result->num_rows > 0) {
                           while ($row = $result->fetch_assoc()) {
                             $depName = $row['d_name'];
-                            $dep_id=$row['d_id'];
+                            $dep_id = $row['d_id'];
                             echo "<option value=\"$dep_id\">$depName</option>";
                           }
                         } else {
@@ -191,9 +216,12 @@ $link->close();
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <br>
-                      <button type="submit" class="btn btn-primary form-control" id="submit" name="submit" style="margin-top: 8px;">Add Task
+                      <button type="submit" class="btn btn-primary form-control" id="submit" name="submit"
+                        style="margin-top: 8px;">Add Task
                     </div>
                   </div>
+                  <div id="error-message" style="color: red;"></div>
+
               </div>
 
             </div>
@@ -214,7 +242,7 @@ $link->close();
                 if (file) {
                   var reader = new FileReader();
 
-                  reader.onload = function(e) {
+                  reader.onload = function (e) {
                     image.src = e.target.result;
                     container.style.display = 'block'; // Show the image container
                   };
@@ -272,6 +300,72 @@ $link->close();
 
 <!-- App js -->
 <script src="assets/js/app.js"></script>
+<script>
+  // Function to validate the selected dates
+  function validateDates() {
+    var startDate = new Date(document.getElementById('startDate').value);
+    var endDate = new Date(document.getElementById('endDate').value);
+    var today = new Date(); // Today's date
+
+    var errorMessage = ""; // Initialize error message
+
+    // Check if either start date or end date is empty
+    if (!startDate || !endDate) {
+      errorMessage += "Please select both start and end dates. ";
+    }
+    // Check if start date is before today's date
+    else if (startDate < today) {
+      errorMessage += "Start date cannot be before today's date. ";
+    }
+    // Check if end date is before start date
+    if (endDate < startDate) {
+      errorMessage += "End date cannot be before the start date. ";
+    }
+    // Check if year is greater than 3000
+    if (startDate.getFullYear() > 3000 || endDate.getFullYear() > 3000) {
+      errorMessage += "Select appropriate year. Year should not exceed 3000. ";
+    }
+
+    return errorMessage; // Return error message
+  }
+
+  // Function to display error message
+  function displayError(message) {
+    var errorElement = document.getElementById('error-message');
+    errorElement.innerText = message;
+  }
+
+  // Function to handle start date selection
+  function onStartDateSelected() {
+    var errorMessage = validateDates(); // Validate dates
+    displayError(errorMessage); // Display error message
+  }
+
+  function onEndDateSelected() {
+    var errorMessage = validateDates(); // Validate dates
+    displayError(errorMessage); // Display error message
+  }
+
+  // Attach the validation function to the start date input
+  document.getElementById('startDate').addEventListener('change', onStartDateSelected);
+  document.getElementById('endDate').addEventListener('change', onEndDateSelected);
+
+  // Function to handle form submission
+  function onSubmit() {
+    event.preventDefault(); // Prevent default form submission behavior
+    var errorMessage = validateDates(); // Validate dates
+    displayError(errorMessage); // Display error message
+
+    // If no error, submit the form
+    if (!errorMessage) {
+      document.getElementById('taskForm').submit();
+    }
+  }
+
+  // Attach the validation function to the form submission
+  // document.getElementById('submit').addEventListener('click', onSubmit);
+  document.getElementById('taskForm').addEventListener('submit', onSubmit);
+</script>
 
 </body>
 
