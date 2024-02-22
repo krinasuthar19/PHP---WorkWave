@@ -1,6 +1,6 @@
 <?php
 session_start(); // Start session to get user role
-require 'layouts/check_pm.php';
+require 'layouts/check_emp.php';
 include 'layouts/head-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
   include 'layouts/config.php';
 
   // Fetch task data from the database
+
+
   $query = "SELECT * FROM task WHERE t_id = $task_id";
   $result = mysqli_query($link, $query);
 
