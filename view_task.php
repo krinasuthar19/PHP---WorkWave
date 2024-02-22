@@ -1,6 +1,6 @@
 <?php
 session_start(); // Start session to get user role
-require 'layouts/check_pm.php';
+require 'layouts/check_emp.php';
 include 'layouts/head-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
@@ -56,10 +56,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 ?>
 
 <head>
-  <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
+  <title>
+    <?php echo $language["Dashboard"]; ?> | Employee Management System
+  </title>
   <?php include 'layouts/head.php'; ?>
-  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet"
+    type="text/css" />
+  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
   <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <?php include 'layouts/head-style.php'; ?>
@@ -199,8 +203,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 <!-- apexcharts -->
 <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
 <!-- Plugins js-->
-<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js">
+</script>
+<script
+  src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
+  </script>
 <!-- DataTables js -->
 <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -213,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 <!-- App js -->
 <script src="assets/js/app.js"></script>
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     $('#example1').DataTable({
       "paging": true,
       "lengthChange": true,
