@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $today = date('Y-m-d');
 
   if (empty($title) || empty($desc) || empty($department) || empty($startDate) || empty($endDate)) {
-    echo "<script>alert('Please fill in all fields');</script>";
+    // echo "<script>alert('Please fill in all fields');</script>";
+    echo "<script>console.log('Please fill in all fields');</script>";
   } elseif ($endDate < $startDate) {
     echo "<script>alert('End date cannot be before the start date.');</script>";
   } elseif ($startDate < $today) {

@@ -13,48 +13,48 @@ include 'layouts/head-main.php';
     type="text/css" />
   <?php include 'layouts/head-style.php'; ?>
   <style>
-  .form-content {
-    padding: 25px;
-    border-radius: 15px;
-    margin: 10px;
-    box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
-  }
+    .form-content {
+      padding: 25px;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
+    }
 
-  table {
-    border-collapse: collapse;
-    margin-top: 20px;
-    padding: 20px;
-  }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+      padding: 20px;
+    }
 
-  th {
-    border-bottom: 2px solid #ddd;
-  }
+    th {
+      border-bottom: 2px solid #ddd;
+    }
 
-  #button1 {
-    width: 100%;
-    font-weight: bold;
-  }
+    #button1 {
+      width: 100%;
+      font-weight: bold;
+    }
 
-  #button2 {
-    width: 100%;
-    border-color: blue;
-    background-color: white;
-    color: blue;
-    font-weight: bold;
-  }
+    #button2 {
+      width: 100%;
+      border-color: blue;
+      background-color: white;
+      color: blue;
+      font-weight: bold;
+    }
 
-  .image-container {
-    width: 150px;
-    height: 150px;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-  }
+    .image-container {
+      width: 150px;
+      height: 150px;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid #ccc;
+    }
 
-  .image-container img {
-    width: 100%;
-    height: auto;
-  }
+    .image-container img {
+      width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <?php include 'layouts/body.php'; ?>
@@ -84,18 +84,18 @@ include 'layouts/head-main.php';
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="Title">Title</label>
-                      <input type="text" class="form-control" id="title" name="title">
+                      <input type="text" class="form-control" id="title" name="title" required>
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="Description">Description</label>
-                      <input type="text" class="form-control" id="description" name="description">
+                      <input type="text" class="form-control" id="description" name="description" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <label for="Department">Department</label>
-                      <select class="form-control" id="department" name="department">
-                        <option value="select" disabled selected hidden>Select Department</option>
+                      <select class="form-control" id="department" name="department" required>
+                        <option value="" disabled selected hidden>Select Department</option>
                         <?php
                         include 'layouts/config.php';
                         $sql = "SELECT d_name,d_id FROM department";
@@ -115,11 +115,11 @@ include 'layouts/head-main.php';
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="startdate">Start Date</label>
-                      <input type="date" class="form-control" id="startDate" name="startDate">
+                      <input type="date" class="form-control" id="startDate" name="startDate" required>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="enddate">End Date</label>
-                      <input type="date" class="form-control" id="endDate" name="endDate">
+                      <input type="date" class="form-control" id="endDate" name="endDate" required>
                     </div>
                   </div>
                   <div class="row">
@@ -134,20 +134,20 @@ include 'layouts/head-main.php';
             </div>
             </form>
             <script>
-            function displayImage() {
-              var input = document.getElementById('imageInput');
-              var container = document.getElementById('displayContainer');
-              var image = document.getElementById('displayImage');
-              var file = input.files[0];
-              if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                  image.src = e.target.result;
-                  container.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
+              function displayImage() {
+                var input = document.getElementById('imageInput');
+                var container = document.getElementById('displayContainer');
+                var image = document.getElementById('displayImage');
+                var file = input.files[0];
+                if (file) {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                    image.src = e.target.result;
+                    container.style.display = 'block';
+                  };
+                  reader.readAsDataURL(file);
+                }
               }
-            }
             </script>
           </div>
         </div>
@@ -166,42 +166,42 @@ include 'layouts/head-main.php';
 <!-- <script src="assets/js/pages/dashboard.init.js"></script> -->
 <script src="assets/js/app.js"></script>
 <script>
-function validateDates() {
-  var startDate = new Date(document.getElementById('startDate').value);
-  var endDate = new Date(document.getElementById('endDate').value);
-  var today = new Date();
-  var errorMessage = '';
+  function validateDates() {
+    var startDate = new Date(document.getElementById('startDate').value);
+    var endDate = new Date(document.getElementById('endDate').value);
+    var today = new Date();
+    var errorMessage = '';
 
-  if (startDate <= today) {
-    errorMessage += "Start date must be after today's date. ";
-  }
-  if (startDate >= endDate) {
-    errorMessage += "Start date must be before end date. ";
-  }
-  if (endDate <= startDate) {
-    errorMessage += "End date must be after start date. ";
-  }
-  if (startDate.getFullYear() > 3000 || endDate.getFullYear() > 3000) {
-    errorMessage += "Select an appropriate year. Year should not exceed 3000.";
+    if (startDate <= today) {
+      errorMessage += "Start date must be after today's date. ";
+    }
+    if (startDate >= endDate) {
+      errorMessage += "Start date must be before end date. ";
+    }
+    if (endDate <= startDate) {
+      errorMessage += "End date must be after start date. ";
+    }
+    if (startDate.getFullYear() > 3000 || endDate.getFullYear() > 3000) {
+      errorMessage += "Select an appropriate year. Year should not exceed 3000.";
+    }
+
+    var errorElement = document.getElementById('error-message');
+    errorElement.textContent = errorMessage;
   }
 
-  var errorElement = document.getElementById('error-message');
-  errorElement.textContent = errorMessage;
-}
+  document.getElementById('startDate').addEventListener('change', validateDates);
+  document.getElementById('endDate').addEventListener('change', validateDates);
 
-document.getElementById('startDate').addEventListener('change', validateDates);
-document.getElementById('endDate').addEventListener('change', validateDates);
-
-document.getElementById('taskForm').addEventListener('submit', function(event) {
-  validateDates();
-  var errorMessage = document.getElementById('error-message').textContent;
-  if (errorMessage) {
-    event.preventDefault();
-    alert("Please correct the errors before submitting the form: \n" + errorMessage);
-    return false; // Prevent form submission
-  }
-  return true; // Allow form submission
-});
+  document.getElementById('taskForm').addEventListener('submit', function (event) {
+    validateDates();
+    var errorMessage = document.getElementById('error-message').textContent;
+    if (errorMessage) {
+      event.preventDefault();
+      alert("Please correct the errors before submitting the form: \n" + errorMessage);
+      return false; // Prevent form submission
+    }
+    return true; // Allow form submission
+  });
 </script>
 </body>
 
