@@ -1,4 +1,4 @@
-<?php include 'layouts/session.php';
+<?php
 session_start(); // Start session to get user role
 if ($_SESSION['role'] == 3) {
     // Redirect user to another page or show access denied message

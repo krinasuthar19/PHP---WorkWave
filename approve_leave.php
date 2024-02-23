@@ -1,6 +1,5 @@
 <?php
 session_start(); // Start session to get user role
-include 'layouts/session.php';
 require 'layouts/check_hr.php';
 include 'layouts/head-main.php';
 ?>
