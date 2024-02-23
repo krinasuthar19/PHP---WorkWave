@@ -119,6 +119,12 @@
               <span data-key="t-dashboard"><?php echo "Confirm Salary" ?></span>
             </a>
           </li>
+          <li>
+            <a href="profile.php">
+              <i data-feather="check-circle"></i>
+              <span data-key="t-dashboard"><?php echo "Profile" ?></span>
+            </a>
+          </li>
 
 
         <?php } elseif ($user_role == 2) { ?>
