@@ -2,32 +2,6 @@
 session_start();
 require 'layouts/check_admin.php';
 include 'layouts/head-main.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
-  $task_id = $_GET['task_id'];
-  include 'layouts/config.php';
-  $query = "SELECT * FROM task WHERE t_id = $task_id";
-  $result = mysqli_query($link, $query);
-
-  if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $status = $row['status'];
-    $updateQuery = ($status == 0) ? "UPDATE task SET status = 1" : "UPDATE task SET status = 2";
-    $updateQuery .= " WHERE t_id = $task_id";
-
-    if (mysqli_query($link, $updateQuery)) {
-      header("Location: view_task.php");
-      exit();
-    } else {
-      echo "Error updating task status: " . mysqli_error($link);
-      exit();
-    }
-  } else {
-    echo "Task not found.";
-    exit();
-  }
-  mysqli_close($link);
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
