@@ -251,7 +251,7 @@ $link->close();
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="Pincode">Pincode</label>
-                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required value=<?php echo $pincode; ?>>
+                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="Country">Country</label>
