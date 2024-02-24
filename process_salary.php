@@ -1,50 +1,58 @@
 <?php
-// Include necessary files and session handling logic
+include 'layouts/config.php';
 
-// Check if form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Retrieve form data
-  $employeeName = $_POST['employee_name'];
-  $employeeID = $_POST['employee_id'];
-  $basicSalary = $_POST['basic_salary'];
-  $bonus = $_POST['bonus'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $monthDropdown = $_POST['monthDropdown'];
+    $year = $_POST['yearDropdown'];
+    $username = $_POST['username'];
+    $uId = $_POST['uId'];
+    $baseSalary = $_POST['baseSalary'];
+    $deduction = $_POST['deduction'];
+    $allowance = $_POST['allowance'];
+    $finalSalary = $_POST['finalSalary'];
+    $hr_status=1;
 
-  // Calculate total salary
-  $totalSalary = $basicSalary + $bonus;
+    // Insert salary details into salaries table
+    $insertQuery = "INSERT INTO salaries (month, year, u_id, base_salary, deduction, allowance, final_salary, hr_status) 
+                    VALUES ('$monthDropdown','$year', '$uId', '$baseSalary', '$deduction', '$allowance', '$finalSalary', '$hr_status')";
 
-  // Save salary details to the database (replace with actual database logic)
-  saveSalaryDetails($employeeID, $employeeName, $basicSalary, $bonus, $totalSalary);
+    // Execute the query
+    $result = mysqli_query($link, $insertQuery);
 
-  // Redirect to salary slip page
+    // Check if the query was successful
+    if ($result) {
+        // Retrieve total salary paid
+        $totalSalaryQuery = "SELECT total_salary_paid FROM users WHERE u_id = '$uId'";
+        $resultTotal = mysqli_query($link, $totalSalaryQuery);
 
+        // Check if the query was successful
+        if ($resultTotal) {
+            $row = mysqli_fetch_assoc($resultTotal);
+            $totalSalaryPaid = $row['total_salary_paid'];
+
+            // Update total salary paid
+            $newTotalSalary = $totalSalaryPaid + $finalSalary;
+            $updateTotalSalaryQuery = "UPDATE users SET total_salary_paid = '$newTotalSalary' WHERE u_id = '$uId'";
+            $resultUpdate = mysqli_query($link, $updateTotalSalaryQuery);
+
+            if (!$resultUpdate) {
+                echo "Error updating total salary paid: " . mysqli_error($link);
+            }
+        } else {
+            echo "Error retrieving total salary paid: " . mysqli_error($link);
+        }
+
+        // Close connection
+        mysqli_close($link);
+
+        // Redirect to a success page or display a success message
+        header("Location: pending_salary_list.php");
+        exit();
+    } else {
+        echo "Error inserting salary details: " . mysqli_error($link);
+    }
 } else {
-  // Redirect to salary page if accessed without form submission
-  header('Location: salary.php');
-  exit();
+    echo "Invalid request method!";
 }
-
-// Function to save salary details to the database (replace with your database logic)
-function saveSalaryDetails($employeeID, $employeeName, $basicSalary, $bonus, $totalSalary)
-{
-  // Connect to your database (replace with actual database connection code)
-  include 'layouts/config.php';
-  // Check the connection
-  if ($link->connect_error) {
-    die("Connection failed: " . $link->connect_error);
-  }
-
-  // Prepare and execute SQL query to insert salary details
-  $sql = "INSERT INTO salaries (u_id, basic_salary, bonus, total_salary, payment_date)
-            VALUES ('$employeeID', '$basicSalary', '$bonus', '$totalSalary', NOW())";
-
-  if ($link->query($sql) === TRUE) {
-    // Salary details saved successfully
-    echo "Salary details saved successfully.";
-  } else {
-    // Error in saving salary details
-    echo "Error: " . $sql . "<br>" . $link->error;
-  }
-
-  // Close the database connection
-  $link->close();
-}
+?>

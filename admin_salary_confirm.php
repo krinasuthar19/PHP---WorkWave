@@ -1,145 +1,73 @@
 <?php
 session_start(); // Start session to get user role
-require 'layouts/check_admin.php';
 include 'layouts/head-main.php';
+include 'layouts/config.php'; 
+if(isset($_GET['id'])) {
+  $record_id = $_GET['id'];
+  $today_date = date('Y-m-d');
+  // Construct the SQL UPDATE query
+  $update_query = "UPDATE salaries SET admin_status = 1, payment_date = '$today_date' WHERE id = $record_id";
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
-  $task_id = $_GET['task_id'];
-
-  // Include database connection or configuration file
-  include 'layouts/config.php';
-
-  // Fetch task data from the database
-  $query = "SELECT * FROM task WHERE t_id = $task_id";
-  $result = mysqli_query($link, $query);
-
-  if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $status = $row['status'];
-
-    // Start Task
-    if ($status == 0) {
-      $updateQuery = "UPDATE task SET status = 1 WHERE t_id = $task_id";
-      if (mysqli_query($link, $updateQuery)) {
-        // Task started successfully
-        header("Location: view_task.php"); // Redirect back to view_tasks.php
-        exit();
-      } else {
-        // Error updating task status
-        echo "Error updating task status: " . mysqli_error($link);
-        exit();
-      }
-    }
-
-    // End Task
-    if ($status == 1) {
-      $updateQuery = "UPDATE task SET status = 2 WHERE t_id = $task_id";
-      if (mysqli_query($link, $updateQuery)) {
-        // Task ended successfully
-        header("Location: view_task.php"); // Redirect back to view_tasks.php
-        exit();
-      } else {
-        // Error updating task status
-        echo "Error updating task status: " . mysqli_error($link);
-        exit();
-      }
-    }
+  // Execute the update query
+  if(mysqli_query($link, $update_query)) {
+      // Update successful
+      echo "Admin status updated successfully.";
   } else {
-    // Task not found
-    echo "Task not found.";
-    exit();
+      // Update failed
+      echo "Error updating admin status: " . mysqli_error($link);
   }
-
-  // Close the database connection
-  mysqli_close($link);
-}
+} else {
+  // Handle case where ID is not provided
+  echo "Record ID not provided.";
+}// Include database configuration file
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
   <?php include 'layouts/head.php'; ?>
+  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
   <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <?php include 'layouts/head-style.php'; ?>
 </head>
 
-<?php include 'layouts/body.php'; ?>
-
-<!-- Begin page -->
-<div id="layout-wrapper">
-  <?php include 'layouts/menu.php'; ?>
-  <!-- ============================================================== -->
-  <!-- Start right Content here -->
-  <!-- ============================================================== -->
-  <div class="main-content">
-    <div class="page-content">
-      <div class="container-fluid">
-        <!-- start page title -->
-        <div class="row">
-          <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 class="mb-sm-0 font-size-18">Admin Salary confirms</h4>
-              <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="javascript: void(0);">Admin Salary confirms</a></li>
-                  <li class="breadcrumb-item active">Admin Salary confirms</li>
-                </ol>
+<body>
+  <div id="layout-wrapper">
+    <?php include 'layouts/menu.php'; ?>
+    <div class="main-content">
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">Confirm Salary</h4>
+                <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">COnfirm Salary</a></li>
+                    <li class="breadcrumb-item active">Confirm Salary</li>
+                  </ol>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- end page title -->
-        <!-- Content Header -->
-        <!-- Main Content -->
-        <section class="content">
-
           <div class="row mb-3">
             <div class="col-md-4">
-              <label for="departmentDropdown" class="form-label">Select Department:</label>
-              <select class="form-select" id="departmentDropdown" name="departmentDropdown">
-                <!-- Replace the options with actual employee data -->
+              <label for="department">Select Department:</label>
+              <select class="form-control" id="department" name="department">
+                <option value="">All Departments</option>
                 <?php
-                include 'layouts/config.php';
-
-                //Assuming you have a connection to your database
-                $sql = "SELECT d_name FROM department";
-                $result = $link->query($sql);
-
-                if ($result->num_rows > 0) {
-                  while ($row = $result->fetch_assoc()) {
-                    $depName = $row['d_name'];
-                    echo "<option value=\"$depName\">$depName</option>";
-                  }
-                } else {
-                  echo "<option value=\"\">No roles found</option>";
+                // Fetch department data from the database
+                $department_query = "SELECT * FROM department";
+                $department_result = mysqli_query($link, $department_query);
+                $selected_dept = isset($_GET['department']) ? $_GET['department'] : '';
+                while ($dept_row = mysqli_fetch_assoc($department_result)) {
+                  $selected = ($selected_dept == $dept_row['d_id']) ? 'selected' : '';
+                  echo "<option value='{$dept_row['d_id']}' $selected>{$dept_row['d_name']}</option>";
                 }
-                $link->close();
-
-                ?>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label for="employeeDropdown" class="form-label">Select Employee:</label>
-              <select class="form-select" id="employeeDropdown" name="Employee">
-                <!-- Replace the options with actual employee data -->
-                <?php
-                include 'layouts/config.php';
-
-
-                $sql = "SELECT username,u_id FROM users";
-                $result = $link->query($sql);
-
-                if ($result->num_rows > 0) {
-                  while ($row = $result->fetch_assoc()) {
-                    $username = $row['username'];
-                    $u_id = $row['u_id'];
-                    echo "<option value=\"$username\">$username</option>";
-                  }
-                } else {
-                  echo "<option value=\"\">No roles found</option>";
-                }
-
                 ?>
               </select>
             </div>
@@ -147,81 +75,118 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
           <div class="row">
             <div class="col-xs-12">
               <div class="box box-info">
-                <div class="box-header">
-                </div>
+                <div class="box-header"></div>
                 <div class="box-body">
                   <div class="table-responsive">
+                    <div class="row"></div>
                     <div class="row">
-                    </div>
-                    <!-- DataTable -->
-                    <table id="example1" class="table table-bordered table-striped dataTable no-footer">
-                      <thead>
-                        <tr role="row">
-                          <!-- Table Headers -->
-                          <th>SR</th>
-                          <th>UserID</th>
-                          <th>UserName</th>
-                          <th>Salary</th>
-                          <th>deduction</th>
-                          <th>final salary</th>
-                          <th>HR status</th>
-                          <th>Admin status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
+                      <div class="col-12">
+                        <div class="card">
+                          <div class="card-header">
+                            <h4 class="card-title">Records</h4>
+                          </div>
+                          <div class="card-body">
+                            <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
+                              <thead>
+                                <tr>
+                                  <th>Sr no.</th>
+                                  <th>Profile Img</th>
+                                  <th>Emp ID</th>
+                                  <th>Username</th>
+                                  <th>Role</th>
+                                  <th>Month</th>
+                                  <th>Year</th>
+                                  <th>Base Salary</th>
+                                  <th>Deduction</th>
+                                  <th>Allowance</th>
+                                  <th>Final Salary</th>
+                                  <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <?php
+                                // Modify your query to include the department filter
+                                $query = "SELECT s.id, s.*, u.username, u.profile_image, r.r_name FROM salaries s 
+          INNER JOIN users u ON s.u_id = u.u_id
+          INNER JOIN role r ON u.role = r.r_id
+          WHERE s.hr_status = 1 AND s.admin_status = 0";  // Add this condition to filter based on hr_status
 
-                      </tbody>
-                    </table>
+                                if (isset($_GET['department']) && !empty($_GET['department'])) {
+                                  $dept_id = $_GET['department'];
+                                  $query .= " AND u.d_id = $dept_id"; // Add department filter if needed
+                                }
+                                $result = mysqli_query($link, $query);
+                                $i = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                  echo "<tr>";
+                                  echo "<td>$i</td>";
+                                  echo "<td><img src='{$row['profile_image']}' alt='Profile Image' style='width: 50px; height: 50px;'></td>";
+                                  echo "<td>{$row['u_id']}</td>";
+                                  echo "<td>{$row['username']}</td>";
+                                  echo "<td>{$row['r_name']}</td>";
+                                  echo "<td>{$row['month']}</td>";
+                                  echo "<td>{$row['year']}</td>";
+                                  echo "<td>{$row['base_salary']}</td>";
+                                  echo "<td>{$row['deduction']}</td>";
+                                  echo "<td>{$row['allowance']}</td>";
+                                  echo "<td>{$row['final_salary']}</td>";
+
+                                  echo '<td>';
+
+                                  echo "<a href='admin_salary_confirm.php?id={$row['id']}' class='btn btn-warning'>Confirm</a>";
+
+                                  echo '</td>';
+                                  echo "</tr>";
+                                  $i++;
+                                }
+                                ?>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-      </div>
-      <!-- Footer -->
-      <!-- <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-          <b>Version</b> 3.4.13
         </div>
-        <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-      </footer> -->
+      </div>
+      <?php include 'layouts/footer.php'; ?>
     </div>
   </div>
-  <!-- End Page-content -->
-  <?php include 'layouts/footer.php'; ?>
-</div>
-<!-- end main content-->
-</div>
-<!-- END layout-wrapper -->
-<!-- Right Sidebar -->
-<?php include 'layouts/right-sidebar.php'; ?>
-<!-- /Right-bar -->
-<!-- JAVASCRIPT -->
-<?php include 'layouts/vendor-scripts.php'; ?>
-<!-- apexcharts -->
-<script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
-<!-- Plugins js-->
-<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
-<!-- DataTables js -->
-<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-<!-- Datatable -->
-<script>
-  $(document).ready(function() {
-    $('#example1').DataTable({
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true
+  <?php include 'layouts/right-sidebar.php'; ?>
+  <?php include 'layouts/vendor-scripts.php'; ?>
+  <!-- Responsive examples -->
+  <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+  <script src="assets/js/pages/datatables.init.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+  <script>
+    $.fn.dataTable.ext.errMode = 'none';
+    $(document).ready(function() {
+      $('#datatable').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
+      // JavaScript function to filter records based on department selection
+      $('#department').change(function() {
+        var dept_id = $(this).val();
+        window.location.href = 'payslip_list.php?department=' + dept_id;
+      });
     });
-  });
-</script>
+  </script>
+</body>
+
+</html>

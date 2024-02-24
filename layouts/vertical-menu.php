@@ -149,6 +149,16 @@
             </a>
           </li>
           <li>
+            <a href="payslip_list.php">
+              <i data-feather="file-text"></i>
+              <span data-key="t-dashboard">
+                <?php echo "Payslip List" ?>
+              </span>
+            </a>
+          </li>
+          
+          
+          <li>
             <a href="profile.php">
               <i data-feather="check-circle"></i>
               <span data-key="t-dashboard">
@@ -156,7 +166,6 @@
               </span>
             </a>
           </li>
-
 
         <?php } elseif ($user_role == 2) { ?>
 
@@ -185,10 +194,27 @@
             </a>
           </li>
           <li>
-            <a href="hr_salary_confirm.php">
+            <a href="confirm_salary.php">
               <i data-feather="check-circle"></i>
               <span data-key="t-dashboard">
                 <?php echo "Confirm Salary" ?>
+              </span>
+            </a>
+          </li>
+          
+          <li>
+            <a href="payslip_list.php">
+              <i data-feather="file-text"></i>
+              <span data-key="t-dashboard">
+                <?php echo "Payslip List" ?>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="pending_salary_list.php">
+              <i data-feather="file-text"></i>
+              <span data-key="t-dashboard">
+                <?php echo "Pending Salary List" ?>
               </span>
             </a>
           </li>
