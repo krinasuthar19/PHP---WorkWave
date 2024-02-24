@@ -53,7 +53,10 @@ include 'layouts/head-main.php';
   }
   </style>
   <!-- datepicker1 -->
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+  <!-- datepicker2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 <?php include 'layouts/body.php'; ?>
 <div id="layout-wrapper">
@@ -105,7 +108,7 @@ include 'layouts/head-main.php';
                     <div class="col-md-3 mb-3">
                       <label for="DateOfBirth">Date of Birth</label>
                       <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" autocomplete="off"
-                        required>
+                        placeholder="Select date of birth" required>
                       <span id="ageError" style="color: red;"></span>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -227,7 +230,6 @@ include 'layouts/head-main.php';
 <?php include 'layouts/right-sidebar.php'; ?>
 <?php include 'layouts/vendor-scripts.php'; ?>
 <script src="assets/js/app.js"></script>
-<script src="assets/js/app.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -292,7 +294,7 @@ function displayProfileImage() {
 </script>
 
 <!-- datepicker -->
-<div>
+<!-- <div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
@@ -326,8 +328,55 @@ function displayProfileImage() {
     });
   });
   </script>
-</div>
+</div> -->
 
+<!-- datepicker2 -->
+<div>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    /* The above code is using flatpickr library to create a date input field with specific
+    configurations. It sets the date format to "d-m-Y", allows changing the month and year,
+    restricts the year range to be from 100 years ago to the current year, and sets the
+    maximum selectable date to 19 years ago. It will also show the valid dates based on the default age. */
+    var currentDate = new Date();
+    var defaultYear = currentDate.getFullYear() - 19;
+    var defaultMonth = currentDate.getMonth() + 1;
+    var defaultDay = currentDate.getDate();
+
+    var defaultDate = defaultDay + "-" + defaultMonth + "-" + defaultYear;
+
+    flatpickr("#DateOfBirth", {
+      dateFormat: "d-m-Y",
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:+0",
+      maxDate: new Date(currentDate.getFullYear() - 19, currentDate.getMonth(), currentDate.getDate()),
+
+      // maxDate: new Date().fp_incr(-19),
+      defaultDate: defaultDate,
+      onChange: function(selectedDates, dateStr, instance) {
+        var selectedDate = selectedDates[0];
+        if (!selectedDate) {
+          // Handle invalid date
+          console.log("Invalid Date");
+          return;
+        }
+        var age = Math.floor((currentDate - selectedDate) / (365 * 24 * 60 * 60 * 1000));
+        if (age < 18) {
+          $("#ageError").text("Age must be at least 18.");
+          instance.clear();
+        } else if (age < 19) {
+          $("#ageError").text("Age must be at least 19.");
+          instance.clear();
+        } else {
+          $("#ageError").text("");
+        }
+      }
+    });
+  });
+  </script>
+</div>
 </body>
 
 </html>
