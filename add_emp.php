@@ -9,48 +9,48 @@ include 'layouts/head-main.php';
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
   <style>
-  .form-content {
-    padding: 25px;
-    border-radius: 15px;
-    margin: 10px;
-    box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
-  }
+    .form-content {
+      padding: 25px;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
+    }
 
-  table {
-    border-collapse: collapse;
-    margin-top: 20px;
-    padding: 20px;
-  }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+      padding: 20px;
+    }
 
-  th {
-    border-bottom: 2px solid #ddd;
-  }
+    th {
+      border-bottom: 2px solid #ddd;
+    }
 
-  #button1 {
-    width: 100%;
-    font-weight: bold;
-  }
+    #button1 {
+      width: 100%;
+      font-weight: bold;
+    }
 
-  #button2 {
-    width: 100%;
-    border-color: blue;
-    background-color: white;
-    color: blue;
-    font-weight: bold;
-  }
+    #button2 {
+      width: 100%;
+      border-color: blue;
+      background-color: white;
+      color: blue;
+      font-weight: bold;
+    }
 
-  .image-container {
-    width: 150px;
-    height: 150px;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-  }
+    .image-container {
+      width: 150px;
+      height: 150px;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid #ccc;
+    }
 
-  .image-container img {
-    width: 100%;
-    height: auto;
-  }
+    .image-container img {
+      width: 100%;
+      height: auto;
+    }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -108,7 +108,7 @@ include 'layouts/head-main.php';
                     <div class="col-md-3 mb-3">
                       <label for="DateOfBirth">Date of Birth</label>
                       <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" autocomplete="off"
-                        placeholder="Select date of birth" required>
+                        required>
                       <span id="ageError" style="color: red;"></span>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -186,7 +186,7 @@ include 'layouts/head-main.php';
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="DateOfJoining">Date of Joining</label>
-                      <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
+                      <input type="text" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="Salary">Salary</label>
@@ -231,138 +231,124 @@ include 'layouts/head-main.php';
 <?php include 'layouts/vendor-scripts.php'; ?>
 <script src="assets/js/app.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
 
-  //! ----------START-firstname and lastname validator-START---------- 
-  document.getElementById('FirstName').addEventListener('input', function() {
-    var firstName = this.value.trim();
-    var errorSpan = document.getElementById('firstNameError');
-    errorSpan.textContent = (/[^a-zA-Z]/.test(firstName)) ? 'First name should contain only letters.' : '';
+    //! ----------START-firstname and lastname validator-START---------- 
+    document.getElementById('FirstName').addEventListener('input', function () {
+      var firstName = this.value.trim();
+      var errorSpan = document.getElementById('firstNameError');
+      errorSpan.textContent = (/[^a-zA-Z]/.test(firstName)) ? 'First name should contain only letters.' : '';
+    });
+
+    document.getElementById('LastName').addEventListener('input', function () {
+      var lastName = this.value.trim();
+      var errorSpan = document.getElementById('lastNameError');
+      errorSpan.textContent = (/[^a-zA-Z]/.test(lastName)) ? 'Last name should contain only letters.' : '';
+    });
+
+    const form = document.getElementById('employeeForm');
+    form.addEventListener('submit', function (event) {
+      const firstName = document.getElementById('FirstName').value;
+      const lastName = document.getElementById('LastName').value;
+      const lettersOnly = /^[a-zA-Z]+$/;
+
+      if (!firstName.match(lettersOnly)) {
+        alert('First name should contain only letters.');
+        event.preventDefault();
+      }
+
+      if (!lastName.match(lettersOnly)) {
+        alert('Last name should contain only letters.');
+        event.preventDefault();
+      }
+    });
+    //! ----------END-firstname and lastname validator-END---------- 
+
   });
-
-  document.getElementById('LastName').addEventListener('input', function() {
-    var lastName = this.value.trim();
-    var errorSpan = document.getElementById('lastNameError');
-    errorSpan.textContent = (/[^a-zA-Z]/.test(lastName)) ? 'Last name should contain only letters.' : '';
-  });
-
-  const form = document.getElementById('employeeForm');
-  form.addEventListener('submit', function(event) {
-    const firstName = document.getElementById('FirstName').value;
-    const lastName = document.getElementById('LastName').value;
-    const lettersOnly = /^[a-zA-Z]+$/;
-
-    if (!firstName.match(lettersOnly)) {
-      alert('First name should contain only letters.');
-      event.preventDefault();
-    }
-
-    if (!lastName.match(lettersOnly)) {
-      alert('Last name should contain only letters.');
-      event.preventDefault();
-    }
-  });
-  //! ----------END-firstname and lastname validator-END---------- 
-
-});
 </script>
 
 <script>
-function displayProfileImage() {
-  var input = document.getElementById('imageInput');
-  var container = document.getElementById('displayContainer');
-  var image = document.getElementById('displayImage');
-  var file = input.files[0];
-  if (file) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      image.src = e.target.result;
+  function displayProfileImage() {
+    var input = document.getElementById('imageInput');
+    var container = document.getElementById('displayContainer');
+    var image = document.getElementById('displayImage');
+    var file = input.files[0];
+    if (file) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        image.src = e.target.result;
+        image.style.objectFit = 'cover';
+        image.style.width = '100%';
+        image.style.height = '100%';
+        container.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      image.src = 'profile_images/user_default_img.jpg';
       image.style.objectFit = 'cover';
       image.style.width = '100%';
       image.style.height = '100%';
       container.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  } else {
-    image.src = 'profile_images/user_default_img.jpg';
-    image.style.objectFit = 'cover';
-    image.style.width = '100%';
-    image.style.height = '100%';
-    container.style.display = 'block';
+    }
   }
-}
 </script>
 <div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var currentDate = new Date();
-    var defaultYear = currentDate.getFullYear() - 19;
-    var defaultMonth = currentDate.getMonth() + 1;
-    var defaultDay = currentDate.getDate();
+    document.addEventListener('DOMContentLoaded', function () {
+      var currentDate = new Date();
+      var defaultYear = currentDate.getFullYear() - 19;
+      var defaultMonth = currentDate.getMonth() + 1;
+      var defaultDay = currentDate.getDate();
 
-    var defaultDate = defaultDay + "-" + defaultMonth + "-" + defaultYear;
+      flatpickr("#DateOfBirth", {
+        dateFormat: "d-m-Y",
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100:+0",
+        maxDate: new Date(currentDate.getFullYear() - 19, currentDate.getMonth(), currentDate.getDate()),
 
-    flatpickr("#DateOfBirth", {
-      dateFormat: "d-m-Y",
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "-100:+0",
-      maxDate: new Date(currentDate.getFullYear() - 19, currentDate.getMonth(), currentDate.getDate()),
-
-      // maxDate: new Date().fp_incr(-19),
-      defaultDate: defaultDate,
-      onChange: function(selectedDates, dateStr, instance) {
-        var selectedDate = selectedDates[0];
-        if (!selectedDate) {
-          // Handle invalid date
-          console.log("Invalid Date");
-          return;
+        // maxDate: new Date().fp_incr(-19),
+        onChange: function (selectedDates, dateStr, instance) {
+          var selectedDate = selectedDates[0];
+          if (!selectedDate) {
+            // Handle invalid date
+            console.log("Invalid Date");
+            return;
+          }
+          var age = Math.floor((currentDate - selectedDate) / (365 * 24 * 60 * 60 * 1000));
+          if (age < 18) {
+            $("#ageError").text("Age must be at least 18.");
+            instance.clear();
+          } else if (age < 19) {
+            $("#ageError").text("Age must be at least 19.");
+            instance.clear();
+          } else {
+            $("#ageError").text("");
+          }
         }
-        var age = Math.floor((currentDate - selectedDate) / (365 * 24 * 60 * 60 * 1000));
-        if (age < 18) {
-          $("#ageError").text("Age must be at least 18.");
-          instance.clear();
-        } else if (age < 19) {
-          $("#ageError").text("Age must be at least 19.");
-          instance.clear();
-        } else {
-          $("#ageError").text("");
-        }
-      }
+      });
     });
-  });
   </script>
 </div>
 
 
 <div>
-  <!-- email verification AJAX request -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-  // code to check email 
-  // $(document).ready(function () {
-  //   $('#Email').on('input', function () {
-  //     var email = $(this).val();
+    // code to check email 
+  </script>
+</div>
 
-  //     $.ajax({
-  //       url: 'check_email.php', // Change this to the path of your server-side script
-  //       type: 'POST',
-  //       data: {
-  //         email: email
-  //       },
-  //       success: function (response) {
-  //         if (response === 'valid') {
-  //           $('#emailError').text('');
-  //           console.log(response);
-  //         } else {
-  //           $('#emailError').text('Email domain does not exist.');
-  //           console.log(response);
-  //         }
-  //       }
-  //     });
-  //   });
-  // });
+
+<!-- Add this <div> containing the script for the Date of Joining date picker -->
+<div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      flatpickr("#DateOfJoining", {
+        dateFormat: "d-m-Y",
+        maxDate: "today", // Date of joining cannot be in the future
+      });
+    });
   </script>
 </div>
 </body>

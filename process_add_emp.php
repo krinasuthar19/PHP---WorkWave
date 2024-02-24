@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = $_POST['Email'];
   $mobileNumber = $_POST['MobileNumber'];
   $dateOfBirth = date('Y-m-d', strtotime($_POST['DateOfBirth']));
-  $dateOfJoining = $_POST['DateOfJoining'];
+  $dateOfBirth = date('Y-m-d', strtotime($_POST['DateOfJoining']));
   $gender = $_POST['Gender'];
   $address = $_POST['Address'];
   $city = $_POST['City'];
