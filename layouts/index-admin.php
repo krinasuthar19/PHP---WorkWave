@@ -2,7 +2,7 @@
 echo '<!-- cards for first row start-->
 <div class="row">
 
-  <div class="col-md-3">
+  <div class="col-md-4">
     <a href="add_emp.php">
       <div class="card">
         <div class="card-body text-center">
@@ -13,7 +13,7 @@ echo '<!-- cards for first row start-->
     </a>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-4">
     <a href="view_emp.php">
       <div class="card">
         <div class="card-body text-center">
@@ -24,7 +24,7 @@ echo '<!-- cards for first row start-->
     </a>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-4">
     <a href="attendance.php">
       <div class="card">
         <div class="card-body text-center">
@@ -35,7 +35,13 @@ echo '<!-- cards for first row start-->
     </a>
   </div>
 
-  <div class="col-md-3">
+  
+</div>
+<!-- cards for first row end-->
+<!-- cards for Second row start-->
+<div class="row">
+
+  <div class="col-md-4">
     <a href="add_task.php">
       <div class="card">
         <div class="card-body text-center">
@@ -45,12 +51,8 @@ echo '<!-- cards for first row start-->
       </div>
     </a>
   </div>
-</div>
-<!-- cards for first row end-->
-<!-- cards for Second row start-->
-<div class="row">
 
-  <div class="col-md-3">
+  <div class="col-md-4">
     <a href="leave_history.php">
       <div class="card">
         <div class="card-body text-center">
@@ -61,7 +63,7 @@ echo '<!-- cards for first row start-->
     </a>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-4">
     <a href="admin_salary_confirm.php">
       <div class="card">
         <div class="card-body text-center">
@@ -74,4 +76,3 @@ echo '<!-- cards for first row start-->
 </div>
 <!-- cards for Second row end-->
 ';
-?>

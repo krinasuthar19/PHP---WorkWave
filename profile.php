@@ -5,19 +5,15 @@ include 'layouts/head-main.php';
 include 'layouts/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $firstName = $_POST['FirstName'];
-  $lastName = $_POST['LastName'];
-  $username = $firstName . ' ' . $lastName;
+  $usertName = $_POST['userName'];
   $email = $_POST['Email'];
   $mobileNumber = $_POST['MobileNumber'];
   $dateOfBirth = $_POST['DateOfBirth'];
-  $gender = $_POST['Gender'];
   $address = $_POST['Address'];
   $city = $_POST['City'];
   $state = $_POST['State'];
   $pincode = $_POST['Pincode'];
   $country = $_POST['Country'];
-  $salary = $_POST['Salary'];
 
   $pass = strtolower($firstName . $lastName . substr((string) $mobileNumber, -4));
   $password = $pass;
@@ -85,8 +81,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($rowCount != 0) {
       echo "<script>alert('user already exsist')</script>";
     } else {
-      $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, city, state, pincode, country, role, d_id, password, date_of_joining, profile_image) 
-              VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath')";
+      $sql = "INSERT INTO users (username, email, phone, dob, address, city, state, pincode, country, role, d_id, password, date_of_joining, profile_image) 
+              VALUES ('$username', '$email', '$mobileNumber', '$dateOfBirth', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath')";
     }
   }
   if ($link->query($sql) === TRUE) {
@@ -202,13 +198,13 @@ $link->close();
 
                   <div class="row">
                     <div class="col-md-3 mb-3">
-                      <label for="FirstName">First Name</label>
+                      <label for="FirstName">User Name</label>
                       <input type="text" class="form-control" id="FirstName" name="FirstName" autocomplete="off" required>
                     </div>
-                    <div class="col-md-3 mb-3">
+                    <!--<div class="col-md-3 mb-3">
                       <label for="LastName">Last Name</label>
                       <input type="text" class="form-control" id="LastName" name="LastName" autocomplete="off" required>
-                    </div>
+                    </div>-->
                     <div class="col-md-3 mb-3">
                       <label for="Email">Email</label>
                       <input type="email" class="form-control" id="Email" name="Email" autocomplete="off" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
@@ -217,72 +213,6 @@ $link->close();
                       <label for="MobileNumber">Mobile Number</label>
                       <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber" autocomplete="off" pattern="[0-9]{10}" required title="Please enter a 10-digit number">
                     </div>
-                  </div>
-
-                  <div class="row">
-
-                    <div class="col-md-3 mb-3">
-                      <label for="DateOfBirth">Date of Birth</label>
-                      <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Gender">Gender</label>
-                      <select class="form-control" id="Gender" name="Gender">
-                        <option value="select" disabled selected hidden>Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <!-- Add more options as needed -->
-                      </select>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Address">Address</label>
-                      <input type="text" class="form-control" id="Address" name="Address" autocomplete="off" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="City">City</label>
-                      <input type="text" class="form-control" id="City" name="City" autocomplete="off" required>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-3 mb-3">
-                      <label for="State">State</label>
-                      <input type="text" class="form-control" id="State" name="State" autocomplete="off" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Pincode">Pincode</label>
-                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Country">Country</label>
-                      <input type="text" class="form-control" id="Country" name="Country" autocomplete="off" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Role">Role</label>
-                      <select class="form-control" id="Role" name="Role">
-                        <option value="0" disabled selected hidden>Select Role</option>
-                        <?php
-                        include 'layouts/config.php';
-
-                        // Assuming you have a connection to your database
-                        $sql = "SELECT r_name FROM role";
-                        $result = $link->query($sql);
-
-                        if ($result->num_rows > 0) {
-                          while ($row = $result->fetch_assoc()) {
-                            $roleName = $row['r_name'];
-                            echo "<option value=\"$roleName\">$roleName</option>";
-                          }
-                        } else {
-                          echo "<option value=\"\">No roles found</option>";
-                        }
-                        $link->close();
-
-                        ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="Department">Department</label>
                       <select class="form-control" id="Department" name="Department">
@@ -307,14 +237,113 @@ $link->close();
                         ?>
                       </select>
                     </div>
+                  </div>
+
+                  <div div class="row">
+
+                    <div class="col-md-3 mb-3">
+                      <label for="DateOfBirth">Date of Birth</label>
+                      <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required>
+                    </div>
                     <div class="col-md-3 mb-3">
                       <label for="DateOfJoining">Date of Joining</label>
                       <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
+                       </div>
+                    
+                    <div class="col-md-3 mb-3">
+                      <label for="Address">Address</label>
+                      <input type="text" class="form-control" id="Address" name="Address" autocomplete="off" required>
+                      </div>
+                    <div class="col-md-3 mb-3">
+                      <label for="City">City</label>
+                      <input type="text" class="form-control" id="City" name="City" autocomplete="off" required>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <label for="State">State</label>
+                      <input type="text" class="form-control" id="State" name="State" autocomplete="off" required>
                     </div>
                     <div class="col-md-3 mb-3">
+                      <label for="Pincode">Pincode</label>
+                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label for="Country">Country</label>
+                      <input type="text" class="form-control" id="Country" name="Country" autocomplete="off" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label for="Role">Role</label>
+                      <select class="form-control" id="Role" name="Role">
+                        <option value="0" disabled selected hidden>Select Role</option>
+                        
+                        <?php
+                        include 'layouts/config.php';
+
+                        // Assuming you have a connection to your database
+                        $sql = "SELECT r_name FROM role";
+                        $result = $link->query($sql);
+
+                        if ($result->num_rows > 0) {
+                          while ($row = $result->fetch_assoc()) {
+                            $roleName = $row['r_name'];
+                            echo "<option value=\"$roleName\">$roleName</option>";
+                          }
+                        } else {
+                          echo "<option value=\"\">No roles found</option>";
+                        }
+                        $link->close();
+
+                        ?>
+                      </select>
+                      </div>
+                      </div>
+
+                      <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <label for="State">Password</label>
+                      <input type="text" class="form-control" id="State" name="State" autocomplete="off" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                      <label for="Pincode">Confirm Password</label>
+                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
+                    </div>
+                <!--  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <label for="Department">Department</label>
+                      <select class="form-control" id="Department" name="Department">
+                        <option value="0" disabled selected hidden>Select Department</option>
+                       // <?php
+                        //include 'layouts/config.php';
+
+                        // Assuming you have a connection to your database
+                       // $sql = "SELECT d_name FROM department";
+                       // $result = $link->query($sql);
+
+                        //if ($result->num_rows > 0) {
+                          //while ($row = $result->fetch_assoc()) {
+                           // $depName = $row['d_name'];
+                           // echo "<option value=\"$depName\">$depName</option>";
+                       //   }
+                       // }// else {
+                         // echo "<option value=\"\">No roles found</option>";
+                      //  }
+                      //  $link->close();
+
+                        ?>
+                      </select>
+                    </div>-->
+                   <!-- <div class="col-md-3 mb-3">
+                      <label for="DateOfJoining">Date of Joining</label>
+                      <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
+                    </div>
+                  <!--  <div class="col-md-3 mb-3">
                       <label for="Salary">Salary</label>
                       <input type="text" class="form-control" id="Salary" name="Salary" autocomplete="off" required>
-                    </div>
+                    </div>-->
 
                     <div class="row">
                       <div class="col-md-3 mb-3">
@@ -334,19 +363,13 @@ $link->close();
 
                     </div>
                 </form>
+                       </div>
 
 
-
-
-
-
-              </div>
-
-
-            </div>
+                       </div>
             <!-- end form -->
 
-          </div>
+                       </div>
         </div> <!-- container-fluid -->
       </div>
       <!-- End Page-content -->
