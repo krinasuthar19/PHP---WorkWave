@@ -183,7 +183,7 @@ if(isset($_GET['id'])) {
       // JavaScript function to filter records based on department selection
       $('#department').change(function() {
         var dept_id = $(this).val();
-        window.location.href = 'payslip_list.php?department=' + dept_id;
+        window.location.href = 'admin_salary_confirm.php?department=' + dept_id;
       });
     });
   </script>

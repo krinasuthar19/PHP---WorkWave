@@ -96,7 +96,7 @@ include 'layouts/config.php'; // Include database configuration file
 
                                                                 if (isset($_GET['department']) && !empty($_GET['department'])) {
                                                                     $dept_id = $_GET['department'];
-                                                                    $query .= " WHERE u.d_id = $dept_id";
+                                                                    $query .= " AND u.d_id = $dept_id"; // Use AND instead of WHERE
                                                                 }
                                                                 $result = mysqli_query($link, $query);
                                                                 $i = 1;
@@ -114,12 +114,12 @@ include 'layouts/config.php'; // Include database configuration file
                                                                     echo "<td>{$row['allowance']}</td>";
                                                                     echo "<td>{$row['final_salary']}</td>";
                                                                     echo "<td>{$row['payment_date']}</td>";
-                                                                    
+
                                                                     echo '<td>';
-                                                                   
-                                                                        echo "<a href='generate_pdf.php?id={$row['id']}&u_id={$row['u_id']}&month={$row['month']}&year={$row['year']}' class='btn btn-warning'>PDF</a>";
-                                                                    
-                                                                    
+
+                                                                    echo "<a href='generate_pdf.php?id={$row['id']}&u_id={$row['u_id']}&month={$row['month']}&year={$row['year']}' class='btn btn-warning'>PDF</a>";
+
+
                                                                     echo '</td>';
                                                                     echo "</tr>";
                                                                     $i++;

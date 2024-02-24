@@ -1,6 +1,6 @@
 <?php
-session_start(); 
-require_once 'layouts/check_hr.php';// Start session to get user role
+session_start();
+require_once 'layouts/check_hr.php'; // Start session to get user role
 include 'layouts/head-main.php';
 include 'layouts/config.php'; // Include database configuration file
 ?>
@@ -91,13 +91,12 @@ include 'layouts/config.php'; // Include database configuration file
                                                                 // Modify your query to include the department filter
                                                                 $query = "SELECT s.id, s.*, u.username, u.profile_image, r.r_name FROM salaries s 
           INNER JOIN users u ON s.u_id = u.u_id
-          INNER JOIN role r ON u.role = r.r_id
+          INNER JOIN role r ON u.role = r.r_id 
           WHERE s.admin_status = 0";
-
 
                                                                 if (isset($_GET['department']) && !empty($_GET['department'])) {
                                                                     $dept_id = $_GET['department'];
-                                                                    $query .= " WHERE u.d_id = $dept_id";
+                                                                    $query .= " AND u.d_id = $dept_id"; // Use AND instead of WHERE
                                                                 }
                                                                 $result = mysqli_query($link, $query);
                                                                 $i = 1;
@@ -114,12 +113,12 @@ include 'layouts/config.php'; // Include database configuration file
                                                                     echo "<td>{$row['deduction']}</td>";
                                                                     echo "<td>{$row['allowance']}</td>";
                                                                     echo "<td>{$row['final_salary']}</td>";
-                                                                   
+
                                                                     echo '<td>';
                                                                     // Display action button based on admin status
-                                                                    
-                                                                        echo "<a href='edit_record.php?id={$row['id']}&u_id={$row['u_id']}&month={$row['month']}&year={$row['year']}' class='btn btn-warning'>Edit</a>";
-                                                                   
+
+                                                                    echo "<a href='edit_record.php?id={$row['id']}&u_id={$row['u_id']}&month={$row['month']}&year={$row['year']}' class='btn btn-warning'>Edit</a>";
+
                                                                     echo '</td>';
                                                                     echo "</tr>";
                                                                     $i++;
