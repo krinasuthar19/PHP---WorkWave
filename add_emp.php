@@ -2,73 +2,6 @@
 session_start();
 require "layouts/check_admin.php";
 include 'layouts/head-main.php';
-include 'layouts/config.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $firstName = $_POST['FirstName'];
-  $lastName = $_POST['LastName'];
-  $username = $firstName . ' ' . $lastName;
-  $email = $_POST['Email'];
-  $mobileNumber = $_POST['MobileNumber'];
-  $dateOfBirth = $_POST['DateOfBirth'];
-  $gender = $_POST['Gender'];
-  $address = $_POST['Address'];
-  $city = $_POST['City'];
-  $state = $_POST['State'];
-  $pincode = $_POST['Pincode'];
-  $country = $_POST['Country'];
-  $salary = $_POST['Salary'];
-
-  $pass = strtolower($firstName . $lastName . substr((string) $mobileNumber, -4));
-  $password = $pass;
-
-  $role = $_POST['Role'];
-  $sql = "SELECT r_id FROM role WHERE r_name = '$role'";
-  $result = $link->query($sql);
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $roleId = $row['r_id'];
-  }
-
-  $department = $_POST['Department'];
-  $sql = "SELECT d_id FROM department WHERE d_name = '$department'";
-  $result = $link->query($sql);
-  if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $depId = $row['d_id'];
-  }
-
-  $image = $_FILES['imageInput'];
-  if ($image['size'] > 0) {
-    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-    $extension = pathinfo($image['name'], PATHINFO_EXTENSION);
-    if (in_array(strtolower($extension), $allowedExtensions)) {
-      $imageName = uniqid('img_') . '.' . $extension;
-      $imagePath = 'profile_images/' . $imageName;
-      move_uploaded_file($image['tmp_name'], $imagePath);
-    }
-  } else {
-    $imagePath = 'profile_images/user_default_img.jpg';
-  }
-
-  $query = "SELECT email FROM users where email='$email'";
-  $result = mysqli_query($link, $query);
-  if ($result) {
-    $rowCount = mysqli_num_rows($result);
-    if ($rowCount != 0) {
-      echo "<script>alert('user already exist')</script>";
-    } else {
-      $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, city, state, pincode, country, role, d_id, password, date_of_joining, profile_image) 
-              VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath')";
-    }
-  }
-  if ($link->query($sql) === TRUE) {
-    // echo "Record inserted successfully";
-  } else {
-    echo "Error: " . $sql . "<br>" . $link->error;
-  }
-}
-$link->close();
 ?>
 
 <head>
@@ -119,7 +52,8 @@ $link->close();
     height: auto;
   }
   </style>
-
+  <!-- datepicker1 -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <?php include 'layouts/body.php'; ?>
 <div id="layout-wrapper">
@@ -143,7 +77,7 @@ $link->close();
           <div class="row">
             <div class="col-md-12">
               <div class="row">
-                <form action="" method="POST" enctype="multipart/form-data" id="employeeForm">
+                <form action="process_add_emp.php" method="POST" enctype="multipart/form-data" id="employeeForm">
                   <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="FirstName">First Name</label>
@@ -170,9 +104,9 @@ $link->close();
                   <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="DateOfBirth">Date of Birth</label>
-                      <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required>
+                      <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" autocomplete="off"
+                        required>
                       <span id="ageError" style="color: red;"></span>
-                      <span id="dobError" style="color: red;"></span>
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="Gender">Gender</label>
@@ -297,112 +231,41 @@ $link->close();
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-  // ----------START-firstname and lastname validator-START---------- 
-  // dynamic error message displaying
-
+  //! ----------START-firstname and lastname validator-START---------- 
   document.getElementById('FirstName').addEventListener('input', function() {
     var firstName = this.value.trim();
     var errorSpan = document.getElementById('firstNameError');
-    if (/[^a-zA-Z]/.test(firstName)) {
-      errorSpan.textContent = 'First name should contain only letters.';
-    } else {
-      errorSpan.textContent = '';
-    }
+    errorSpan.textContent = (/[^a-zA-Z]/.test(firstName)) ? 'First name should contain only letters.' : '';
   });
 
-  // submit preventing(managing)
   document.getElementById('LastName').addEventListener('input', function() {
     var lastName = this.value.trim();
     var errorSpan = document.getElementById('lastNameError');
-    if (/[^a-zA-Z]/.test(lastName)) {
-      errorSpan.textContent = 'Last name should contain only letters.';
-    } else {
-      errorSpan.textContent = '';
-    }
+    errorSpan.textContent = (/[^a-zA-Z]/.test(lastName)) ? 'Last name should contain only letters.' : '';
   });
-  // Find the form by its ID
+
   const form = document.getElementById('employeeForm');
-  // Attach an event listener to the form submission event
   form.addEventListener('submit', function(event) {
-    // Get the values of the first name and last name fields
     const firstName = document.getElementById('FirstName').value;
     const lastName = document.getElementById('LastName').value;
-    // Regular expression to match only letters (no numbers or special characters)
     const lettersOnly = /^[a-zA-Z]+$/;
-    // Validation checks
+
     if (!firstName.match(lettersOnly)) {
       alert('First name should contain only letters.');
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault();
     }
 
     if (!lastName.match(lettersOnly)) {
       alert('Last name should contain only letters.');
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault();
     }
   });
-  // ----------END-firstname and lastname validator-END---------- 
+  //! ----------END-firstname and lastname validator-END---------- 
 
-  // ----------START-Date of birth validator-START---------- 
-  // dynamic error message displaying
-  document.getElementById('DateOfBirth').addEventListener('change', function() {
-    var dob = new Date(this.value); // Get the selected date of birth
-    var today = new Date(); // Get today's date
-
-    // Calculate the age based on the selected date of birth
-    var age = today.getFullYear() - dob.getFullYear();
-    var monthDiff = today.getMonth() - dob.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-      age--;
-    }
-
-    // Validate age (age should be at least 19)
-    var ageErrorSpan = document.getElementById('ageError');
-    if (age < 19) {
-      ageErrorSpan.textContent = 'Employee must be at least 19 years old. ';
-    } else {
-      ageErrorSpan.textContent = '';
-    }
-
-    // Validate date of birth (should not be in the future or too far in the past)
-    var maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() - 19); // Maximum date of birth (19 years ago)
-    var dobErrorSpan = document.getElementById('dobError');
-    if (dob > today || dob >= maxDate) {
-      dobErrorSpan.textContent = 'Please enter a valid date of birth. ';
-    } else {
-      dobErrorSpan.textContent = '';
-    }
-  });
-
-  // submit preventing(managing)
-  document.getElementById('employeeForm').addEventListener('submit', function(event) {
-    var dob = new Date(document.getElementById('DateOfBirth').value);
-    var today = new Date();
-    var age = today.getFullYear() - dob.getFullYear();
-    var monthDiff = today.getMonth() - dob.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-      age--;
-    }
-
-    // Validation for age (age should be at least 19)
-    if (age < 19) {
-      alert('Employee must be at least 19 years old. ');
-      event.preventDefault(); // Prevent form submission
-      return;
-    }
-
-    // Validation for date of birth (should not be in the future or too far in the past)
-    var maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() - 19);
-    if (dob > today || dob >= maxDate) {
-      alert('Please enter a valid date of birth. ');
-      event.preventDefault(); // Prevent form submission
-      return;
-    }
-  });
-  // ----------END-Date of birth validator-END---------- 
 });
+</script>
 
+<script>
 function displayProfileImage() {
   var input = document.getElementById('imageInput');
   var container = document.getElementById('displayContainer');
@@ -427,6 +290,44 @@ function displayProfileImage() {
   }
 }
 </script>
+
+<!-- datepicker -->
+<div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $(function() {
+    /* The above code is using jQuery UI's datepicker function to create a date input field with specific
+    configurations. It sets the date format to "dd-mm-yy", allows changing the month and year,
+    restricts the year range to be from 100 years ago to the current year, and sets the maximum
+    selectable date to 19 years ago. */
+    $("#DateOfBirth").datepicker({
+      dateFormat: "dd-MM-yy",
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "-100:+0",
+      maxDate: "-19Y",
+      onSelect: function(dateText, inst) {
+        var selectedDate = new Date(dateText);
+        if (isNaN(selectedDate)) {
+          // Handle invalid date
+          console.log("Invalid Date");
+          return;
+        }
+        var currentDate = new Date();
+        var age = Math.round((currentDate - selectedDate) / (365.25 * 24 * 60 * 60 * 1000));
+        if (age < 18) {
+          $("#ageError").text("Age must be at least 18.");
+          $(this).val("");
+        } else {
+          $("#ageError").text("");
+        }
+      }
+    });
+  });
+  </script>
+</div>
+
 </body>
 
 </html>
