@@ -52,9 +52,6 @@ include 'layouts/head-main.php';
     height: auto;
   }
   </style>
-  <!-- datepicker1 -->
-  <!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-  <!-- datepicker2 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
@@ -97,6 +94,9 @@ include 'layouts/head-main.php';
                       <label for="Email">Email</label>
                       <input type="email" class="form-control" id="Email" name="Email" autocomplete="off"
                         pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+                      <span id="emailError" style="color: red;"></span>
+                      <!-- Add this span element for displaying email error -->
+
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="MobileNumber">Mobile Number</label>
@@ -292,53 +292,10 @@ function displayProfileImage() {
   }
 }
 </script>
-
-<!-- datepicker -->
-<!-- <div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $(function() {
-    /* The above code is using jQuery UI's datepicker function to create a date input field with specific
-    configurations. It sets the date format to "dd-mm-yy", allows changing the month and year,
-    restricts the year range to be from 100 years ago to the current year, and sets the maximum
-    selectable date to 19 years ago. */
-    $("#DateOfBirth").datepicker({
-      dateFormat: "dd-MM-yy",
-      changeMonth: true,
-      changeYear: true,
-      yearRange: "-100:+0",
-      maxDate: "-19Y",
-      onSelect: function(dateText, inst) {
-        var selectedDate = new Date(dateText);
-        if (isNaN(selectedDate)) {
-          // Handle invalid date
-          console.log("Invalid Date");
-          return;
-        }
-        var currentDate = new Date();
-        var age = Math.round((currentDate - selectedDate) / (365.25 * 24 * 60 * 60 * 1000));
-        if (age < 18) {
-          $("#ageError").text("Age must be at least 18.");
-          $(this).val("");
-        } else {
-          $("#ageError").text("");
-        }
-      }
-    });
-  });
-  </script>
-</div> -->
-
-<!-- datepicker2 -->
 <div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
-    /* The above code is using flatpickr library to create a date input field with specific
-    configurations. It sets the date format to "d-m-Y", allows changing the month and year,
-    restricts the year range to be from 100 years ago to the current year, and sets the
-    maximum selectable date to 19 years ago. It will also show the valid dates based on the default age. */
     var currentDate = new Date();
     var defaultYear = currentDate.getFullYear() - 19;
     var defaultMonth = currentDate.getMonth() + 1;
@@ -375,6 +332,37 @@ function displayProfileImage() {
       }
     });
   });
+  </script>
+</div>
+
+
+<div>
+  <!-- email verification AJAX request -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+  // code to check email 
+  // $(document).ready(function () {
+  //   $('#Email').on('input', function () {
+  //     var email = $(this).val();
+
+  //     $.ajax({
+  //       url: 'check_email.php', // Change this to the path of your server-side script
+  //       type: 'POST',
+  //       data: {
+  //         email: email
+  //       },
+  //       success: function (response) {
+  //         if (response === 'valid') {
+  //           $('#emailError').text('');
+  //           console.log(response);
+  //         } else {
+  //           $('#emailError').text('Email domain does not exist.');
+  //           console.log(response);
+  //         }
+  //       }
+  //     });
+  //   });
+  // });
   </script>
 </div>
 </body>
