@@ -1,5 +1,7 @@
 <?php
-// admin_salary_confirm.php
+// hr_salary_confirm.php
+session_start(); // Start session to get user role
+require 'layouts/check_hr.php';
 
 include 'layouts/config.php';
 
@@ -19,17 +21,16 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
     echo "User not found!";
   }
 
-
-  session_start(); // Start session to get user role
-  require 'layouts/check_hr.php';
   include 'layouts/head-main.php';
-
-?>
+  ?>
 
   <head>
-    <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
+    <title>
+      <?php echo $language["Dashboard"]; ?> | Employee Management System
+    </title>
     <?php include 'layouts/head.php'; ?>
-    <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+      type="text/css" />
     <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <?php include 'layouts/head-style.php'; ?>
@@ -76,12 +77,13 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
                   <div class="col-md-4">
                     <label for="yearDropdown" class="form-label">Select Year:</label>
                     <select class="form-select" id="yearDropdown" name="yearDropdown">
+                      <option value=''>Select Year</option>
                       <?php
                       // Get the current year
                       $currentYear = date("Y");
 
                       // Set the range of years you want to display
-                      $startYear = $currentYear-2;
+                      $startYear = $currentYear;
                       $endYear = $currentYear;
 
                       // Generate options for the year dropdown
@@ -122,11 +124,12 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
             <div class="row">
               <div class="col-md-4">
                 <label for="baseSalary">Base Salary:</label>
-                <input type="text" class="form-control" id="baseSalary" name="baseSalary" value='<?php echo $base_salary; ?>' readonly>
+                <input type="text" class="form-control" id="baseSalary" name="baseSalary"
+                  value='<?php echo $base_salary; ?>' readonly>
               </div>
               <div class="col-md-4">
                 <label for="deduction">Deduction:</label>
-                <input type="text" class="form-control" id="deduction" name="deduction">
+                <input type="text" class="form-control" id="deduction" name="deduction" readonly>
               </div>
               <div class="col-md-4">
                 <label for="allowance">Allowance:</label>
@@ -160,10 +163,13 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
   <!-- JAVASCRIPT -->
   <?php include 'layouts/vendor-scripts.php'; ?>
   <!-- apexcharts -->
-  <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
+  <!-- <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script> -->
   <!-- Plugins js-->
-  <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-  <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+  <!-- <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js">
+</script> -->
+  <!-- <script
+  src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
+</script> -->
   <!-- DataTables js -->
   <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -171,11 +177,11 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
   <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
   <!-- Datatable -->
   <!-- Datatable init js -->
-<script src="assets/js/pages/datatables.init.js"></script>
+  <script src="assets/js/pages/datatables.init.js"></script>
 
-<script src="assets/js/app.js"></script>
+  <script src="assets/js/app.js"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#example1').DataTable({
         "paging": true,
         "lengthChange": true,
@@ -188,104 +194,105 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
     });
   </script>
   <script>
-    $(document).ready(function() {
-      $('#employeeDropdown').change(function() {
-        var selectedEmployee = $(this).val(); // Get the selected employee username
-        if (selectedEmployee) {
-          $.ajax({
-            type: 'POST',
-            url: 'get_employees.php', // PHP script to fetch employee information
-            data: {
-              username: selectedEmployee
-            },
-            success: function(response) {
-              var data = JSON.parse(response);
-              // Update the base salary and u_id fields with the fetched data
-              $('#baseSalary').val(data.baseSalary);
-              $('#uId').val(data.u_id);
-            }
-          });
-        } else {
-          $('#baseSalary').val(''); // Clear the base salary field if no employee is selected
-          $('#uId').val(''); // Clear the u_id field if no employee is selected
+    $(document).ready(function () {
+      // Function to calculate deduction based on absent days and half-days
+      function calculateDeduction(absentDays, halfDays, baseSalary) {
+        var deduction = 0;
+        var maxAbsentDays = 2; // Maximum allowed absent days
+        var maxHalfDays = 4; // Maximum allowed absent days
+        var excessAbsentPercent = 0.02; // 2% deduction for each excess absent day
+        var excessHalfPercent = 0.01;
+        // console.log("absent days: " + absentDays);
+        // console.log("half days: " + halfDays);
+        // console.log("max absent days: " + maxAbsentDays);
+        // console.log("max half days: " + maxHalfDays);
+
+
+        // Calculate the deduction for excess absent days
+        if (absentDays > maxAbsentDays) {
+          var extraAbsentDays = absentDays - maxAbsentDays;
+          deduction += baseSalary * excessAbsentPercent * extraAbsentDays;
         }
-      });
-
-      // Handle change event for the month dropdown
-      $('#monthDropdown').change(function() {
-        // You can perform additional actions here based on the selected month
-      });
-
-      // Handle input change events for deduction and allowance fields
-      $('#deduction, #allowance').on('input', function() {
-        // Calculate the final salary based on deduction, allowance, and base salary
-        var baseSalary = parseFloat($('#baseSalary').val());
-        var deduction = parseFloat($('#deduction').val()) || 0;
-        var allowance = parseFloat($('#allowance').val()) || 0;
-        var finalSalary = baseSalary - deduction + allowance;
-        $('#finalSalary').val(finalSalary.toFixed(2));
-      });
-
-      // Handle click event for the confirm button
-      $('#confirmButton').click(function() {
-        // You can perform actions here when the confirm button is clicked
-      });
-    });
-
-    $(document).ready(function() {
-      $('#departmentDropdown').on('change', function() {
-        var departmentId = $(this).val(); // Get the selected department ID
-        if (departmentId) {
-          $.ajax({
-            type: 'POST',
-            url: 'get_employees.php', // PHP script to fetch employees based on department
-            data: {
-              d_id: departmentId
-            },
-            success: function(html) {
-              $('#employeeDropdown').html(html); // Update employee dropdown with new options
-            }
-          });
-        } else {
-          $('#employeeDropdown').html('<option value="">Select Department First</option>'); // If no department is selected, reset employee dropdown
+        if (halfDays > maxHalfDays) {
+          var extraHalfDays = halfDays - maxHalfDays;
+          deduction += baseSalary * excessHalfPercent * extraHalfDays;
         }
-      });
-    });
-  </script>
-  <script>
-    $(document).ready(function() {
-      // Handle input change events for deduction and allowance fields
-      $('#deduction, #allowance').on('input', function() {
-        calculateFinalSalary(); // Calculate final salary when deduction or allowance changes
-      });
+        // console.log("extra absent days: " + extraAbsentDays);
+        // console.log("extra half days: " + extraHalfDays);
+        // console.log("deduction of absent days = baseSalary(" + baseSalary + ")*percentageToDeduct(" +
+        //   excessAbsentPercent + ")*extraAbsentDay(" + extraAbsentDays + "): " + baseSalary * excessAbsentPercent *
+        //   extraAbsentDays);
+        // console.log("deduction of half days: = baseSalary(" + baseSalary + ")*percentageToDeduct(" +
+        //   excessHalfPercent + ")*extraHalfDay(" + extraHalfDays + "): " + baseSalary * excessHalfPercent *
+        //   extraHalfDays);
+        // console.log("total deduction = deduction of absent days(" + baseSalary * excessAbsentPercent *
+        //   extraAbsentDays + ") + deduction of half days(" + baseSalary * excessHalfPercent *
+        //   extraHalfDays + "): " + deduction);
 
-      // Function to calculate final salary
-      function calculateFinalSalary() {
-        var baseSalary = parseFloat($('#baseSalary').val()) || 0; // Get base salary
-        var deduction = parseFloat($('#deduction').val()) || 0; // Get deduction
-        var allowance = parseFloat($('#allowance').val()) || 0; // Get allowance
-
-        // Calculate final salary
-        var finalSalary = baseSalary + allowance - deduction;
-
-        // Display final salary in the final salary field
-        $('#finalSalary').val(finalSalary.toFixed(2));
+        return deduction;
       }
 
-      // Trigger calculation initially
-      calculateFinalSalary();
+      // Function to update deduction and final salary based on selected year and month
+      function updateDeductionAndFinalSalary() {
+        // Get selected month and year
+        var month = $('#monthDropdown').val();
+        var year = $('#yearDropdown').val();
 
-      // Handle click event for the confirm button
-      $('#confirmButton').click(function() {
-        // Perform additional actions here when the confirm button is clicked
+        // Get user ID and base salary
+        var userId = '<?php echo $u_id; ?>';
+        var baseSalary = parseFloat('<?php echo $base_salary; ?>');
+
+        // Make AJAX request to fetch attendance data
+        $.ajax({
+          type: 'POST',
+          url: 'get_attendance_hr_salary_confirm.php', // PHP script to fetch attendance data
+          data: {
+            userId: userId,
+            month: month,
+            year: year
+          },
+          success: function (response) {
+            // console.log(response);
+            var data = JSON.parse(response);
+            var absentDays = parseInt(data.totalAbsentDays); // Parse the total absent days as an integer
+            var halfDays = parseInt(data.totalHalfDays); // Parse the half days as an integer
+            var deduction = calculateDeduction(absentDays, halfDays,
+              baseSalary); // Calculate deduction including half days
+            var allowance = parseFloat($('#allowance').val()) || 0; // Get allowance
+            var finalSalary = baseSalary - deduction + allowance; // Calculate final salary
+
+            // Update deduction and final salary fields
+            $('#deduction').val(deduction.toFixed(2));
+            $('#finalSalary').val(finalSalary.toFixed(2));
+          }
+        });
+      }
+
+      // Event listener for year dropdown change
+      $('#yearDropdown').change(function () {
+        updateDeductionAndFinalSalary();
       });
-    });
-    $('#yearDropdown').change(function() {
-      // You can perform additional actions here based on the selected year
+
+      // Event listener for month dropdown change
+      $('#monthDropdown').change(function () {
+        updateDeductionAndFinalSalary();
+      });
+
+      // Handle input change events for allowance field
+      $('#allowance').on('input', function () {
+        var baseSalary = parseFloat($('#baseSalary').val()) || 0; // Get base salary
+        var deduction = parseFloat($('#deduction').val()) || 0; // Get deduction
+        var allowance = parseFloat($(this).val()) || 0; // Get updated allowance
+        var finalSalary = baseSalary - deduction + allowance; // Calculate final salary
+
+        // Update final salary field
+        $('#finalSalary').val(finalSalary.toFixed(3));
+      });
     });
   </script>
 
-<?php
+
+  <?php
 } else {
   echo "Invalid request!";
 }
