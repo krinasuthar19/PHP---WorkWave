@@ -163,13 +163,13 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
 <!-- JAVASCRIPT -->
 <?php include 'layouts/vendor-scripts.php'; ?>
 <!-- apexcharts -->
-<!-- <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script> -->
+<!-- <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script> --> -->
 <!-- Plugins js-->
 <!-- <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js">
-</script> -->
-<!-- <script
-  src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
-</script> -->
+  </script>
+  <script
+    src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
+    </script> -->
 <!-- DataTables js -->
 <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -233,7 +233,11 @@ $(document).ready(function() {
         var data = JSON.parse(response);
         var absentDays = parseInt(data.totalAbsentDays); // Parse the total absent days as an integer
         var halfDays = parseInt(data.totalHalfDays); // Parse the half days as an integer
-        var workingDays = 25;
+        var workingDays = parseInt(data.totalWorkingDays);
+        var holidays = parseInt(data.totalHolidays);
+        console.log("working days: " + workingDays);
+        console.log("holidays: " + holidays);
+        console.log("absent days: " + absentDays);
         var deduction = calculateDeduction(absentDays, halfDays,
           baseSalary, workingDays); // Calculate deduction including half days
         var allowance = parseFloat($('#allowance').val()) || 0; // Get allowance

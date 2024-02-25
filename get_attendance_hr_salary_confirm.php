@@ -12,6 +12,31 @@ if (isset($_POST['userId'], $_POST['month'], $_POST['year'])) {
   $startDate = date("Y-m-01", strtotime("$year-$month"));
   $endDate = date("Y-m-t", strtotime("$year-$month"));
 
+  //to get working days
+  $monthStatus = "SELECT status FROM employee_attendance WHERE emp_id='$userId' AND attendance_date BETWEEN '$startDate' AND '$endDate'";
+  $monthStatusResult = mysqli_query($link, $monthStatus);
+  $workingDays = 0;
+  $holiday = 0;
+  if ($monthStatusResult && mysqli_num_rows($monthStatusResult) > 0) {
+    while ($row = mysqli_fetch_assoc($monthStatusResult)) {
+      if ($row['status'] == 'holiday') {
+        $holiday++;
+      } else {
+        $workingDays++;
+      }
+    }
+  }
+  $monthStatusHalfday = "SELECT status FROM employee_attendance WHERE emp_id='$userId' AND attendance_date BETWEEN '$startDate' AND '$endDate'";
+  $monthStatusHalfdayResult = mysqli_query($link, $monthStatusHalfday);
+  $halfday = 0;
+  if ($monthStatusHalfdayResult && mysqli_num_rows($monthStatusHalfdayResult) > 0) {
+    while ($row = mysqli_fetch_assoc($monthStatusHalfdayResult)) {
+      if ($row['status'] == 'half-day') {
+        $halfday++;
+      }
+    }
+  }
+
   // Query to get total absent days for the selected month
   $absentQuery = "SELECT COUNT(*) AS totalAbsentDays FROM employee_attendance WHERE emp_id = '$userId' AND attendance_date BETWEEN '$startDate' AND '$endDate' AND status = 'absent'";
   $absentResult = mysqli_query($link, $absentQuery);
@@ -30,7 +55,9 @@ if (isset($_POST['userId'], $_POST['month'], $_POST['year'])) {
     $totalHalfDays = $row['totalHalfDays'];
   }
 
-  echo json_encode(array('totalAbsentDays' => $totalAbsentDays, 'totalHalfDays' => $totalHalfDays));
+  $workingDays = $workingDays - $totalHalfDays - $totalAbsentDays;
+
+  echo json_encode(array('totalAbsentDays' => $totalAbsentDays, 'totalHalfDays' => $totalHalfDays, 'totalWorkingDays' => $workingDays, 'totalHolidays' => $holiday, 'totalHalfdays' => $halfday));
 } else {
   echo json_encode(array('error' => 'Invalid request'));
 }
