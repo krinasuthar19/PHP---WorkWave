@@ -37,8 +37,6 @@ function isHoliday($date)
     sort($holidays_2024);
     return in_array($date, $holidays_2024);
 }
-// Check if the given date is in the list of holidays
-// $isHolidayDefault = in_array($date, $holidays_2024);
 
 // Insert records for holidays automatically when the page is loaded
 // foreach ($holidays_2024 as $holiday) {
