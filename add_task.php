@@ -56,6 +56,8 @@ include 'layouts/head-main.php';
       height: auto;
     }
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 <?php include 'layouts/body.php'; ?>
 <div id="layout-wrapper">
@@ -115,11 +117,11 @@ include 'layouts/head-main.php';
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="startdate">Start Date</label>
-                      <input type="date" class="form-control" id="startDate" name="startDate" required>
+                      <input type="text" class="form-control" id="startDate" name="startDate" required>
                     </div>
                     <div class="col-md-4 mb-3">
                       <label for="enddate">End Date</label>
-                      <input type="date" class="form-control" id="endDate" name="endDate" required>
+                      <input type="text" class="form-control" id="endDate" name="endDate" required>
                     </div>
                   </div>
                   <div class="row">
@@ -165,44 +167,80 @@ include 'layouts/head-main.php';
 <script src="assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
 <!-- <script src="assets/js/pages/dashboard.init.js"></script> -->
 <script src="assets/js/app.js"></script>
+
+<!-- datepicker -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-  function validateDates() {
-    var startDate = new Date(document.getElementById('startDate').value);
-    var endDate = new Date(document.getElementById('endDate').value);
+  document.addEventListener('DOMContentLoaded', function () {
     var today = new Date();
-    var errorMessage = '';
 
-    if (startDate <= today) {
-      errorMessage += "Start date must be after today's date. ";
-    }
-    if (startDate >= endDate) {
-      errorMessage += "Start date must be before end date. ";
-    }
-    if (endDate <= startDate) {
-      errorMessage += "End date must be after start date. ";
-    }
-    if (startDate.getFullYear() > 3000 || endDate.getFullYear() > 3000) {
-      errorMessage += "Select an appropriate year. Year should not exceed 3000.";
+    // Get defaultStartDate's date
+    var defaultStartDate = new Date(today);
+    defaultStartDate.setDate(defaultStartDate.getDate() + 1);
+
+    // Calculate tomorrow's date
+    var defaultEndDate = new Date(defaultStartDate);
+    defaultEndDate.setDate(defaultEndDate.getDate() + 1);
+
+    // Initialize Flatpickr for startDate and endDate inputs
+    flatpickr("#startDate", {
+      dateFormat: "d-m-Y",
+      defaultDate: defaultStartDate, // Set default start date to today
+      onChange: validateDates // Call validateDates whenever endDate changes
+
+    });
+
+    flatpickr("#endDate", {
+      dateFormat: "d-m-Y",
+      defaultDate: defaultEndDate, // Set default end date to tomorrow
+      onChange: validateDates // Call validateDates whenever endDate changes
+    });
+
+    // Function to validate dates
+    function validateDates() {
+      var startDate = document.getElementById('startDate').value;
+      var endDate = document.getElementById('endDate').value;
+      var today = new Date();
+      var errorMessage = '';
+
+      // Parse date strings into the appropriate format
+      var startDateParsed = flatpickr.parseDate(startDate, "d-m-Y");
+      var endDateParsed = flatpickr.parseDate(endDate, "d-m-Y");
+
+      if (startDateParsed <= today) {
+        errorMessage += "Start date must be after today's date. ";
+      }
+      if (startDateParsed >= endDateParsed) {
+        errorMessage = "Start date must be before end date. ";
+      }
+      if (endDateParsed <= startDateParsed) {
+        errorMessage = "End date must be after start date. ";
+      }
+
+      var errorElement = document.getElementById('error-message');
+      errorElement.textContent = errorMessage;
+
+      // Return true if there are no errors, false otherwise
+      return errorMessage === '';
     }
 
-    var errorElement = document.getElementById('error-message');
-    errorElement.textContent = errorMessage;
-  }
-
-  document.getElementById('startDate').addEventListener('change', validateDates);
-  document.getElementById('endDate').addEventListener('change', validateDates);
-
-  document.getElementById('taskForm').addEventListener('submit', function (event) {
+    // Validate dates initially
     validateDates();
-    var errorMessage = document.getElementById('error-message').textContent;
-    if (errorMessage) {
-      event.preventDefault();
-      alert("Please correct the errors before submitting the form: \n" + errorMessage);
-      return false; // Prevent form submission
-    }
-    return true; // Allow form submission
+    // Form submission event listener
+    document.getElementById('taskForm').addEventListener('submit', function (event) {
+      // Validate dates
+      var isValid = validateDates();
+
+      // If validation failed, prevent form submission
+      if (!isValid) {
+        event.preventDefault();
+        alert("Please correct the errors before submitting the form.");
+      }
+    });
   });
 </script>
+
+
 </body>
 
 </html>
