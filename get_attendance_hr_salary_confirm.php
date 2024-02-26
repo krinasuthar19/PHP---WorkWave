@@ -55,8 +55,6 @@ if (isset($_POST['userId'], $_POST['month'], $_POST['year'])) {
     $totalHalfDays = $row['totalHalfDays'];
   }
 
-  $workingDays = $workingDays - $totalHalfDays - $totalAbsentDays;
-
   echo json_encode(array('totalAbsentDays' => $totalAbsentDays, 'totalHalfDays' => $totalHalfDays, 'totalWorkingDays' => $workingDays, 'totalHolidays' => $holiday, 'totalHalfdays' => $halfday));
 } else {
   echo json_encode(array('error' => 'Invalid request'));
