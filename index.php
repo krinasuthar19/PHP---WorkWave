@@ -24,6 +24,7 @@ include 'layouts/head-main.php';
 <div id="layout-wrapper">
 
   <?php include 'layouts/menu.php'; ?>
+  <?php include 'layouts/alerts.php'; ?>
   
   <div class="main-content">
 

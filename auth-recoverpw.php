@@ -17,9 +17,9 @@ $uri_segments = explode('/', $uri_path);
 $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]/$uri_segments[1]";
 if (isset($_POST['submit'])) {
 
-  $useremail = mysqli_real_escape_string($link, $_POST['useremail']);
+  $useremail = mysqli_real_escape_string($link, $_POST['email']);
 
-  $sql = "SELECT * FROM users WHERE useremail = '$useremail'";
+  $sql = "SELECT * FROM users WHERE email = '$useremail'";
   $query = mysqli_query($link, $sql);
   $emailcount = mysqli_num_rows($query);
 
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
                 <form class="mt-4" action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="post">
                   <div class="mb-3 <?php echo (!empty($useremail_err)) ? 'has-error' : ''; ?>">
                     <label class="form-label">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="Enter email">
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter email">
                     <span class="text-danger"><?php echo $useremail_err; ?></span>
                   </div>
                   <div class="mb-3 mt-4">
