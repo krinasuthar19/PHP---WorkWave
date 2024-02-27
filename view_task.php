@@ -2,6 +2,12 @@
 session_start(); // Start session to get user role
 // require 'layouts/check_admin.php';
 // require 'layouts/check_emp.php';
+if (!(isset($_SESSION['loggedin']))) {
+  header("Location: auth-login.php");
+}
+if ($_SESSION['role'] == 2 || $_SESSION['role'] == 3) {
+  header("Location: auth-login.php");
+}
 include 'layouts/head-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
