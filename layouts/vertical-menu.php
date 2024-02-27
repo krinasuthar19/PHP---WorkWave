@@ -11,18 +11,34 @@
             <img src="assets/images/logo.png" alt="" height="26">
           </span>
           <span class="logo-lg">
-            <img src="assets/images/wwlogo.jpeg" alt="" height="26"> <span class="logo-txt">Work Wave</span>
+            <img src="assets/images/wwlogo.jpeg" alt="" height="26"> <span class="logo-txt">Work Wave (<?php
+                                                                                                      switch ($_SESSION['role']) {
+                                                                                                        case 1:
+                                                                                                          echo "admin";
+                                                                                                          break;
+                                                                                                        case 2:
+                                                                                                          echo "hr";
+                                                                                                          break;
+                                                                                                        case 3:
+                                                                                                          echo "pm";
+                                                                                                          break;
+                                                                                                        case 4:
+                                                                                                          echo "emp";
+                                                                                                          break;
+                                                                                                      }
+                                                                                                      ?>)</span>
           </span>
         </a>
 
-        <a href="index.php" class="logo logo-light">
+        <!-- logo for light color in dark theme -->
+        <!-- <a href="index.php" class="logo logo-light">
           <span class="logo-sm">
             <img src="assets/images/logo-sm.svg" alt="" height="26">
           </span>
           <span class="logo-lg">
             <img src="assets/images/wwlogo.jpeg" alt="" height="26"> <span class="logo-txt">Work Wave</span>
           </span>
-        </a>
+        </a> -->
       </div>
 
       <!-- <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
@@ -42,8 +58,7 @@
       </div> -->
 
       <div class="dropdown d-inline-block">
-        <button type="button" class="btn header-item bg-light-subtle border-start border-end"
-          id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn header-item bg-light-subtle border-start border-end" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
           <span class="d-none d-xl-inline-block ms-1 fw-medium">
             <?php echo $language["Shawn_L"]; ?>.
@@ -91,225 +106,17 @@
           </a>
         </li>
 
-        <?php if ($user_role == 1) { ?>
-          <li>
-            <a href="add_emp.php">
-              <i data-feather="user-plus"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Add Employees" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard">
-                <?php echo "View Employees" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Attendance" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="add_task.php">
-              <i data-feather="plus-square"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Add Task" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="task_list.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard">
-                <?php echo "View Tasks" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="leave_history.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Leave History" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="admin_salary_confirm.php">
-              <i data-feather="check-circle"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Confirm Salary" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="payslip_list.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Payslip List" ?>
-              </span>
-            </a>
-          </li>
-          
-          
-          <li>
-            <a href="profile.php">
-              <i data-feather="check-circle"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Profile" ?>
-              </span>
-            </a>
-          </li>
-
-        <?php } elseif ($user_role == 2) { ?>
-
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard">
-                <?php echo "View Employees" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="approve_leave.php">
-              <i data-feather="user-check"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Employee Leave" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Attendance" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="confirm_salary.php">
-              <i data-feather="check-circle"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Confirm Salary" ?>
-              </span>
-            </a>
-          </li>
-          
-          <li>
-            <a href="payslip_list.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Payslip List" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="pending_salary_list.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Pending Salary List" ?>
-              </span>
-            </a>
-          </li>
-        <?php } elseif ($user_role == 3) { ?>
-
-
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Attendance" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="add_leave.php">
-              <i data-feather="plus-circle"></i>
-              <span data-key="t-dashboard">
-                <?php echo "add leave" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="leave_status.php">
-              <i data-feather="file"></i>
-              <span data-key="t-dashboard">
-                <?php echo " leave status" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="task.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Tasks" ?>
-              </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard">
-                <?php echo "View Other Employees" ?>
-              </span>
-            </a>
-          </li>
-        <?php } else { ?>
-
-
-
-          <li>
-            <a href="attendance.php">
-              <i data-feather="calendar"></i>
-              <span data-key="t-dashboard">
-                <?php echo "Attendance" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="add_leave.php">
-              <i data-feather="plus-circle"></i>
-              <span data-key="t-dashboard">
-                <?php echo "add leave" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="leave_status.php">
-              <i data-feather="file"></i>
-              <span data-key="t-dashboard">
-                <?php echo " leave status" ?>
-              </span>
-            </a>
-          </li>
-
-
-          <li>
-            <a href="view_task.php">
-              <i data-feather="file-text"></i>
-              <span data-key="t-dashboard">
-                <?php echo "View Tasks" ?>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="view_emp.php">
-              <i data-feather="users"></i>
-              <span data-key="t-dashboard">
-                <?php echo "View Other Employees" ?>
-              </span>
-            </a>
-          </li>
-
-        <?php } ?>
+        <?php
+        if ($user_role == 1) {
+          include "layouts/vertical-menu-admin.php";
+        } elseif ($user_role == 2) {
+          include "layouts/vertical-menu-hr.php";
+        } elseif ($user_role == 3) {
+          include "layouts/vertical-menu-pm.php";
+        } else {
+          include "layouts/vertical-menu-emp.php";
+        }
+        ?>
 
       </ul>
 
