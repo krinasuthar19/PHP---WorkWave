@@ -1,6 +1,7 @@
 <?php
 session_start(); // Start session to get user role
-require 'layouts/check_emp.php';
+// require 'layouts/check_admin.php';
+// require 'layouts/check_emp.php';
 include 'layouts/head-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
@@ -37,6 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
     if ($status == 1) {
       $updateQuery = "UPDATE task SET status = 2 WHERE t_id = $task_id";
       if (mysqli_query($link, $updateQuery)) {
+        // Task ended successfully
+        header("Location: view_task.php"); // Redirect back to view_tasks.php
+        exit();
+      } else {
+        // Error updating task status
+        echo "Error updating task status: " . mysqli_error($link);
+        exit();
+      }
+    }
+
+    // Remove Task
+    if ($status == 2) {
+      $deleteQuery = "DELETE FROM task WHERE t_id = $task_id";
+      if (mysqli_query($link, $deleteQuery)) {
         // Task ended successfully
         header("Location: view_task.php"); // Redirect back to view_tasks.php
         exit();
@@ -134,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           $u_id = $_SESSION['u_id'];
 
                           // Fetch task data from the database
-                          $query = "SELECT * FROM task where t_id IN (Select t_id from assign_task where u_id = $u_id)";
+                          $query = "SELECT * FROM task";
                           $result = mysqli_query($link, $query);
 
                           if (!$result) {
@@ -158,20 +173,34 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                               echo '<td style="color: ' . $statusColor . ';">';
                               echo ($status == 0) ? 'Pending' : (($status == 1) ? 'Working' : 'Completed');
                               echo '</td>';
-
-                              // Action buttons
-                              echo '<td>';
-                              if ($status == 0) {
-                                // Display the Start button
-                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-success">Start</a>';
-                              } elseif ($status == 1) {
-                                // Display the End button
-                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
+                              if ($_SESSION['role'] == 1) {
+                                // Action button for admin
+                                if ($status == 2) {
+                                  // Display the Remove button to remove task completely if completed
+                                  echo '<td><a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a></td>';
+                                } elseif ($status == 0) {
+                                  // Display the End button
+                                  echo '<td style="color: blue;">Not Started</td>';
+                                } else {
+                                  // Display the End button
+                                  echo '<td style="color: green;">Working</td>';
+                                }
                               }
-                              echo '</td>';
+                              if ($_SESSION['role'] == 4) {
 
-                              echo '</tr>';
+                                // Action buttons
+                                echo '<td>';
+                                if ($status == 0) {
+                                  // Display the Start button
+                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-success">Start</a>';
+                                } elseif ($status == 1) {
+                                  // Display the End button
+                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
+                                }
+                                echo '</td>';
 
+                                echo '</tr>';
+                              }
                               $rowNumber++;
                             }
                           } else {

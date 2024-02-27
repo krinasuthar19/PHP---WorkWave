@@ -24,6 +24,12 @@ echo '<li>
         </a>
       </li>
       <li>
+        <a href="view_task.php">
+          <i data-feather="file-text"></i>
+          <span data-key="t-dashboard">View Tasks</span>
+        </a>
+      </li>
+      <li>
         <a href="leave_history.php">
           <i data-feather="file-text"></i>
           <span data-key="t-dashboard">Leave History</span>

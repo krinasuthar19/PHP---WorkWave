@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$title','$desc','$department','$startDate','$endDate', '$status')";
     if ($link->query($sql) === TRUE) {
       // echo "<script>alert('Record inserted successfully')</script>";
-      header("Location: add_task.php");
+      header("Location: view_task.php");
       exit();
     } else {
       echo "Error: " . $sql . "<br>" . $link->error;
