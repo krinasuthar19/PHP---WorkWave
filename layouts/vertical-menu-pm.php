@@ -20,7 +20,7 @@ echo '<li>
         <li>
           <a href="task.php">
             <i data-feather="file-text"></i>
-            <span data-key="t-dashboard">Tasks</span>
+            <span data-key="t-dashboard">Assign Tasks</span>
           </a>
         </li>
 

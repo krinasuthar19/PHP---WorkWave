@@ -50,8 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 
     // Remove Task
     if ($status == 2) {
-      $deleteQuery = "DELETE FROM task WHERE t_id = $task_id";
-      if (mysqli_query($link, $deleteQuery)) {
+      $deleteQuery1 = "DELETE FROM assign_task WHERE t_id = $task_id";
+      $deleteQuery2 = "DELETE FROM task WHERE t_id = $task_id";
+      if (mysqli_query($link, $deleteQuery1) && mysqli_query($link, $deleteQuery2)) {
         // Task ended successfully
         header("Location: view_task.php"); // Redirect back to view_tasks.php
         exit();
@@ -160,6 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           if (mysqli_num_rows($result) > 0) {
                             $rowNumber = 1; // Variable to track the row number in the table
                             while ($row = mysqli_fetch_assoc($result)) {
+                              $task_id = $row['t_id'];
+
                               // Output each row in the table 
                               echo '<tr>';
                               echo '<td>' . $rowNumber . '</td>'; // Assuming 'emp_id' is the employee ID column
@@ -174,17 +177,29 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                               echo ($status == 0) ? 'Pending' : (($status == 1) ? 'Working' : 'Completed');
                               echo '</td>';
                               if ($_SESSION['role'] == 1) {
-                                // Action button for admin
-                                if ($status == 2) {
-                                  // Display the Remove button to remove task completely if completed
-                                  echo '<td><a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a></td>';
-                                } elseif ($status == 0) {
-                                  // Display the End button
-                                  echo '<td style="color: blue;">Not Started</td>';
+
+                                $queryCheckAssign = "SELECT * FROM assign_task where t_id = $task_id";
+                                $resultCheckAssign = mysqli_query($link, $queryCheckAssign);
+                                // Displaying action buttons based on the status
+                          
+                                if (!(mysqli_num_rows($resultCheckAssign) > 0)) {
+                                  // action if task is not available on assign_task table
+                                  echo '<td style="color: blue;">Not Assigned</td>';
                                 } else {
-                                  // Display the End button
-                                  echo '<td style="color: green;">Working</td>';
+                                  // Action button for admin
+                                  if ($status == 2) {
+                                    // Display the Remove button to remove task completely if completed
+                                    echo '<td><a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a></td>';
+                                  } elseif ($status == 0) {
+                                    // Display the End button
+                                    echo '<td style="color: blue;">Not Started</td>';
+                                  } else {
+                                    // Display the End button
+                                    echo '<td style="color: green;">Working</td>';
+                                  }
                                 }
+
+
                               }
                               if ($_SESSION['role'] == 4) {
 
