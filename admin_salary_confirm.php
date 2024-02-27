@@ -1,20 +1,23 @@
 <?php
 session_start(); // Start session to get user role
+
+require "layouts/check_admin.php";
+
 include 'layouts/head-main.php';
-include 'layouts/config.php'; 
-if(isset($_GET['id'])) {
+include 'layouts/config.php';
+if (isset($_GET['id'])) {
   $record_id = $_GET['id'];
   $today_date = date('Y-m-d');
   // Construct the SQL UPDATE query
   $update_query = "UPDATE salaries SET admin_status = 1, payment_date = '$today_date' WHERE id = $record_id";
 
   // Execute the update query
-  if(mysqli_query($link, $update_query)) {
-      // Update successful
-      echo "Admin status updated successfully.";
+  if (mysqli_query($link, $update_query)) {
+    // Update successful
+    echo "Admin status updated successfully.";
   } else {
-      // Update failed
-      echo "Error updating admin status: " . mysqli_error($link);
+    // Update failed
+    echo "Error updating admin status: " . mysqli_error($link);
   }
 } else {
   // Handle case where ID is not provided
@@ -26,10 +29,14 @@ if(isset($_GET['id'])) {
 <html lang="en">
 
 <head>
-  <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
+  <title>
+    <?php echo $language["Dashboard"]; ?> | Employee Management System
+  </title>
   <?php include 'layouts/head.php'; ?>
-  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet"
+    type="text/css" />
+  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
   <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
   <?php include 'layouts/head-style.php'; ?>
@@ -110,7 +117,7 @@ if(isset($_GET['id'])) {
           INNER JOIN users u ON s.u_id = u.u_id
           INNER JOIN role r ON u.role = r.r_id
           WHERE s.hr_status = 1 AND s.admin_status = 0";  // Add this condition to filter based on hr_status
-
+                                
                                 if (isset($_GET['department']) && !empty($_GET['department'])) {
                                   $dept_id = $_GET['department'];
                                   $query .= " AND u.d_id = $dept_id"; // Add department filter if needed
@@ -170,7 +177,7 @@ if(isset($_GET['id'])) {
   <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
   <script>
     $.fn.dataTable.ext.errMode = 'none';
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#datatable').DataTable({
         "paging": true,
         "lengthChange": true,
@@ -181,7 +188,7 @@ if(isset($_GET['id'])) {
         "responsive": true,
       });
       // JavaScript function to filter records based on department selection
-      $('#department').change(function() {
+      $('#department').change(function () {
         var dept_id = $(this).val();
         window.location.href = 'admin_salary_confirm.php?department=' + dept_id;
       });
