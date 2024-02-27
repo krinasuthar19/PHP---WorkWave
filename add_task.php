@@ -9,8 +9,7 @@ include 'layouts/head-main.php';
     <?php echo $language["Dashboard"]; ?> | Minia - Admin & Dashboard Template
   </title>
   <?php include 'layouts/head.php'; ?>
-  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet"
-    type="text/css" />
+  <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
   <?php include 'layouts/head-style.php'; ?>
   <style>
     .form-content {
@@ -115,20 +114,23 @@ include 'layouts/head-main.php';
                         ?>
                       </select>
                     </div>
+                    <!-- start date open -->
                     <div class="col-md-4 mb-3">
                       <label for="startdate">Start Date</label>
                       <input type="text" class="form-control" id="startDate" name="startDate" required>
                     </div>
+                    <!-- start date close -->
+                    <!-- end date open -->
                     <div class="col-md-4 mb-3">
                       <label for="enddate">End Date</label>
                       <input type="text" class="form-control" id="endDate" name="endDate" required>
                     </div>
+                    <!-- end date close -->
                   </div>
                   <div class="row">
                     <div class="col-md-4 mb-3">
                       <br>
-                      <button type="submit" class="btn btn-primary form-control" id="submit" name="submit"
-                        style="margin-top: 8px;">Add Task
+                      <button type="submit" class="btn btn-primary form-control" id="submit" name="submit" style="margin-top: 8px;">Add Task
                     </div>
                   </div>
                   <div id="error-message" style="color: red;"></div>
@@ -143,7 +145,7 @@ include 'layouts/head-main.php';
                 var file = input.files[0];
                 if (file) {
                   var reader = new FileReader();
-                  reader.onload = function (e) {
+                  reader.onload = function(e) {
                     image.src = e.target.result;
                     container.style.display = 'block';
                   };
@@ -171,6 +173,35 @@ include 'layouts/head-main.php';
 <!-- datepicker -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var today = new Date();
+    var SminDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    var SmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0);
+    var EminDate = new Date();
+    var EmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0); // Maximum end date is 4 months from today
+
+    var startDatePicker = flatpickr("#startDate", {
+      dateFormat: "d-m-Y",
+      minDate: SminDate,
+      maxDate: SmaxDate,
+      onChange: function(selectedDates, selectedDate) {
+        // Update the minimum date of the end date picker to be the selected start date
+        endDatePicker.set("minDate", selectedDate);
+      }
+    });
+
+    var endDatePicker = flatpickr("#endDate", {
+      dateFormat: "d-m-Y",
+      minDate: EminDate,
+      maxDate: EmaxDate
+    });
+  });
+</script>
+
+
+
+
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function () {
     var today = new Date();
 
@@ -238,7 +269,7 @@ include 'layouts/head-main.php';
       }
     });
   });
-</script>
+</script> -->
 
 
 </body>
