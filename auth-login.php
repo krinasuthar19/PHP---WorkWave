@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="mt-4 mt-md-5 text-center">
                 <p class="mb-0">© <script>
                     document.write(new Date().getFullYear())
-                  </script> WorkWave . Crafted with <i class="mdi mdi-heart text-danger"></i> by xyz</p>
+                  </script> WorkWave .  <i class="mdi mdi-heart text-danger"></i> </p>
               </div>
             </div>
           </div>
