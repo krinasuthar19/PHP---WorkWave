@@ -5,7 +5,9 @@ include 'layouts/head-main.php';
 ?>
 
 <head>
-  <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
+  <title>
+    <?php echo $language["Dashboard"]; ?> | Employee Management System
+  </title>
 
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
@@ -78,10 +80,10 @@ include 'layouts/head-main.php';
                           $result = $link->query($sql);
 
                           // Check if there are any leave records
-                          if ($result->num_rows > 0) {
+                          if (mysqli_num_rows($result) > 0) {
                             $rowNumber = 1;
 
-                            while ($row = $result->fetch_assoc()) {
+                            while ($row = mysqli_fetch_assoc($result)) {
                               echo '<tr>';
                               echo '<td>' . $rowNumber . '</td>';
                               echo '<td>' . $row['emp_id'] . '</td>';
@@ -92,7 +94,7 @@ include 'layouts/head-main.php';
                               echo '<td>' . $row['description'] . '</td>';
                               echo '<td>' . $row['applied_on'] . '</td>';
                               echo '<td>
-                                        <form action="" method="post">
+                                        <form action="approve_leave_bcknd.php" method="post">
                                           <input type="hidden" name="leave_id" value="' . $row['id'] . '">
                                           <button type="submit" name="approve" class="btn btn-success">Approve</button>
                                           <button type="submit" name="reject" class="btn btn-danger">Reject</button>
@@ -107,37 +109,7 @@ include 'layouts/head-main.php';
                                     <td valign="top" colspan="10">No pending leave requests found.</td>
                                   </tr>';
                           }
-                          // Handle approval and rejection actions
-                          if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                            if (isset($_POST['approve'])) {
-                              // Update status to 1 (approved) in the database
-                              $leaveId = $_POST['leave_id'];
-                              $updateSql = "UPDATE leave_tbl SET status = 1 WHERE id = $leaveId";
-                              if ($link->query($updateSql) === TRUE) {
-                                echo "updated";
-                              } else {
-                                echo "Error updating record: " . $link->error;
-                              }
-                            }
-
-                            if (isset($_POST['reject'])) {
-                              // Update status to 0 (rejected) in the database
-                              $leaveId = $_POST['leave_id'];
-                              $updateSql = "UPDATE leave_tbl SET status = 0 WHERE id = $leaveId";
-                              if ($link->query($updateSql) === TRUE) {
-
-                                echo "updated";
-                              } else {
-                                echo "Error updating record: " . $link->error;
-                              }
-                            }
-                          }
-
-                          // Close database connection
-                          $link->close();
                           ?>
-
-
                         </tbody>
                       </table>
                     </div>

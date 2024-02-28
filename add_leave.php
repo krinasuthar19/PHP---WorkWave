@@ -44,14 +44,19 @@ if ($_SESSION['role'] == 3 || $_SESSION['role'] == 4) {
                           <label for="leave_reason">Leave Reason</label>
                           <input type="text" class="form-control" id="leave_reason" name="leave_reason" required>
                         </div>
+                        <!-- Replace leave_from and leave_to inputs with Flatpickr -->
                         <div class="form-group">
                           <label for="leave_from">Leave From</label>
-                          <input type="date" class="form-control" id="leave_from" name="leave_from" required>
+                          <div>
+                            <input type="text" class="form-control" id="leave_from" name="leave_from" required>
+                          </div>
                           <span id="leaveFromError" style="color: red;"></span>
                         </div>
                         <div class="form-group">
                           <label for="leave_to">Leave To</label>
-                          <input type="date" class="form-control" id="leave_to" name="leave_to" required>
+                          <div>
+                            <input type="text" class="form-control" id="leave_to" name="leave_to" required>
+                          </div>
                           <span id="leaveToError" style="color: red;"></span>
                         </div>
                         <div class="form-group">
@@ -88,34 +93,86 @@ if ($_SESSION['role'] == 3 || $_SESSION['role'] == 4) {
   <script src="http://localhost/EMS-CI/assets/js/app.js"></script>
   <script src="http://localhost/EMS-CI/assets/js/pages/dashboard.init.js"></script>
   <script src="http://localhost/EMS-CI/assets/js/app.js"></script>
+  <!-- <script>
+function validateDates() {
+  var leaveFrom = new Date(document.getElementById('leave_from').value);
+  var leaveTo = new Date(document.getElementById('leave_to').value);
+  var today = new Date();
+  var leaveFromError = document.getElementById('leaveFromError');
+  var leaveToError = document.getElementById('leaveToError');
+  leaveFromError.textContent = '';
+  leaveToError.textContent = '';
+  if (leaveFrom <= today) {
+    leaveFromError.textContent = "Leave from date must be after today's date.";
+  }
+  if (leaveTo < leaveFrom) {
+    leaveToError.textContent = "Leave to date must be after leave from date.";
+  }
+}
+
+document.getElementById('leave_from').addEventListener('change', validateDates);
+document.getElementById('leave_to').addEventListener('change', validateDates);
+
+document.getElementById('leaveForm').addEventListener('submit', function(event) {
+  validateDates();
+  var leaveFromError = document.getElementById('leaveFromError').textContent;
+  var leaveToError = document.getElementById('leaveToError').textContent;
+  if (leaveFromError || leaveToError) {
+    event.preventDefault();
+    alert("Please correct the errors before submitting the form.");
+  }
+});
+</script> -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-    function validateDates() {
-      var leaveFrom = new Date(document.getElementById('leave_from').value);
-      var leaveTo = new Date(document.getElementById('leave_to').value);
+    document.addEventListener('DOMContentLoaded', function () {
       var today = new Date();
-      var leaveFromError = document.getElementById('leaveFromError');
-      var leaveToError = document.getElementById('leaveToError');
-      leaveFromError.textContent = '';
-      leaveToError.textContent = '';
-      if (leaveFrom <= today) {
-        leaveFromError.textContent = "Leave from date must be after today's date.";
-      }
-      if (leaveTo < leaveFrom) {
-        leaveToError.textContent = "Leave to date must be after leave from date.";
-      }
-    }
+      var SminDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      var SmaxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 10);
 
-    document.getElementById('leave_from').addEventListener('change', validateDates);
-    document.getElementById('leave_to').addEventListener('change', validateDates);
+      var startDatePicker = flatpickr("#leave_from", {
+        dateFormat: "Y-m-d",
+        minDate: SminDate,
+        maxDate: SmaxDate,
+        onChange: function (selectedDates, selectedDate) {
+          // Update the minimum date of the end date picker to be the selected start date
+          endDatePicker.set("minDate", selectedDate);
+        }
+      });
 
-    document.getElementById('leaveForm').addEventListener('submit', function (event) {
-      validateDates();
-      var leaveFromError = document.getElementById('leaveFromError').textContent;
-      var leaveToError = document.getElementById('leaveToError').textContent;
-      if (leaveFromError || leaveToError) {
-        event.preventDefault();
-        alert("Please correct the errors before submitting the form.");
+      var endDatePicker = flatpickr("#leave_to", {
+        dateFormat: "Y-m-d",
+        minDate: "today"
+      });
+
+      function validateDates() {
+        var leaveFrom = new Date(document.getElementById('leave_from').value);
+        var leaveTo = new Date(document.getElementById('leave_to').value);
+        var today = new Date();
+        var leaveFromError = document.getElementById('leaveFromError');
+        var leaveToError = document.getElementById('leaveToError');
+        leaveFromError.textContent = '';
+        leaveToError.textContent = '';
+        if (Date(leaveFrom) < Date(today)) {
+          leaveFromError.textContent = "Date must be today or after today's date.";
+        }
+        if (leaveTo < leaveFrom) {
+          leaveToError.textContent = "Date must be after leave from date.";
+        }
       }
+
+      document.getElementById('leave_from').addEventListener('change', validateDates);
+      document.getElementById('leave_to').addEventListener('change', validateDates);
+
+      document.getElementById('leaveForm').addEventListener('submit', function (event) {
+        validateDates();
+        var leaveFromError = document.getElementById('leaveFromError').textContent;
+        var leaveToError = document.getElementById('leaveToError').textContent;
+        if (leaveFromError || leaveToError) {
+          event.preventDefault();
+          alert("Please correct the errors before submitting the form.");
+        }
+      });
     });
   </script>
 <?php } else {
