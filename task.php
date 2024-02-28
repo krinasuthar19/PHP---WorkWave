@@ -142,11 +142,11 @@ if ($_SESSION['role'] == 3) {
                                                             echo '<td>' . $row['start_date'] . '</td>';
                                                             echo '<td>' . $row['end_date'] . '</td>';
                                                             $status = $row['status'];
-                                                            $statusColor = ($status == 0) ? 'red' : (($status == 1) ? 'green' : 'blue');
+                                                            $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
                                                             echo '<td style="color: ' . $statusColor . ';">';
 
                                                             // Displaying status based on the value
-                                                            echo ($status == 0) ? 'Pending' : (($status == 1) ? 'Working' : 'Completed');
+                                                            echo ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
                                                             echo '</td>';
 
                                                             //action  button
