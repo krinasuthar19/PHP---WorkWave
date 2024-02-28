@@ -2,6 +2,7 @@
 session_start();
 $_SESSION = array();
 session_destroy();
-header("location: auth-login.php");
+// header("location: auth-login.php");
+header("location: login.php");
 exit;
 ?>

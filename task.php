@@ -1,9 +1,9 @@
 <?php
 session_start(); // Start session to get user role
 if ($_SESSION['role'] == 3) {
-    // Redirect user to another page or show access denied message
-    include 'layouts/head-main.php';
-    ?>
+  // Redirect user to another page or show access denied message
+  include 'layouts/head-main.php';
+  ?>
 
 <head>
   <title>
@@ -32,10 +32,10 @@ if ($_SESSION['role'] == 3) {
         <div class="row">
           <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 class="mb-sm-0 font-size-18">Assign Tasks</h4>
+              <h4 class="mb-sm-0 font-size-18">Tasks</h4>
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                  <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>-->
+                  <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li> -->
                   <li class="breadcrumb-item active">Tasks</li>
                 </ol>
               </div>
@@ -72,60 +72,60 @@ if ($_SESSION['role'] == 3) {
                       </thead>
                       <tbody>
                         <?php
-                                                    // Include database connection or configuration file
-                                                    include 'layouts/config.php';
-                                                    $d_id = $_SESSION['d_id'];
+                          // Include database connection or configuration file
+                          include 'layouts/config.php';
+                          $d_id = $_SESSION['d_id'];
 
-                                                    // Fetch task data from the database where status is not 0 (not assigned)
-                                                    $query = "SELECT * FROM task WHERE department = $d_id AND status = 0";
-                                                    $result = mysqli_query($link, $query);
+                          // Fetch task data from the database where status is not 0 (not assigned)
+                          $query = "SELECT * FROM task WHERE department = $d_id AND status = 0";
+                          $result = mysqli_query($link, $query);
 
-                                                    // Check if there are rows in the result
-                                                    if (mysqli_num_rows($result) > 0) {
-                                                        $rowNumber = 1; // Variable to track the row number in the table
-                                                        while ($row = mysqli_fetch_assoc($result)) {
-                                                            $task_id = $row['t_id'];
+                          // Check if there are rows in the result
+                          if (mysqli_num_rows($result) > 0) {
+                            $rowNumber = 1; // Variable to track the row number in the table
+                            while ($row = mysqli_fetch_assoc($result)) {
+                              $task_id = $row['t_id'];
 
-                                                            // Output each row in the table
-                                                            echo '<tr>';
-                                                            echo '<td>' . $rowNumber . '</td>';
-                                                            echo '<td>' . $row['t_title'] . '</td>';
-                                                            echo '<td>' . $row['t_description'] . '</td>';
-                                                            echo '<td>' . $row['start_date'] . '</td>';
-                                                            echo '<td>' . $row['end_date'] . '</td>';
+                              // Output each row in the table
+                              echo '<tr>';
+                              echo '<td>' . $rowNumber . '</td>';
+                              echo '<td>' . $row['t_title'] . '</td>';
+                              echo '<td>' . $row['t_description'] . '</td>';
+                              echo '<td>' . $row['start_date'] . '</td>';
+                              echo '<td>' . $row['end_date'] . '</td>';
 
-                                                            $status = $row['status'];
-                                                            $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
-                                                            echo '<td style="color: ' . $statusColor . ';">';
-                                                            // Displaying status based on the value
-                                                            echo ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
-                                                            echo '</td>';
+                              $status = $row['status'];
+                              $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
+                              echo '<td style="color: ' . $statusColor . ';">';
+                              // Displaying status based on the value
+                              echo ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
+                              echo '</td>';
 
-                                                            //action  button
-                                                            echo '<td>';
-                                                            //check assign_task table if task is already available in that db or not 
-                                                            $queryCheckAssign = "SELECT * FROM assign_task where t_id = $task_id";
-                                                            $resultCheckAssign = mysqli_query($link, $queryCheckAssign);
+                              //action  button
+                              echo '<td>';
+                              //check assign_task table if task is already available in that db or not 
+                              $queryCheckAssign = "SELECT * FROM assign_task where t_id = $task_id";
+                              $resultCheckAssign = mysqli_query($link, $queryCheckAssign);
 
-                                                            // Displaying action buttons based on the status
-                                                            if ($status == 0) {
-                                                                // Status is 0 
-                                                                echo '<a href="assign_task.php?task_id=' . $row['t_id'] . '" class="btn btn-primary">Assign</a>';
-                                                            }
+                              // Displaying action buttons based on the status
+                              if ($status == 0) {
+                                // Status is 0 
+                                echo '<a href="assign_task.php?task_id=' . $row['t_id'] . '" class="btn btn-primary">Assign</a>';
+                              }
 
-                                                            echo '</td>';
-                                                            echo '</tr>';
-                                                            $rowNumber++;
-                                                        }
-                                                    } else {
-                                                        //don't uncomment this, throws warning if no data is fetched from db
-                                                        // If no data is available
-                                                        // echo '<tr><td colspan="9">No data available in the table</td></tr>';
-                                                    }
+                              echo '</td>';
+                              echo '</tr>';
+                              $rowNumber++;
+                            }
+                          } else {
+                            //don't uncomment this, throws warning if no data is fetched from db
+                            // If no data is available
+                            // echo '<tr><td colspan="9">No data available in the table</td></tr>';
+                          }
 
-                                                    // Close the database connection
-                                                    mysqli_close($link);
-                                                    ?>
+                          // Close the database connection
+                          mysqli_close($link);
+                          ?>
                       </tbody>
                     </table>
                   </div>
@@ -200,8 +200,8 @@ $(document).ready(function() {
 </script>
 <?php
 } else {
-    header("Location: auth-login.php");
-    exit(); // Stop further execution
+  header("Location: login.php");
+  exit(); // Stop further execution
 }
 ?>
 </body>

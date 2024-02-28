@@ -3,10 +3,10 @@ session_start(); // Start session to get user role
 // require 'layouts/check_admin.php';
 // require 'layouts/check_emp.php';
 if (!(isset($_SESSION['loggedin']))) {
-  header("Location: auth-login.php");
+  header("Location: login.php");
 }
 if ($_SESSION['role'] == 2) {
-  header("Location: auth-login.php");
+  header("Location: login.php");
 }
 include 'layouts/head-main.php';
 
