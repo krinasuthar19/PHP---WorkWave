@@ -52,7 +52,6 @@ include 'layouts/head-main.php';
     height: auto;
   }
   </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 </head>
 <?php include 'layouts/body.php'; ?>
@@ -105,12 +104,16 @@ include 'layouts/head-main.php';
                     </div>
                   </div>
                   <div class="row">
+
+                    <!-- dob code start -->
                     <div class="col-md-3 mb-3">
                       <label for="DateOfBirth">Date of Birth</label>
                       <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" autocomplete="off"
                         required>
                       <span id="ageError" style="color: red;"></span>
                     </div>
+                    <!-- dob code end -->
+
                     <div class="col-md-3 mb-3">
                       <label for="Gender">Gender</label>
                       <select class="form-control" id="Gender" name="Gender">
@@ -184,10 +187,14 @@ include 'layouts/head-main.php';
                         ?>
                       </select>
                     </div>
+
+                    <!-- doj code start -->
                     <div class="col-md-3 mb-3">
                       <label for="DateOfJoining">Date of Joining</label>
                       <input type="text" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
                     </div>
+                    <!-- doj code start -->
+
                     <div class="col-md-3 mb-3">
                       <label for="Salary">Salary</label>
                       <input type="text" class="form-control" id="Salary" name="Salary" autocomplete="off" required>
@@ -297,9 +304,6 @@ function displayProfileImage() {
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     var currentDate = new Date();
-    var defaultYear = currentDate.getFullYear() - 19;
-    var defaultMonth = currentDate.getMonth() + 1;
-    var defaultDay = currentDate.getDate();
 
     flatpickr("#DateOfBirth", {
       dateFormat: "d-m-Y",
@@ -308,7 +312,6 @@ function displayProfileImage() {
       yearRange: "-100:+0",
       maxDate: new Date(currentDate.getFullYear() - 19, currentDate.getMonth(), currentDate.getDate()),
 
-      // maxDate: new Date().fp_incr(-19),
       onChange: function(selectedDates, dateStr, instance) {
         var selectedDate = selectedDates[0];
         if (!selectedDate) {
@@ -332,20 +335,12 @@ function displayProfileImage() {
   </script>
 </div>
 
-
-<div>
-  <script>
-  // code to check email 
-  </script>
-</div>
-
-
 <!-- Add this <div> containing the script for the Date of Joining date picker -->
 <div>
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     var today = new Date();
-    var maxDate = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
+    var maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
 
     flatpickr("#DateOfJoining", {
       dateFormat: "d-m-Y",

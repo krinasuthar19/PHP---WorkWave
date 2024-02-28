@@ -56,6 +56,8 @@ include 'layouts/head-main.php';
       height: auto;
     }
   </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
 </head>
 <?php include 'layouts/body.php'; ?>
 <div id="layout-wrapper">
@@ -113,14 +115,18 @@ include 'layouts/head-main.php';
                         ?>
                       </select>
                     </div>
+                    <!-- start date open -->
                     <div class="col-md-4 mb-3">
                       <label for="startdate">Start Date</label>
-                      <input type="date" class="form-control" id="startDate" name="startDate" required>
+                      <input type="text" class="form-control" id="startDate" name="startDate" required>
                     </div>
+                    <!-- start date close -->
+                    <!-- end date open -->
                     <div class="col-md-4 mb-3">
                       <label for="enddate">End Date</label>
-                      <input type="date" class="form-control" id="endDate" name="endDate" required>
+                      <input type="text" class="form-control" id="endDate" name="endDate" required>
                     </div>
+                    <!-- end date close -->
                   </div>
                   <div class="row">
                     <div class="col-md-4 mb-3">
@@ -165,44 +171,35 @@ include 'layouts/head-main.php';
 <script src="assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
 <!-- <script src="assets/js/pages/dashboard.init.js"></script> -->
 <script src="assets/js/app.js"></script>
+
+<!-- datepicker -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-  function validateDates() {
-    var startDate = new Date(document.getElementById('startDate').value);
-    var endDate = new Date(document.getElementById('endDate').value);
+  document.addEventListener('DOMContentLoaded', function () {
     var today = new Date();
-    var errorMessage = '';
+    var SminDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    var SmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0);
+    var EminDate = new Date();
+    var EmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0); // Maximum end date is 4 months from today
 
-    if (startDate <= today) {
-      errorMessage += "Start date must be after today's date. ";
-    }
-    if (startDate >= endDate) {
-      errorMessage += "Start date must be before end date. ";
-    }
-    if (endDate <= startDate) {
-      errorMessage += "End date must be after start date. ";
-    }
-    if (startDate.getFullYear() > 3000 || endDate.getFullYear() > 3000) {
-      errorMessage += "Select an appropriate year. Year should not exceed 3000.";
-    }
+    var startDatePicker = flatpickr("#startDate", {
+      dateFormat: "d-m-Y",
+      minDate: SminDate,
+      maxDate: SmaxDate,
+      onChange: function (selectedDates, selectedDate) {
+        // Update the minimum date of the end date picker to be the selected start date
+        endDatePicker.set("minDate", selectedDate);
+      }
+    });
 
-    var errorElement = document.getElementById('error-message');
-    errorElement.textContent = errorMessage;
-  }
-
-  document.getElementById('startDate').addEventListener('change', validateDates);
-  document.getElementById('endDate').addEventListener('change', validateDates);
-
-  document.getElementById('taskForm').addEventListener('submit', function (event) {
-    validateDates();
-    var errorMessage = document.getElementById('error-message').textContent;
-    if (errorMessage) {
-      event.preventDefault();
-      alert("Please correct the errors before submitting the form: \n" + errorMessage);
-      return false; // Prevent form submission
-    }
-    return true; // Allow form submission
+    var endDatePicker = flatpickr("#endDate", {
+      dateFormat: "d-m-Y",
+      minDate: EminDate,
+      maxDate: EmaxDate
+    });
   });
 </script>
+
 </body>
 
 </html>
