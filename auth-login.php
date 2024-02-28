@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="auth-content my-auto">
                 <div class="text-center">
                   <h5 class="mb-0">Welcome Back !</h5>
-                  <p class="text-muted mt-2">Sign in to continue to Minia.</p>
+                  <p class="text-muted mt-2">Sign in to continue to WorkWave.</p>
                 </div>
                 <form class="mt-4 pt-2" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                   <div class="mb-3 <?php echo (!empty($email_err)) ? 'has-error' : ''; ?>">
@@ -206,12 +206,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       <div class="testi-contain text-white">
                         <i class="bx bxs-quote-alt-left text-success display-6"></i>
 
-                        <h4 class="mt-4 fw-medium lh-base text-white">“I feel confident
-                          imposing change
-                          on myself. It's a lot more progressing fun than looking back.
-                          That's why
-                          I ultricies enim
-                          at malesuada nibh diam on tortor neaded to throw curve balls.”
+                        <h4 class="mt-4 fw-medium lh-base text-white">“Unity is strength. 
+                          When there is teamwork and collaboration, 
+                          wonderful things can be achieved.” ― Mattie Stepanek”
                         </h4>
                       </div>
                     </div>
@@ -220,12 +217,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       <div class="testi-contain text-white">
                         <i class="bx bxs-quote-alt-left text-success display-6"></i>
 
-                        <h4 class="mt-4 fw-medium lh-base text-white">“Our task must be to
-                          free ourselves by widening our circle of compassion to embrace
-                          all living
-                          creatures and
-                          the whole of quis consectetur nunc sit amet semper justo. nature
-                          and its beauty.”</h4>
+                        <h4 class="mt-4 fw-medium lh-base text-white">“Many ideas grow better when
+                           transplanted into another mind than 
+                           the one where they sprang up.” – Oliver Wendell Holmes”</h4>
                       </div>
                     </div>
 
@@ -233,12 +227,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       <div class="testi-contain text-white">
                         <i class="bx bxs-quote-alt-left text-success display-6"></i>
 
-                        <h4 class="mt-4 fw-medium lh-base text-white">“I've learned that
-                          people will forget what you said, people will forget what you
-                          did,
-                          but people will never forget
-                          how donec in efficitur lectus, nec lobortis metus you made them
-                          feel.”</h4>
+                        <h4 class="mt-4 fw-medium lh-base text-white">“Collaboration is a key part of the success of any organization,
+                          executed through a clearly defined vision and mission and
+                           based on transparency and constant communication." — Dinesh Paliwal”</h4>
                       </div>
                     </div>
                   </div>
