@@ -5,7 +5,7 @@ session_start(); // Start session to get user role
 if (!(isset($_SESSION['loggedin']))) {
   header("Location: auth-login.php");
 }
-if ($_SESSION['role'] == 2 || $_SESSION['role'] == 3) {
+if ($_SESSION['role'] == 2) {
   header("Location: auth-login.php");
 }
 include 'layouts/head-main.php';
@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           $role = $_SESSION['role'];
 
                           // Fetch task data from the database based on user role
-                          if ($role == 1) {
+                          if ($role == 1 || $role == 3) {
                             // Query for admin
                             $query = "SELECT * FROM task";
                           } elseif ($role == 4) {
@@ -185,30 +185,53 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                               echo '<td>' . $row['t_description'] . '</td>';
                               echo '<td>' . $row['start_date'] . '</td>';
                               echo '<td>' . $row['end_date'] . '</td>';
+
+                              //status column
                               $status = $row['status'];
                               $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
                               echo '<td style="color: ' . $statusColor . ';">';
                               echo ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
                               echo '</td>';
-                              echo '<td>';
-                              if ($role == 1 && ($status == 0 || $status == 3)) {
-                                // Action buttons for admin
-                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a>';
-                              } elseif ($role == 4 && $status == 1) {
-                                // Action buttons for employee only if the task is pending
-                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-success">Start</a>';
-                              } elseif ($role == 4 && $status == 2) {
-                                // Action buttons for employee only if the task is in progress
-                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
-                              }
-                              echo '</td>';
 
+                              //Action column
+                              if ($role == 1 || $role == 3) {
+                                if ($status == 0 || $status == 3) {
+                                  // Action buttons for admin or pm if task is completed or not assigned yet
+                                  echo '<td>';
+                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a>';
+                                  echo '</td>';
+                                } else {
+                                  //Message for admin or pm if task is on working phase(employee started working on task)
+                                  echo '<td style="color: blue;">';
+                                  echo ($status == 1) ? 'Not Completed' : (($status == 2) ? 'Not Completed' : '');
+                                  echo '</td>';
+                                }
+                              }
+                              if ($role == 4) {
+                                if ($status == 1) {
+                                  // Action buttons for employee only if the task is not started
+                                  // Action Button for employee to start the task
+                                  echo '<td>';
+                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-success">Start</a>';
+                                  echo '</td>';
+                                } elseif ($status == 2) {
+                                  // Action buttons for employee only if the task is in working phase(started)
+                                  // Action Button for employee to end the task
+                                  echo '<td>';
+                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
+                                  echo '</td>';
+                                } elseif ($status == 3) {
+                                  // Action buttons for employee only if the task completed
+                                  echo '<td style="color: blue;">Completed</td>';
+                                }
+                              }
                               echo '</tr>';
                               $rowNumber++;
                             }
                           } else {
+                            //don't uncomment this, throws warning if no data is fetched from db
                             // If no data is available
-                            echo '<tr><td colspan="7">No data available in the table</td></tr>';
+                            // echo '<tr><td colspan="9">No data available in the table</td></tr>';
                           }
 
                           // Close the database connection

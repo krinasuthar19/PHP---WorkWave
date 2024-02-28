@@ -3,129 +3,81 @@ session_start(); // Start session to get user role
 if ($_SESSION['role'] == 3) {
     // Redirect user to another page or show access denied message
     include 'layouts/head-main.php';
-    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
-        $task_id = $_GET['task_id'];
-
-        // Include database connection or configuration file
-        include 'layouts/config.php';
-
-        // Fetch task data from the database
-        $query = "SELECT * FROM task WHERE t_id = $task_id";
-        $result = mysqli_query($link, $query);
-
-        if ($result && mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $status = $row['status'];
-
-
-
-            // End Task
-            if ($status == 1) {
-                $updateQuery = "UPDATE task SET status = 2 WHERE t_id = $task_id";
-                $updateQuery2 = "UPDATE assign_task SET status = 2 WHERE t_id = $task_id";
-
-                if (mysqli_query($link, $updateQuery) && mysqli_query($link, $updateQuery2)) {
-                    header("Location: task.php"); // Redirect back to view_tasks.php
-                    exit();
-                } else {
-                    // Error updating task status
-                    echo "Error updating task status: " . mysqli_error($link);
-                    exit();
-                }
-            }
-        } else {
-            // Task not found
-            echo "Task not found.";
-            exit();
-        }
-
-        // Close the database connection
-        mysqli_close($link);
-    }
     ?>
 
-    <head>
-        <title>
-            <?php echo $language["Dashboard"]; ?> | Employee Management System
-        </title>
+<head>
+  <title>
+    <?php echo $language["Dashboard"]; ?> | Employee Management System
+  </title>
+  <?php include 'layouts/head.php'; ?>
+  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+  <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <?php include 'layouts/head-style.php'; ?>
+</head>
 
-        <?php include 'layouts/head.php'; ?>
-        <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
-            type="text/css" />
-        <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet"
-            type="text/css" />
-        <?php include 'layouts/head-style.php'; ?>
-    </head>
+<?php include 'layouts/body.php'; ?>
 
-    <?php include 'layouts/body.php'; ?>
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <?php include 'layouts/menu.php'; ?>
+  <!-- ============================================================== -->
+  <!-- Start right Content here -->
+  <!-- ============================================================== -->
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+          <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+              <h4 class="mb-sm-0 font-size-18">Tasks</h4>
+              <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>
+                  <li class="breadcrumb-item active">Tasks</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end page title -->
+        <!-- Content Header -->
 
-    <!-- Begin page -->
-    <div id="layout-wrapper">
-
-        <?php include 'layouts/menu.php'; ?>
-
-        <!-- ============================================================== -->
-        <!-- Start right Content here -->
-        <!-- ============================================================== -->
-        <div class="main-content">
-
-            <div class="page-content">
-                <div class="container-fluid">
-
-                    <!-- start page title -->
+        <!-- Main Content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box box-info">
+                <div class="box-header">
+                </div>
+                <div class="box-body">
+                  <div class="table-responsive">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0 font-size-18">Tasks</h4>
-
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Tasks</a></li>
-                                        <li class="breadcrumb-item active">Tasks</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <!-- end page title -->
-                    <!-- Content Header -->
-
-                    <!-- Main Content -->
-                    <section class="content">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="box box-info">
-                                    <div class="box-header">
-                                    </div>
-                                    <div class="box-body">
-                                        <div class="table-responsive">
-                                            <div class="row">
-
-                                            </div>
-                                            <!-- DataTable -->
-                                            <table id="example1"
-                                                class="table table-bordered table-striped dataTable no-footer">
-                                                <thead>
-                                                    <tr role="row">
-                                                        <!-- Table Headers -->
-                                                        <th>#</th>
-                                                        <th>Name</th>
-                                                        <th>Description</th>
-                                                        <th>Start Date</th>
-                                                        <th>End Date</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
+                    <!-- DataTable -->
+                    <table id="example1" class="table table-bordered table-striped dataTable no-footer">
+                      <thead>
+                        <tr role="row">
+                          <!-- Table Headers -->
+                          <th>#</th>
+                          <th>Name</th>
+                          <th>Description</th>
+                          <th>Start Date</th>
+                          <th>End Date</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
                                                     // Include database connection or configuration file
                                                     include 'layouts/config.php';
                                                     $d_id = $_SESSION['d_id'];
 
-                                                    // Fetch task data from the database
-                                                    $query = "SELECT * FROM task where department = $d_id";
+                                                    // Fetch task data from the database where status is not 0 (not assigned)
+                                                    $query = "SELECT * FROM task WHERE department = $d_id AND status = 0";
                                                     $result = mysqli_query($link, $query);
 
                                                     // Check if there are rows in the result
@@ -141,10 +93,10 @@ if ($_SESSION['role'] == 3) {
                                                             echo '<td>' . $row['t_description'] . '</td>';
                                                             echo '<td>' . $row['start_date'] . '</td>';
                                                             echo '<td>' . $row['end_date'] . '</td>';
+
                                                             $status = $row['status'];
                                                             $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
                                                             echo '<td style="color: ' . $statusColor . ';">';
-
                                                             // Displaying status based on the value
                                                             echo ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
                                                             echo '</td>';
@@ -154,117 +106,99 @@ if ($_SESSION['role'] == 3) {
                                                             //check assign_task table if task is already available in that db or not 
                                                             $queryCheckAssign = "SELECT * FROM assign_task where t_id = $task_id";
                                                             $resultCheckAssign = mysqli_query($link, $queryCheckAssign);
+
                                                             // Displaying action buttons based on the status
-                                                
-                                                            if (mysqli_num_rows($resultCheckAssign) > 0) {
-                                                                // Status is Pending
-                                                                echo '<a style="color:blue;">Assigned</a>';
-                                                            } else {
-
-
-                                                                if ($status == 0) {
-                                                                    // Status is Pending
-                                                                    echo '<a href="assign_task.php?task_id=' . $row['t_id'] . '" class="btn btn-primary">Assign</a>';
-                                                                } elseif ($status == 1) {
-                                                                    // Status is Working
-                                                                    echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
-                                                                } elseif ($status == 2) {
-                                                                    // Status is Completed, no button
-                                                                }
+                                                            if ($status == 0) {
+                                                                // Status is 0 
+                                                                echo '<a href="assign_task.php?task_id=' . $row['t_id'] . '" class="btn btn-primary">Assign</a>';
                                                             }
+
                                                             echo '</td>';
-
                                                             echo '</tr>';
-
                                                             $rowNumber++;
                                                         }
                                                     } else {
+                                                        //don't uncomment this, throws warning if no data is fetched from db
                                                         // If no data is available
-                                                        echo '<tr><td colspan="9">No data available in the table</td></tr>';
+                                                        // echo '<tr><td colspan="9">No data available in the table</td></tr>';
                                                     }
 
                                                     // Close the database connection
                                                     mysqli_close($link);
                                                     ?>
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-        <!-- end page title -->
-        <!-- Content Header -->
+          </div>
+        </section>
+      </div>
     </div>
+  </div>
+  <!-- end page title -->
+  <!-- Content Header -->
+</div>
 
+<!-- Footer -->
+<footer class="main-footer">
+  <div class="pull-right hidden-xs">
+    <b>Version</b> 3.4.13
+  </div>
+  <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
+</footer>
+</div>
+</div>
+<!-- End Page-content -->
 
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 3.4.13
-        </div>
-        <strong>© 2024</strong> Employee Management System in CodeIgniter Framework
-    </footer>
+<?php include 'layouts/footer.php'; ?>
+</div>
+<!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
 
-    </div>
+<!-- Right Sidebar -->
+<?php include 'layouts/right-sidebar.php'; ?>
+<!-- /Right-bar -->
 
-    </div>
-    <!-- End Page-content -->
+<!-- JAVASCRIPT -->
+<?php include 'layouts/vendor-scripts.php'; ?>
 
-    <?php include 'layouts/footer.php'; ?>
-    </div>
-    <!-- end main content-->
-    </div>
-    <!-- END layout-wrapper -->
+<!-- apexcharts -->
+<script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
 
-    <!-- Right Sidebar -->
-    <?php include 'layouts/right-sidebar.php'; ?>
-    <!-- /Right-bar -->
+<!-- Plugins js-->
+<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js">
+</script>
+<script
+  src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
+</script>
 
-    <!-- JAVASCRIPT -->
-    <?php include 'layouts/vendor-scripts.php'; ?>
-
-    <!-- apexcharts -->
-    <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
-
-    <!-- Plugins js-->
-    <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js">
-    </script>
-    <script
-        src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
-        </script>
-
-    <!-- DataTables js -->
-    <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <!-- DataTables js -->
-    <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-    <!-- App js -->
-    <script src="assets/js/app.js"></script>
-    <!-- Datatable -->
-    <script>
-        $(document).ready(function () {
-            $('#example1').DataTable({
-                "paging": true,
-                "lengthChange": true,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true
-            });
-        });
-    </script>
-    <?php
+<!-- DataTables js -->
+<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<!-- DataTables js -->
+<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+<!-- Datatable -->
+<script>
+$(document).ready(function() {
+  $('#example1').DataTable({
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "responsive": true
+  });
+});
+</script>
+<?php
 } else {
     header("Location: auth-login.php");
     exit(); // Stop further execution

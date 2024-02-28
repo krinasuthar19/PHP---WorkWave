@@ -2,5 +2,26 @@
   "CodeGPT.apiKey": "CodeGPT Plus Beta",
   "cSpell.words": [
     "halfday"
+  ],
+  "colorize.include": [
+
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "**/*.styl"
+  ],
+  "colorize.languages": [
+    "javascript",
+    "php",
+    "css",
+    "sass",
+    "scss",
+    "less",
+    "postcss",
+    "sss",
+    "stylus",
+    "xml",
+    "svg"
   ]
 }

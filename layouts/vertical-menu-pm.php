@@ -23,7 +23,12 @@ echo '<li>
             <span data-key="t-dashboard">Assign Tasks</span>
           </a>
         </li>
-
+        <li>
+          <a href="view_task.php">
+            <i data-feather="file-text"></i>
+            <span data-key="t-dashboard">View Tasks</span>
+          </a>
+        </li>
         <li>
           <a href="view_emp.php">
             <i data-feather="users"></i>
