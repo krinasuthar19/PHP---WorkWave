@@ -66,6 +66,7 @@ include 'layouts/head-main.php';
               <h4 class="mb-sm-0 font-size-18">Add Employee</h4>
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
+                <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
                   <li class="breadcrumb-item"><a href="javascript:void(0);">Add Employee</a></li>
                 </ol>
               </div>

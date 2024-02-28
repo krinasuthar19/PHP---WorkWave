@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                 <h4 class="mb-sm-0 font-size-18">View Tasks</h4>
                 <div class="page-title-right">
                   <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">View Tasks</a></li>
+                    <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
                     <li class="breadcrumb-item active">View Tasks</li>
                   </ol>
                 </div>
