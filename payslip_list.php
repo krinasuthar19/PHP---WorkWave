@@ -29,7 +29,7 @@ include 'layouts/config.php'; // Include database configuration file
                                 <h4 class="mb-sm-0 font-size-18">Payslip List</h4>
                                 <div class="page-title-right">
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
+                                        <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
                                         <li class="breadcrumb-item active">Payslip List</li>
                                     </ol>
                                 </div>
