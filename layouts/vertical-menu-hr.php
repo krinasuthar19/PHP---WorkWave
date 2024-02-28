@@ -18,7 +18,7 @@ echo '<li>
         </a>
       </li>
       <li>
-        <a href="hr_salary_confirm.php">
+        <a href="confirm_salary.php">
           <i data-feather="check-circle"></i>
           <span data-key="t-dashboard">Confirm Salary</span>
         </a>
