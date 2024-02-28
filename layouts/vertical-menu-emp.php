@@ -14,7 +14,7 @@ echo '<li>
         <li>
           <a href="leave_status.php">
             <i data-feather="file"></i>
-            <span data-key="t-dashboard"> leave status</span>
+            <span data-key="t-dashboard">leave status</span>
           </a>
         </li>
         <li>

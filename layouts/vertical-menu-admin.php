@@ -36,8 +36,20 @@ echo '<li>
         </a>
       </li>
       <li>
-        <a href="admin_salary_confirm.php">
-          <i data-feather="check-circle"></i>
-          <span data-key="t-dashboard">Confirm Salary</span>
+      <a href="admin_salary_confirm.php">
+      <i data-feather="check-circle"></i>
+      <span data-key="t-dashboard">Confirm Salary</span>
+      </a>
+      </li>
+      <li>
+        <a href="payslip_list.php">
+          <i data-feather="file-text"></i>
+          <span data-key="t-dashboard">Payslip List</span>
         </a>
+      </li>
+      <li>
+          <a href="profile.php">
+            <i data-feather="check-circle"></i>
+            <span data-key="t-dashboard">Profile</span>
+          </a>
       </li>';

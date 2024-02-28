@@ -13,48 +13,48 @@ include 'layouts/head-main.php';
     type="text/css" />
   <?php include 'layouts/head-style.php'; ?>
   <style>
-  .form-content {
-    padding: 25px;
-    border-radius: 15px;
-    margin: 10px;
-    box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
-  }
+    .form-content {
+      padding: 25px;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
+    }
 
-  table {
-    border-collapse: collapse;
-    margin-top: 20px;
-    padding: 20px;
-  }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+      padding: 20px;
+    }
 
-  th {
-    border-bottom: 2px solid #ddd;
-  }
+    th {
+      border-bottom: 2px solid #ddd;
+    }
 
-  #button1 {
-    width: 100%;
-    font-weight: bold;
-  }
+    #button1 {
+      width: 100%;
+      font-weight: bold;
+    }
 
-  #button2 {
-    width: 100%;
-    border-color: blue;
-    background-color: white;
-    color: blue;
-    font-weight: bold;
-  }
+    #button2 {
+      width: 100%;
+      border-color: blue;
+      background-color: white;
+      color: blue;
+      font-weight: bold;
+    }
 
-  .image-container {
-    width: 150px;
-    height: 150px;
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-  }
+    .image-container {
+      width: 150px;
+      height: 150px;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid #ccc;
+    }
 
-  .image-container img {
-    width: 100%;
-    height: auto;
-  }
+    .image-container img {
+      width: 100%;
+      height: auto;
+    }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -140,20 +140,20 @@ include 'layouts/head-main.php';
             </div>
             </form>
             <script>
-            function displayImage() {
-              var input = document.getElementById('imageInput');
-              var container = document.getElementById('displayContainer');
-              var image = document.getElementById('displayImage');
-              var file = input.files[0];
-              if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                  image.src = e.target.result;
-                  container.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
+              function displayImage() {
+                var input = document.getElementById('imageInput');
+                var container = document.getElementById('displayContainer');
+                var image = document.getElementById('displayImage');
+                var file = input.files[0];
+                if (file) {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                    image.src = e.target.result;
+                    container.style.display = 'block';
+                  };
+                  reader.readAsDataURL(file);
+                }
               }
-            }
             </script>
           </div>
         </div>
@@ -175,104 +175,30 @@ include 'layouts/head-main.php';
 <!-- datepicker -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var today = new Date();
-  var SminDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  var SmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0);
-  var EminDate = new Date();
-  var EmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0); // Maximum end date is 4 months from today
-
-  var startDatePicker = flatpickr("#startDate", {
-    dateFormat: "d-m-Y",
-    minDate: SminDate,
-    maxDate: SmaxDate,
-    onChange: function(selectedDates, selectedDate) {
-      // Update the minimum date of the end date picker to be the selected start date
-      endDatePicker.set("minDate", selectedDate);
-    }
-  });
-
-  var endDatePicker = flatpickr("#endDate", {
-    dateFormat: "d-m-Y",
-    minDate: EminDate,
-    maxDate: EmaxDate
-  });
-});
-</script>
-
-
-
-
-<!-- <script>
   document.addEventListener('DOMContentLoaded', function () {
     var today = new Date();
+    var SminDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    var SmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0);
+    var EminDate = new Date();
+    var EmaxDate = new Date(today.getFullYear(), today.getMonth() + 4, 0); // Maximum end date is 4 months from today
 
-    // Get defaultStartDate's date
-    var defaultStartDate = new Date(today);
-    defaultStartDate.setDate(defaultStartDate.getDate() + 1);
-
-    // Calculate tomorrow's date
-    var defaultEndDate = new Date(defaultStartDate);
-    defaultEndDate.setDate(defaultEndDate.getDate() + 1);
-
-    // Initialize Flatpickr for startDate and endDate inputs
-    flatpickr("#startDate", {
+    var startDatePicker = flatpickr("#startDate", {
       dateFormat: "d-m-Y",
-      defaultDate: defaultStartDate, // Set default start date to today
-      onChange: validateDates // Call validateDates whenever endDate changes
-
+      minDate: SminDate,
+      maxDate: SmaxDate,
+      onChange: function (selectedDates, selectedDate) {
+        // Update the minimum date of the end date picker to be the selected start date
+        endDatePicker.set("minDate", selectedDate);
+      }
     });
 
-    flatpickr("#endDate", {
+    var endDatePicker = flatpickr("#endDate", {
       dateFormat: "d-m-Y",
-      defaultDate: defaultEndDate, // Set default end date to tomorrow
-      onChange: validateDates // Call validateDates whenever endDate changes
-    });
-
-    // Function to validate dates
-    function validateDates() {
-      var startDate = document.getElementById('startDate').value;
-      var endDate = document.getElementById('endDate').value;
-      var today = new Date();
-      var errorMessage = '';
-
-      // Parse date strings into the appropriate format
-      var startDateParsed = flatpickr.parseDate(startDate, "d-m-Y");
-      var endDateParsed = flatpickr.parseDate(endDate, "d-m-Y");
-
-      if (startDateParsed <= today) {
-        errorMessage += "Start date must be after today's date. ";
-      }
-      if (startDateParsed >= endDateParsed) {
-        errorMessage = "Start date must be before end date. ";
-      }
-      if (endDateParsed <= startDateParsed) {
-        errorMessage = "End date must be after start date. ";
-      }
-
-      var errorElement = document.getElementById('error-message');
-      errorElement.textContent = errorMessage;
-
-      // Return true if there are no errors, false otherwise
-      return errorMessage === '';
-    }
-
-    // Validate dates initially
-    validateDates();
-    // Form submission event listener
-    document.getElementById('taskForm').addEventListener('submit', function (event) {
-      // Validate dates
-      var isValid = validateDates();
-
-      // If validation failed, prevent form submission
-      if (!isValid) {
-        event.preventDefault();
-        alert("Please correct the errors before submitting the form.");
-      }
+      minDate: EminDate,
+      maxDate: EmaxDate
     });
   });
-</script> -->
-
+</script>
 
 </body>
 

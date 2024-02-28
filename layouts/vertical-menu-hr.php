@@ -22,5 +22,17 @@ echo '<li>
           <i data-feather="check-circle"></i>
           <span data-key="t-dashboard">Confirm Salary</span>
         </a>
+      </li>
+      <li>
+        <a href="payslip_list.php">
+          <i data-feather="file-text"></i>
+          <span data-key="t-dashboard">Payslip List</span>
+        </a>
+      </li>
+      <li>
+        <a href="pending_salary_list.php">
+          <i data-feather="file-text"></i>
+          <span data-key="t-dashboard">Pending Salary List</span>
+        </a>
       </li>';
 ?>
