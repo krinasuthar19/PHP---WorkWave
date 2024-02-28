@@ -154,9 +154,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           // Include database connection or configuration file
                           include 'layouts/config.php';
                           $u_id = $_SESSION['u_id'];
+                          $role = $_SESSION['role'];
 
-                          // Fetch task data from the database
-                          $query = "SELECT * FROM task";
+                          // Fetch task data from the database based on user role
+                          if ($role == 1) {
+                            // Query for admin
+                            $query = "SELECT * FROM task";
+                          } elseif ($role == 4) {
+                            // Query for employee
+                            $query = "SELECT t.* FROM task t JOIN assign_task a ON t.t_id = a.t_id WHERE a.u_id = '$u_id'";
+                          }
+
                           $result = mysqli_query($link, $query);
 
                           if (!$result) {
@@ -167,8 +175,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           if (mysqli_num_rows($result) > 0) {
                             $rowNumber = 1; // Variable to track the row number in the table
                             while ($row = mysqli_fetch_assoc($result)) {
-                              $task_id = $row['t_id'];
-
                               // Output each row in the table 
                               echo '<tr>';
                               echo '<td>' . $rowNumber . '</td>'; // Assuming 'emp_id' is the employee ID column
@@ -182,46 +188,23 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                               echo '<td style="color: ' . $statusColor . ';">';
                               echo ($status == 0) ? 'Pending' : (($status == 1) ? 'Working' : 'Completed');
                               echo '</td>';
-                              if ($_SESSION['role'] == 1) {
-
-                                $queryCheckAssign = "SELECT * FROM assign_task where t_id = $task_id";
-                                $resultCheckAssign = mysqli_query($link, $queryCheckAssign);
-                                // Displaying action buttons based on the status
-                          
-                                if (!(mysqli_num_rows($resultCheckAssign) > 0)) {
-                                  // action if task is not available on assign_task table
-                                  echo '<td style="color: blue;">Not Assigned</td>';
-                                } else {
-                                  // Action button for admin
-                                  if ($status == 2) {
-                                    // Display the Remove button to remove task completely if completed
-                                    echo '<td><a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a></td>';
-                                  } elseif ($status == 0) {
-                                    // Display the End button
-                                    echo '<td style="color: blue;">Not Started</td>';
-                                  } else {
-                                    // Display the End button
-                                    echo '<td style="color: green;">Working</td>';
-                                  }
-                                }
-
-
-                              }
-                              if ($_SESSION['role'] == 4) {
-
-                                // Action buttons
+                              if ($role == 1) {
+                                // Action buttons for admin
                                 echo '<td>';
-                                if ($status == 0) {
-                                  // Display the Start button
-                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-success">Start</a>';
-                                } elseif ($status == 1) {
-                                  // Display the End button
-                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
-                                }
+                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a>';
                                 echo '</td>';
-
-                                echo '</tr>';
+                              } elseif ($role == 4 && $status == 0) {
+                                // Action buttons for employee only if the task is pending
+                                echo '<td>';
+                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-success">Start</a>';
+                                echo '</td>';
+                              } elseif ($role == 4 && $status == 1) {
+                                // Action buttons for employee only if the task is in progress
+                                echo '<td>';
+                                echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
+                                echo '</td>';
                               }
+                              echo '</tr>';
                               $rowNumber++;
                             }
                           } else {
@@ -232,6 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           // Close the database connection
                           mysqli_close($link);
                           ?>
+
                         </tbody>
                       </table>
                     </div>
