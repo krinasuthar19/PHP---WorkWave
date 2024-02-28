@@ -34,8 +34,8 @@ include 'layouts/head-main.php';
 
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="javascript: void(0);">WorkWave</a></li>
-                  <li class="breadcrumb-item active">Dashboard</li>
+                  <li class="breadcrumb-item"><a href="javascript: void(0);">Employee Leave</a></li>
+                 <!-- <li class="breadcrumb-item active">Dashboard</li>-->
                 </ol>
               </div>
             </div>
