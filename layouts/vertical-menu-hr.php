@@ -34,5 +34,11 @@ echo '<li>
           <i data-feather="file-text"></i>
           <span data-key="t-dashboard">Pending Salary List</span>
         </a>
-      </li>';
+      </li>
+      <li>
+          <a href="emp_payslip.php">
+            <i data-feather="file-text"></i>
+            <span data-key="t-dashboard">My Payslip</span>
+          </a>
+        </li>';
 ?>

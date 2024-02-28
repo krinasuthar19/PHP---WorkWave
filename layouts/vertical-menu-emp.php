@@ -28,5 +28,11 @@ echo '<li>
             <i data-feather="users"></i>
             <span data-key="t-dashboard">View Other Employees</span>
           </a>
+        </li>
+        <li>
+          <a href="emp_payslip.php">
+            <i data-feather="file-text"></i>
+            <span data-key="t-dashboard">My Payslip</span>
+          </a>
         </li>';
 ?>
