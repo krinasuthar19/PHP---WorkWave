@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Dropdowns | Minia - Admin & Dashboard Template</title>
+    <title>Dropdowns | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

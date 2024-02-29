@@ -5,7 +5,7 @@ include 'layouts/config.php';
 
 <head>
   <title>
-    <?php echo $language["Dashboard"]; ?> | Minia - Admin & Dashboard Template
+    <?php echo $language["Dashboard"]; ?> | WorkWave - Admin & Dashboard Template
   </title>
 
   <?php include 'layouts/head.php'; ?>

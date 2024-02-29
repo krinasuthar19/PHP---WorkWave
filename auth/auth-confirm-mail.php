@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>Confirm Mail | Minia - Admin & Dashboard Template</title>
+  <title>Confirm Mail | WorkWave - Admin & Dashboard Template</title>
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
 

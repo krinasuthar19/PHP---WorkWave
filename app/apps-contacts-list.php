@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>User List | Minia - Admin & Dashboard Template</title>
+  <title>User List | WorkWave - Admin & Dashboard Template</title>
 
   <?php include 'layouts/head.php'; ?>
 

@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>Read Email | Minia - Admin & Dashboard Template</title>
+  <title>Read Email | WorkWave - Admin & Dashboard Template</title>
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
 

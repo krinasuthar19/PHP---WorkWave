@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Vector | Minia - Admin & Dashboard Template</title>
+    <title>Vector | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
 
     <!-- jquery.vectormap css -->

@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Toasts | Minia - Admin & Dashboard Template</title>
+    <title>Toasts | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

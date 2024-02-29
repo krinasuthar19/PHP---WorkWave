@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Modals | Minia - Admin & Dashboard Template</title>
+    <title>Modals | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

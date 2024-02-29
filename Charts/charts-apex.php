@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Apexcharts | Minia - Admin & Dashboard Template</title>
+    <title>Apexcharts | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Advanced Plugins | Minia - Admin & Dashboard Template</title>
+    <title>Advanced Plugins | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
 
     <!-- choices css -->
