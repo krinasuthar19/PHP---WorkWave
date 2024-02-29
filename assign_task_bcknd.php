@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'layouts/check_pm.php';
 include 'layouts/config.php';
 
@@ -25,11 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($result && $result2) {
     $_SESSION['status'] = "Task assigned successfully";
     header("Location: task.php");
-    exit(0);
   } else {
     $_SESSION['status'] = "Task not assigned";
     header("Location: task.php");
-    exit(0);
   }
 }
 

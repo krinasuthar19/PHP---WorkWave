@@ -1,103 +1,126 @@
 <?php
 session_start(); // Start session to get user role
-// require 'layouts/check_admin.php';
-// require 'layouts/check_emp.php';
-
-if (!(isset($_SESSION['loggedin']))) {
+// Redirect to login page if user is not logged in or is an employee
+if (!(isset($_SESSION['loggedin'])) || $_SESSION['role'] == 2) {
   header("Location: login.php");
-}
-if ($_SESSION['role'] == 2) {
-  header("Location: login.php");
+  exit(); // Make sure to exit after redirection
 }
 include 'layouts/head-main.php';
 
-include 'layouts/config.php';
-
-
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
+  include 'layouts/config.php';
+
   $task_id = $_GET['task_id'];
 
   // Include database connection or configuration file
 
+  if ($_GET['action'] == 'Start') {
+    // Fetch task data from the database
+    $query = "SELECT * FROM task WHERE t_id = $task_id";
+    $result = mysqli_query($link, $query);
 
-  // Fetch task data from the database
+    if ($result && mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_assoc($result);
+      $status = $row['status'];
 
-
-  $query = "SELECT * FROM task WHERE t_id = $task_id";
-  $result = mysqli_query($link, $query);
-
-  if ($result && mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    $status = $row['status'];
-    $end_date = strtotime($row['end_date']);
-    $current_date = time();
-
-    // Check if end date is passed
-    if ($current_date > $end_date && $status != 3 && $status != 4) {
-      $updateQuery = "UPDATE task SET status = 4 WHERE t_id = $task_id";
-      if (mysqli_query($link, $updateQuery)) {
-        // Task status updated to 'Overdue'
-        header("Location: view_task.php"); // Redirect back to view_tasks.php
-        exit();
-      } else {
-        // Error updating task status
-        echo "Error updating task status: " . mysqli_error($link);
-        exit();
+      // Start Task
+      if ($status == 1) {
+        $updateQuery1 = "UPDATE task SET status = 2 WHERE t_id = $task_id";
+        $updateQuery2 = "UPDATE assign_task SET status = 2 WHERE t_id = $task_id";
+        if (mysqli_query($link, $updateQuery1) && mysqli_query($link, $updateQuery2)) {
+          // Task started successfully
+          header("Location: view_task.php"); // Redirect back to view_tasks.php
+          exit();
+        } else {
+          // Error updating task status
+          echo "Error updating task status: " . mysqli_error($link);
+          exit();
+        }
       }
+    } else {
+      // Task not found
+      echo "Task not found.";
+      exit();
     }
+  }
+  if ($_GET['action'] == 'End') {
+    // Fetch task data from the database
+    $query = "SELECT * FROM task WHERE t_id = $task_id";
+    $result = mysqli_query($link, $query);
 
-    // Start Task
-    if ($status == 1) {
-      $updateQuery1 = "UPDATE task SET status = 2 WHERE t_id = $task_id";
-      $updateQuery2 = "UPDATE assign_task SET status = 2 WHERE t_id = $task_id";
-      if (mysqli_query($link, $updateQuery1) && mysqli_query($link, $updateQuery2)) {
-        // Task started successfully
-        header("Location: view_task.php"); // Redirect back to view_tasks.php
-        exit();
-      } else {
-        // Error updating task status
-        echo "Error updating task status: " . mysqli_error($link);
-        exit();
+    if ($result && mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_assoc($result);
+      $status = $row['status'];
+      // End Task
+      if ($status == 2) {
+        $updateQuery3 = "UPDATE task SET status = 3 WHERE t_id = $task_id";
+        $updateQuery4 = "UPDATE assign_task SET status = 3 WHERE t_id = $task_id";
+        if (mysqli_query($link, $updateQuery3) && mysqli_query($link, $updateQuery4)) {
+          // Task ended successfully
+          header("Location: view_task.php"); // Redirect back to view_tasks.php
+          exit();
+        } else {
+          // Error updating task status
+          echo "Error updating task status: " . mysqli_error($link);
+          exit();
+        }
       }
+    } else {
+      // Task not found
+      echo "Task not found.";
+      exit();
     }
-
-    // End Task
-    if ($status == 2) {
-      $updateQuery3 = "UPDATE task SET status = 3 WHERE t_id = $task_id";
-      $updateQuery4 = "UPDATE assign_task SET status = 3 WHERE t_id = $task_id";
-      if (mysqli_query($link, $updateQuery3) && mysqli_query($link, $updateQuery4)) {
-        // Task ended successfully
-        header("Location: view_task.php"); // Redirect back to view_tasks.php
-        exit();
-      } else {
-        // Error updating task status
-        echo "Error updating task status: " . mysqli_error($link);
-        exit();
-      }
-    }
-
-    // Remove Task
-    if ($status == 0 || $status == 3) {
-      $deleteQuery1 = "DELETE FROM assign_task WHERE t_id = $task_id";
-      $deleteQuery2 = "DELETE FROM task WHERE t_id = $task_id";
-      if (mysqli_query($link, $deleteQuery1) && mysqli_query($link, $deleteQuery2)) {
-        // Task ended successfully
-        header("Location: view_task.php"); // Redirect back to view_tasks.php
-        exit();
-      } else {
-        // Error updating task status
-        echo "Error updating task status: " . mysqli_error($link);
-        exit();
-      }
-    }
-  } else {
-    // Task not found
-    echo "Task not found.";
-    exit();
   }
 
-  // Close the database connection
-  mysqli_close($link);
+  if ($_GET['action'] == 'remove') {
+    // Fetch task data from the database
+    $query = "SELECT * FROM task WHERE t_id = $task_id";
+    $result = mysqli_query($link, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_assoc($result);
+      $status = $row['status'];
+      if ($status == 0 || $status == 1 || $status == 2) {
+        // Remove Task
+        // Check if end date has been exceeded
+        $end_date = $_GET['remove_end_date'];
+        $endDate = strtotime($end_date);
+        $today = strtotime(date('Y-m-d'));
+
+        if ($endDate < $today) {
+          $deleteQuery1 = "DELETE FROM assign_task WHERE t_id = $task_id";
+          $deleteQuery2 = "DELETE FROM task WHERE t_id = $task_id";
+          if (mysqli_query($link, $deleteQuery1) && mysqli_query($link, $deleteQuery2)) {
+            // Task removed successfully
+            header("Location: view_task.php"); // Redirect back to view_tasks.php
+            exit();
+          } else {
+            // Error removing task
+            echo "Error removing task: " . mysqli_error($link);
+            exit();
+          }
+        }
+      } elseif ($status == 3) {
+        $deleteQuery3 = "DELETE FROM assign_task WHERE t_id = $task_id";
+        $deleteQuery4 = "DELETE FROM task WHERE t_id = $task_id";
+        if (mysqli_query($link, $deleteQuery3) && mysqli_query($link, $deleteQuery4)) {
+          // Task removed successfully
+          header("Location: view_task.php"); // Redirect back to view_tasks.php
+          exit();
+        } else {
+          // Error removing task
+          echo "Error removing task: " . mysqli_error($link);
+          exit();
+        }
+      }
+    } else {
+      // Task not found
+      echo "Task not found.";
+      exit();
+    }
+  }
+} else {
+  echo "db connection error.";
 }
 ?>
 <!DOCTYPE html>
@@ -174,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                         <tbody>
                           <?php
                           // Include database connection or configuration file
-
+                          include 'layouts/config.php';
                           $u_id = $_SESSION['u_id'];
                           $role = $_SESSION['role'];
 
@@ -203,50 +226,119 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                               // Add other fields accordingly
                               echo '<td>' . $row['t_title'] . '</td>';
                               echo '<td>' . $row['t_description'] . '</td>';
+                              $departmentID = $row['department'];
+
+                              $sqldep = "SELECT d_name FROM department WHERE d_id='$departmentID'";
+                              $resultdep = $link->query($sqldep);
+                              if (mysqli_num_rows($resultdep) > 0) {
+                                while ($rowdep = mysqli_fetch_assoc($resultdep)) {
+                                  $depName = $rowdep['d_name'];
+                                }
+                              }
                               echo '<td>' . $row['start_date'] . '</td>';
                               echo '<td>' . $row['end_date'] . '</td>';
 
-                              //status column
-                              $status = $row['status'];
-                              if ($status == 4) {
-                                $statusText = 'Overdue';
-                                $statusColor = 'red';
-                              } else {
-                                $statusText = ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
-                                $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
-                              }
-                              echo '<td style="color: ' . $statusColor . ';">' . $statusText . '</td>';
+                              $endDate = strtotime($row['end_date']);
+                              $today = strtotime(date('Y-m-d'));
 
+                              // Set status and status color based on end date
+                              if ($endDate < $today) {
+                                if ($row['status'] == 3) {
+                                  echo '<td style="color: blue;">Completed</td>';
+                                } else {
+                                  // End date has been exceeded
+                                  echo '<td style="color: red;">Date Exceeded</td>';
+                                }
+                              } else {
+
+                                // Set status color based on the task's status value
+                                switch ($row['status']) {
+                                  case 0:
+                                    echo '<td style="color: blue;">Not Assigned</td>';
+                                    break;
+                                  case 1:
+                                    echo '<td style="color: red;">Not Started</td>';
+                                    break;
+                                  case 2:
+                                    echo '<td style="color:green;">Working</td>';
+                                    break;
+                                  case 3:
+                                    echo '<td style="color: green;">Completed</td>';
+                                    break;
+                                  default:
+                                    $statusColor = 'black';
+                                    break;
+                                }
+                              }
+
+                              // Output status column
+                              // echo '<td style="color: ' . $statusColor . ';">' . $status . '</td>';
+                              $status = $row['status'];
                               //Action column
-                              if ($role == 1 || $role == 3) {
-                                if ($status == 0 || $status == 3) {
-                                  // Action buttons for admin or pm if task is completed or not assigned yet
+                              if ($role == 3) {
+                                // Check if end date has been exceeded
+                                if ($endDate < $today) {
+                                  // Action buttons for pm if task end date is exceeded 
+                                  // Action buttons for extending end date and removing task
                                   echo '<td>';
-                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-danger">Remove</a>';
+                                  echo '<a href="extend_taskdate.php?task_id=' . $row['t_id'] . '&action=extend&tasktitle=' . $row['t_title'] . '&taskdescription=' . $row['t_description'] . '&taskdepartment=' . $depName . '&previousStartDate=' . $row['start_date'] . '&previousEndDate=' . $row['end_date'] . '" class="btn btn-success">Extend Date</a> ';
+                                  echo '<a href="?task_id=' . $row['t_id'] . '&action=remove&remove_end_date=' . $row['end_date'] . '" class="btn btn-danger">Remove</a>';
                                   echo '</td>';
                                 } else {
-                                  //Message for admin or pm if task is on working phase(employee started working on task)
-                                  echo '<td style="color: blue;">';
-                                  echo ($status == 1) ? 'Not Completed' : (($status == 2) ? 'Not Completed' : '');
+                                  if ($status == 3 || $status == 0) {
+                                    //Message for admin or pm if task is on working phase(employee started working on task)
+                                    echo '<td>';
+                                    echo '<a href="?task_id=' . $row['t_id'] . '&action=remove" class="btn btn-danger">Remove</a>';
+                                    echo '</td>';
+                                  } elseif ($status == 1) {
+                                    echo '<td style="color: blue;">waiting..</td>';
+                                  } else {
+                                    echo '<td style="color: blue;">waiting..</td>';
+                                  }
+                                }
+                              } elseif ($role == 1) {
+                                // Check if end date has been exceeded
+                                if ($endDate < $today) {
+                                  // Action buttons for admin if task end date is exceeded 
+                                  // Action buttons for removing task
+                                  echo '<td>';
+                                  echo '<a href="?task_id=' . $row['t_id'] . '&action=remove&remove_end_date=' . $row['end_date'] . '" class="btn btn-danger">Remove</a>';
                                   echo '</td>';
+                                } else {
+                                  if ($status == 3 || $status == 0) {
+                                    //Message for admin or pm if task is on working phase(employee started working on task)
+                                    echo '<td>';
+                                    echo '<a href="?task_id=' . $row['t_id'] . '&action=remove" class="btn btn-danger">Remove</a>';
+                                    echo '</td>';
+
+                                  } elseif ($status == 1) {
+                                    echo '<td style="color: blue;">waiting..</td>';
+                                  } else {
+                                    echo '<td style="color: blue;">waiting..</td>';
+                                  }
                                 }
                               }
                               if ($role == 4) {
-                                if ($status == 1) {
-                                  // Action buttons for employee only if the task is not started
-                                  // Action Button for employee to start the task
-                                  echo '<td>';
-                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-success">Start</a>';
-                                  echo '</td>';
-                                } elseif ($status == 2) {
-                                  // Action buttons for employee only if the task is in working phase(started)
-                                  // Action Button for employee to end the task
-                                  echo '<td>';
-                                  echo '<a href="?task_id=' . $row['t_id'] . '" class="btn btn-warning">End</a>';
-                                  echo '</td>';
-                                } elseif ($status == 3) {
-                                  // Action buttons for employee only if the task completed
-                                  echo '<td style="color: blue;">Completed</td>';
+                                if ($endDate < $today) {
+                                  echo '<td style="color: red;">Incomplete</td>';
+                                } else {
+
+                                  if ($status == 1) {
+                                    // Action buttons for employee only if the task is not started
+                                    // Action Button for employee to start the task
+                                    echo '<td>';
+                                    echo '<a href="?task_id=' . $row['t_id'] . '&action=Start" class="btn btn-success">Start</a>';
+                                    echo '</td>';
+                                  } elseif ($status == 2) {
+                                    // Action buttons for employee only if the task is in working phase(started)
+                                    // Action Button for employee to end the task
+                                    echo '<td>';
+                                    echo '<a href="?task_id=' . $row['t_id'] . '&action=end" class="btn btn-warning">End</a>';
+                                    echo '</td>';
+                                  } elseif ($status == 3) {
+                                    // Action buttons for employee only if the task completed
+                                    echo '<td style="color: blue;">Completed</td>';
+                                  }
                                 }
                               }
                               echo '</tr>';
@@ -286,19 +378,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
   <!-- /Right-bar -->
   <!-- JAVASCRIPT -->
   <?php include 'layouts/vendor-scripts.php'; ?>
-
-
-
-  <!-- ----------------------do not delete this code---------------------- -->
-  <!-- apexcharts -->
-  <!-- <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script> -->
-  <!-- Plugins js-->
-  <!-- <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js">
-  </script> -->
-  <!-- <script
-    src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
-  </script> -->
-
 
   <!-- App js -->
   <script src="assets/js/app.js"></script>

@@ -19,42 +19,6 @@ include 'layouts/head-main.php';
       margin: 10px;
       box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
     }
-
-    table {
-      border-collapse: collapse;
-      margin-top: 20px;
-      padding: 20px;
-    }
-
-    th {
-      border-bottom: 2px solid #ddd;
-    }
-
-    #button1 {
-      width: 100%;
-      font-weight: bold;
-    }
-
-    #button2 {
-      width: 100%;
-      border-color: blue;
-      background-color: white;
-      color: blue;
-      font-weight: bold;
-    }
-
-    .image-container {
-      width: 150px;
-      height: 150px;
-      border-radius: 15px;
-      overflow: hidden;
-      border: 1px solid #ccc;
-    }
-
-    .image-container img {
-      width: 100%;
-      height: auto;
-    }
   </style>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -139,22 +103,6 @@ include 'layouts/head-main.php';
               </div>
             </div>
             </form>
-            <script>
-              function displayImage() {
-                var input = document.getElementById('imageInput');
-                var container = document.getElementById('displayContainer');
-                var image = document.getElementById('displayImage');
-                var file = input.files[0];
-                if (file) {
-                  var reader = new FileReader();
-                  reader.onload = function (e) {
-                    image.src = e.target.result;
-                    container.style.display = 'block';
-                  };
-                  reader.readAsDataURL(file);
-                }
-              }
-            </script>
           </div>
         </div>
       </div>
