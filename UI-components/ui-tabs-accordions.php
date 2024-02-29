@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Tabs & Accordions | Minia - Admin & Dashboard Template</title>
+    <title>Tabs & Accordions | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

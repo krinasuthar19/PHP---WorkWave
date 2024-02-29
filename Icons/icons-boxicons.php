@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Boxicons | Minia - Admin & Dashboard Template</title>
+    <title>Boxicons | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

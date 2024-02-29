@@ -4,7 +4,7 @@
 <head>
 
 
-  <title>Two Step Verification | Minia - Admin & Dashboard Template</title>
+  <title>Two Step Verification | WorkWave - Admin & Dashboard Template</title>
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
 

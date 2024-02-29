@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Carousel | Minia - Admin & Dashboard Template</title>
+    <title>Carousel |  WorkWave- Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

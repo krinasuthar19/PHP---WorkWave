@@ -2,7 +2,7 @@
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
-  <title>Chat | Minia - Admin & Dashboard Template</title>
+  <title>Chat | WorkWave - Admin & Dashboard Template</title>
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
 </head>

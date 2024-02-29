@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Jquery Knob | Minia - Admin & Dashboard Template</title>
+    <title>Jquery Knob | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

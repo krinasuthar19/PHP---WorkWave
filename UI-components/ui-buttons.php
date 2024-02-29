@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Buttons | Minia - Admin & Dashboard Template</title>
+    <title>Buttons | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

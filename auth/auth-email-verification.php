@@ -2,7 +2,7 @@
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
-  <title>Email Verification | Minia - Admin & Dashboard Template</title>
+  <title>Email Verification | WorkWave - Admin & Dashboard Template</title>
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
 </head>

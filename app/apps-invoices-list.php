@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>Invoice List | Minia - Admin & Dashboard Template</title>
+  <title>Invoice List | WorkWave - Admin & Dashboard Template</title>
 
   <?php include 'layouts/head.php'; ?>
 

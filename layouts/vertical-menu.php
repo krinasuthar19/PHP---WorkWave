@@ -12,21 +12,21 @@
           </span>
           <span class="logo-lg">
             <img src="assets/images/wwlogo.jpeg" alt="" height="26"> <span class="logo-txt">Work Wave (<?php
-                                                                                                      switch ($_SESSION['role']) {
-                                                                                                        case 1:
-                                                                                                          echo "admin";
-                                                                                                          break;
-                                                                                                        case 2:
-                                                                                                          echo "hr";
-                                                                                                          break;
-                                                                                                        case 3:
-                                                                                                          echo "pm";
-                                                                                                          break;
-                                                                                                        case 4:
-                                                                                                          echo "emp";
-                                                                                                          break;
-                                                                                                      }
-                                                                                                      ?>)</span>
+                                                                                                        switch ($_SESSION['role']) {
+                                                                                                          case 1:
+                                                                                                            echo "admin";
+                                                                                                            break;
+                                                                                                          case 2:
+                                                                                                            echo "hr";
+                                                                                                            break;
+                                                                                                          case 3:
+                                                                                                            echo "pm";
+                                                                                                            break;
+                                                                                                          case 4:
+                                                                                                            echo "emp";
+                                                                                                            break;
+                                                                                                        }
+                                                                                                        ?>)</span>
           </span>
         </a>
 
@@ -70,6 +70,10 @@
           <!-- <a class="dropdown-item" href="apps-contacts-profile.php"><i class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i> <?php echo $language["Profile"]; ?></a> -->
           <!-- <a class="dropdown-item" href="auth-lock-screen.php"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> <?php echo $language["Lock_screen"]; ?> </a> -->
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="profile.php">
+            <i data-feather="user" class="icon-sm" style=" font-size: 16px;"></i>
+            <?php echo "Profile"; ?>
+          </a>
           <a class="dropdown-item" href="logout.php"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i>
             <?php echo $language["Logout"]; ?>
           </a>

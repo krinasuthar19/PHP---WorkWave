@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Leaflet | Minia - Admin & Dashboard Template</title>
+    <title>Leaflet | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
 
     <!-- leaflet Css -->

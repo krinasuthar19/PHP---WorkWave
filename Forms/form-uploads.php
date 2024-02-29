@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>File Upload | Minia - Admin & Dashboard Template</title>
+    <title>File Upload | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
 
     <!-- dropzone css -->

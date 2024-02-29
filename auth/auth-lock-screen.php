@@ -2,7 +2,7 @@
 <?php include 'layouts/head-main.php'; ?>
 
 <head>
-  <title>Lock Screen | Minia - Admin & Dashboard Template</title>
+  <title>Lock Screen | WorkWave - Admin & Dashboard Template</title>
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
 </head>

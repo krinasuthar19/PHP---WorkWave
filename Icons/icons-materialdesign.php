@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Material Design Icons | Minia - Admin & Dashboard Template</title>
+    <title>Material Design Icons | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
     <?php include 'layouts/head-style.php'; ?>
 

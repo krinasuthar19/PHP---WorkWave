@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>wizard | Minia - Admin & Dashboard Template</title>
+    <title>wizard | WorkWave - Admin & Dashboard Template</title>
     <?php include 'layouts/head.php'; ?>
 
     <!-- twitter-bootstrap-wizard css -->
