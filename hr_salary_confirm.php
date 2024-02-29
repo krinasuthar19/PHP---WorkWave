@@ -77,7 +77,7 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
                   <div class="col-md-4">
                     <label for="yearDropdown" class="form-label">Select Year:</label>
                     <select class="form-select" id="yearDropdown" name="yearDropdown">
-                      <option value=''>Select Year</option>
+                     
                       <?php
                       // Get the current year
                       $currentYear = date("Y");
@@ -88,7 +88,7 @@ if (isset($_GET['u_id']) && !empty($_GET['u_id'])) {
 
                       // Generate options for the year dropdown
                       for ($year = $startYear; $year <= $endYear; $year++) {
-                        echo "<option value='$year'>$year</option>";
+                        echo "<option selected value='$year'>$year</option>";
                       }
                       ?>
                     </select>

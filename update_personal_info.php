@@ -11,18 +11,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newCountry = mysqli_real_escape_string($link, $_POST['newCountry']);
     $newAddress = mysqli_real_escape_string($link, $_POST['newAddress']);
 
-    // Perform database update
-    $sql = "UPDATE users SET phone = '$newPhone', city = '$newCity', state = '$newState', country = '$newCountry', address = '$newAddress' WHERE u_id = $user_id";
-    if (mysqli_query($link, $sql)) {
+    // Prepare and bind parameters
+    $stmt = $link->prepare("UPDATE users SET phone=?, city=?, state=?, country=?, address=? WHERE u_id=?");
+    $stmt->bind_param("sssssi", $newPhone, $newCity, $newState, $newCountry, $newAddress, $user_id);
+
+    // Execute the statement
+    if ($stmt->execute()) {
         echo json_encode(array("success" => true));
     } else {
-        echo json_encode(array("success" => false, "error" => mysqli_error($link)));
+        // Log the error to a file for debugging
+        error_log("Error updating user info: " . $stmt->error);
+
+        // Return error response
+        echo json_encode(array("success" => false, "error" => "Error updating user info"));
     }
+
+    // Close statement
+    $stmt->close();
 } else {
     // If the request method is not POST, return an error
     echo json_encode(array("success" => false, "message" => "Invalid request method."));
 }
 
+// Close connection
 $link->close();
 ?>
-    

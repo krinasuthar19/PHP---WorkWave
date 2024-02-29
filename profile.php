@@ -1,9 +1,7 @@
 <?php
 session_start();
-//require "layouts/check_admin.php";
 include 'layouts/head-main.php';
 include 'layouts/config.php';
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $user_id = $_SESSION['u_id'];
@@ -16,15 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Perform database update
   $sql = "UPDATE users SET phone = '$newPhone', city = '$newCity', state = '$newState', country = '$newCountry', address = '$newAddress' WHERE u_id = $user_id";
   if (mysqli_query($link, $sql)) {
-      echo json_encode(array("success" => true));
+    echo json_encode(array("success" => true));
   } else {
-      echo json_encode(array("success" => false, "error" => mysqli_error($link)));
+    echo json_encode(array("success" => false, "error" => mysqli_error($link)));
   }
 } else {
   // If the request method is not POST, return an error
   echo json_encode(array("success" => false, "message" => "Invalid request method."));
 }
-
 
 $user_id = $_SESSION['u_id'];
 $query = "SELECT * FROM users WHERE u_id = $user_id";
@@ -94,6 +91,7 @@ $link->close();
       margin: 10px;
       box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
     }
+
     .personal {
       padding: 25px;
       border-radius: 15px;
@@ -160,49 +158,50 @@ $link->close();
           <div class="row">
             <div class="col-md-12">
               <div class="row">
-                
-                  <div class="row">
-                    <div class="col-md-3 mb-3">
-                      <div class="image-container" id="displayContainer">
-                        <img id="displayImage" alt="profile Image" src="<?php echo $profile_image; ?>">
-                      </div>
-                    </div>
-                  </div>
-                  <br><br>
-                  <div class="basic">
-                    <div class="row">
-                      <strong>
-                        <h3>Basic Information</h3>
-                      </strong>
-                      <br><br><br>
-                      <div class="col-md-6 mb-3">
-                        <div class="row">
-                          <div class="col-md-3 mb-3">
-                            <h5>ID: </h5>
-                            <h5>Name: </h5>
-                            <h5>Department: </h5>
-                            <h5>Role: </h5>
-                            <h5>Email: </h5>
-                            <h5>D.O.B.: </h5>
-                          </div>
-                          <div class="col-md-3 mb-3">
-                            <h5><strong><?php echo $u_id; ?></strong></h5>
-                            <h5><strong><?php echo $username; ?></strong></h5>
-                            <h5> <strong><?php echo $d_name; ?></strong></h5>
-                            <h5><strong><?php echo $r_name; ?></strong></h5>
-                            <h5><strong><?php echo $email; ?></strong></h5>
-                            <h5><strong><?php echo $dob; ?></strong></h5>
-                          </div>
 
+                <div class="row">
+                  <div class="col-md-3 mb-3">
+                    <div class="image-container" id="displayContainer">
+                      <img id="displayImage" alt="profile Image" src="<?php echo $profile_image; ?>">
+                    </div>
+                  </div>
+                </div>
+                <br><br>
+                <div class="basic">
+                  <div class="row">
+                    <strong>
+                      <h3>Basic Information</h3>
+                    </strong>
+                    <br><br><br>
+                    <div class="col-md-6 mb-3">
+                      <div class="row">
+                        <div class="col-md-3 mb-3">
+                          <h5>ID: </h5>
+                          <h5>Name: </h5>
+                          <h5>Department: </h5>
+                          <h5>Role: </h5>
+                          <h5>Email: </h5>
+                          <h5>D.O.B.: </h5>
                         </div>
+                        <div class="col-md-3 mb-3">
+                          <h5><strong><?php echo $u_id; ?></strong></h5>
+                          <h5><strong><?php echo $username; ?></strong></h5>
+                          <h5> <strong><?php echo $d_name; ?></strong></h5>
+                          <h5><strong><?php echo $r_name; ?></strong></h5>
+                          <h5><strong><?php echo $email; ?></strong></h5>
+                          <h5><strong><?php echo $dob; ?></strong></h5>
+                        </div>
+
                       </div>
                     </div>
                   </div>
-                  <form action="" method="POST" enctype="multipart/form-data">
-                  <div class="personal">
+                </div>
+                <!-- Inside the form -->
+                <div class="personal">
+                  <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
                     <div class="row">
                       <strong>
-                        <h3>Personal Information <span class="edit-icon" id="editBasicInfo"><i data-feather="edit"></i></span><span class="submit-icon" id="submitBasicInfo" style="display:none;"><i data-feather="check-circle"></i></span></h3>
+                        <h3>Personal Information</h3>
                       </strong>
                       <br><br><br>
                       <div class="col-md-6 mb-3">
@@ -221,13 +220,12 @@ $link->close();
                             <h5 id="email" class="basic-info-field"><strong><?php echo $country; ?></strong></h5>
                             <h5 id="email" class="basic-info-field"><strong><?php echo $address; ?></strong></h5>
                           </div>
-
                         </div>
-
                       </div>
                     </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
+
               </div>
             </div>
           </div>
@@ -249,67 +247,57 @@ $link->close();
 
 <script src="assets/js/app.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('editBasicInfo').addEventListener('click', function(e) {
-        e.preventDefault();
-        var basicInfoFields = document.querySelectorAll('.basic-info-field');
-        basicInfoFields.forEach(function(field) {
-            field.setAttribute('contenteditable', 'true');
-            field.style.border = '1px solid #ccc';
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById('editBasicInfo').addEventListener('click', function (e) {
+            e.preventDefault();
+            var basicInfoFields = document.querySelectorAll('.basic-info-field');
+            basicInfoFields.forEach(function (field) {
+                var value = field.innerText.trim();
+                field.innerHTML = '<input type="text" value="' + value + '">';
+            });
+            document.getElementById('submitBasicInfo').style.display = 'inline'; // Show the Submit button
         });
-        document.getElementById('submitBasicInfo').style.display = 'inline'; // Show the Submit button
-    });
 
-    document.getElementById('submitBasicInfo').addEventListener('click', function(e) {
-        e.preventDefault();
-        var basicInfoFields = document.querySelectorAll('.basic-info-field');
-        var updatedFields = {};
-        basicInfoFields.forEach(function(field) {
-            field.setAttribute('contenteditable', 'false');
-            field.style.border = 'none';
-            updatedFields[field.id] = field.innerText;
+        document.getElementById('submitBasicInfo').addEventListener('click', function (e) {
+            e.preventDefault();
+            var basicInfoFields = document.querySelectorAll('.basic-info-field');
+            var updatedFields = {};
+            basicInfoFields.forEach(function (field) {
+                var newValue = field.querySelector('input').value;
+                updatedFields[field.id] = newValue;
+                field.innerHTML = '<strong>' + newValue + '</strong>';
+            });
+            document.getElementById('submitBasicInfo').style.display = 'none'; // Hide the Submit button
+
+            // Send AJAX request to update details
+            updatePersonalInfo(updatedFields);
         });
-        document.getElementById('submitBasicInfo').style.display = 'none'; // Hide the Submit button
 
-        // Send AJAX request to update details
-        updatePersonalInfo(updatedFields);
-    });
-
-    function updatePersonalInfo(updatedFields) {
-        // Assuming you have included jQuery
-        $.ajax({
-            type: 'POST',
-            url: 'update_personal_info.php',
-            data: updatedFields,
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    console.log('Details updated successfully!');
-                    // You can provide feedback to the user if needed
-                } else {
-                    console.error('Error updating details:', response.error);
+        function updatePersonalInfo(updatedFields) {
+            // Assuming you have included jQuery
+            $.ajax({
+                type: 'POST',
+                url: 'profile.php',
+                data: updatedFields,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Details updated successfully!');
+                        // You can provide feedback to the user if needed
+                    } else {
+                        console.error('Error updating details:', response.error);
+                        // Handle error, show an error message, etc.
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX Error:', error);
                     // Handle error, show an error message, etc.
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-                // Handle error, show an error message, etc.
-            }
-        });
-    }
-});
-
-  document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById('editBasicInfo').addEventListener('click', function(e) {
-      e.preventDefault();
-      var basicInfoFields = document.querySelectorAll('.basic-info-field');
-      basicInfoFields.forEach(function(field) {
-        field.setAttribute('contenteditable', 'true');
-        field.style.border = '1px solid #ccc';
-      });
+            });
+        }
     });
-  });
 </script>
+
 
 </body>
 
