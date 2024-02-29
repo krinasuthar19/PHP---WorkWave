@@ -4,113 +4,101 @@ require "layouts/check_admin.php";
 include 'layouts/head-main.php';
 include 'layouts/config.php';
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $usertName = $_POST['userName'];
-  $email = $_POST['Email'];
-  $mobileNumber = $_POST['MobileNumber'];
-  $dateOfBirth = $_POST['DateOfBirth'];
-  $address = $_POST['Address'];
-  $city = $_POST['City'];
-  $state = $_POST['State'];
-  $pincode = $_POST['Pincode'];
-  $country = $_POST['Country'];
+  $user_id = $_SESSION['u_id'];
+  $newPhone = $_POST['newPhone'];
+  $newCity = $_POST['newCity'];
+  $newState = $_POST['newState'];
+  $newCountry = $_POST['newCountry'];
+  $newAddress = $_POST['newAddress'];
 
-  $pass = strtolower($firstName . $lastName . substr((string) $mobileNumber, -4));
-  $password = $pass;
-  // $password = password_hash($pass, PASSWORD_DEFAULT); // Hash the password for security
-
-  $salary = $_POST['Salary'];
-  $dateOfJoining = $_POST['DateOfJoining'];
-
-  $role = $_POST['Role'];
-  // Perform a query to retrieve the role_id for the specified user
-  $sql = "SELECT r_id FROM role WHERE r_name = '$role'";
-  $result = $link->query($sql);
-
-  if ($result->num_rows > 0) {
-    // Fetch the result as an associative array
-    $row = $result->fetch_assoc();
-    // Store the role_id in a PHP variable
-    $roleId = $row['r_id'];
-    // Now $roleId contains the value of the role_id for the specified user
+  // Perform database update
+  $sql = "UPDATE users SET phone = '$newPhone', city = '$newCity', state = '$newState', country = '$newCountry', address = '$newAddress' WHERE u_id = $user_id";
+  if (mysqli_query($link, $sql)) {
+      echo json_encode(array("success" => true));
   } else {
-    echo "User not found or r_id is not available.";
+      echo json_encode(array("success" => false, "error" => mysqli_error($link)));
   }
+} else {
+  // If the request method is not POST, return an error
+  echo json_encode(array("success" => false, "message" => "Invalid request method."));
+}
 
 
-  $department = $_POST['Department'];
-  // Perform a query to retrieve the role_id for the specified user
-  $sql = "SELECT d_id FROM department WHERE d_name = '$department'";
-  $result = $link->query($sql);
+$user_id = $_SESSION['u_id'];
+$query = "SELECT * FROM users WHERE u_id = $user_id";
+$result = mysqli_query($link, $query);
 
-  if ($result->num_rows > 0) {
-    // Fetch the result as an associative array
-    $row = $result->fetch_assoc();
-    // Store the d_id in a PHP variable
-    $depId = $row['d_id'];
+if ($result && mysqli_num_rows($result) > 0) {
+  $row = mysqli_fetch_assoc($result);
+
+  // Assign fetched values to variables
+  $u_id = $row['u_id'];
+  $username = $row['username'];
+  $email = $row['email'];
+  $phone = $row['phone'];
+  $dob = $row['dob'];
+  $address = $row['address'];
+  $city = $row['city'];
+  $state = $row['state'];
+  $pincode = $row['pincode'];
+  $country = $row['country'];
+  $role = $row['role'];
+  $d_id = $row['d_id'];
+  $date_of_joining = $row['date_of_joining'];
+  $profile_image = $row['profile_image'];
+
+  $query3 = "SELECT d_name FROM department WHERE d_id = $d_id";
+  $result3 = mysqli_query($link, $query3);
+
+  if ($result3 && mysqli_num_rows($result3) > 0) {
+    $row2 = mysqli_fetch_assoc($result3);
+    $d_name = $row2['d_name'];
   } else {
-    echo "User not found or d_id is not available.";
+    echo "d_name not found or error in fetching data.";
   }
 
-  // Handle image upload
-  $image = $_FILES['imageInput'];
+  $query3 = "SELECT r_name FROM role WHERE r_id = $role";
+  $result3 = mysqli_query($link, $query3);
 
-  if ($image['size'] > 0) {
-    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
-    $extension = pathinfo($image['name'], PATHINFO_EXTENSION);
-
-    if (in_array(strtolower($extension), $allowedExtensions)) {
-      $imageName = uniqid('img_') . '.' . $extension;
-      $imagePath = 'profile_images/' . $imageName; // Adjust the folder path as needed
-
-      move_uploaded_file($image['tmp_name'], $imagePath);
-    } else {
-      echo "Invalid image format. Allowed formats: jpg, jpeg, png, gif.";
-      exit();
-    }
+  if ($result3 && mysqli_num_rows($result3) > 0) {
+    $row3 = mysqli_fetch_assoc($result3);
+    $r_name = $row3['r_name'];
   } else {
-    // Handle the case where no image is uploaded
-    $imagePath = 'profile_images/user_default_img.jpg'; // Set a default image path or leave it empty based on your requirements
+    echo "d_name not found or error in fetching data.";
   }
-
-  $query = "SELECT email FROM users where email='$email'";
-  $result = mysqli_query($link, $query);
-
-  if ($result) {
-    $rowCount = mysqli_num_rows($result);
-    if ($rowCount != 0) {
-      echo "<script>alert('user already exsist')</script>";
-    } else {
-      $sql = "INSERT INTO users (username, email, phone, dob, address, city, state, pincode, country, role, d_id, password, date_of_joining, profile_image) 
-              VALUES ('$username', '$email', '$mobileNumber', '$dateOfBirth', '$address', '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath')";
-    }
-  }
-  if ($link->query($sql) === TRUE) {
-    // echo "Record inserted successfully";
-  } else {
-    echo "Error: " . $sql . "<br>" . $link->error;
-  }
+} else {
+  echo "User not found or error in fetching data.";
+  exit;
 }
 
 $link->close();
 ?>
 
-
-
 <head>
-  <title>Add Employee</title>
+  <title>Profile</title>
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
   <style>
     .form-content {
       padding: 25px;
-      /* Adjust padding as needed */
       border-radius: 15px;
-      /* Increase border-radius for rounded corners */
       margin: 10px;
-      /* Center the content horizontally */
       box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
-      /* Darker shadow */
+    }
+
+    .basic {
+      padding: 25px;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+    }
+    .personal {
+      padding: 25px;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
     }
 
     table {
@@ -121,22 +109,6 @@ $link->close();
 
     th {
       border-bottom: 2px solid #ddd;
-      /* Add a bottom border to th and td elements */
-    }
-
-    #button1 {
-      width: 100%;
-      font-weight: bold;
-    }
-
-    #button2 {
-      width: 100%;
-      border-color: blue;
-      /* Set border color to blue */
-      background-color: white;
-      color: blue;
-      /* Set font color to blue */
-      font-weight: bold;
     }
 
     .image-container {
@@ -150,6 +122,10 @@ $link->close();
     .image-container img {
       width: 100%;
       height: auto;
+    }
+
+    .edit-icon {
+      cursor: pointer;
     }
   </style>
 
@@ -167,264 +143,174 @@ $link->close();
     <div class="page-content">
       <div class="container-fluid">
 
-        <!-- start page title -->
         <div class="row">
           <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
               <h4 class="mb-sm-0 font-size-18">Profile</h4>
-
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
                   <li class="breadcrumb-item"><a href="javascript: void(0);">Profile</a></li>
                 </ol>
               </div>
             </div>
           </div>
         </div>
-        <!-- end page title -->
 
-        <!-- start form -->
         <div class="form-content">
           <div class="row">
             <div class="col-md-12">
-
               <div class="row">
                 <form action="" method="POST" enctype="multipart/form-data">
-                <div class="col-md-3 mb-3">
-                  <div class="image-container" id="displayContainer">
-                    <img id="displayImage" alt="profile Image" src="profile_images/user_default_img.jpg">
-                  </div>
-                </div>
-
                   <div class="row">
                     <div class="col-md-3 mb-3">
-                      <label for="FirstName">User Name</label>
-                      <input type="text" class="form-control" id="FirstName" name="FirstName" autocomplete="off" required>
-                    </div>
-                    <!--<div class="col-md-3 mb-3">
-                      <label for="LastName">Last Name</label>
-                      <input type="text" class="form-control" id="LastName" name="LastName" autocomplete="off" required>
-                    </div>-->
-                    <div class="col-md-3 mb-3">
-                      <label for="Email">Email</label>
-                      <input type="email" class="form-control" id="Email" name="Email" autocomplete="off" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="MobileNumber">Mobile Number</label>
-                      <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber" autocomplete="off" pattern="[0-9]{10}" required title="Please enter a 10-digit number">
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Department">Department</label>
-                      <select class="form-control" id="Department" name="Department">
-                        <option value="0" disabled selected hidden>Select Department</option>
-                        <?php
-                        include 'layouts/config.php';
-
-                        // Assuming you have a connection to your database
-                        $sql = "SELECT d_name FROM department";
-                        $result = $link->query($sql);
-
-                        if ($result->num_rows > 0) {
-                          while ($row = $result->fetch_assoc()) {
-                            $depName = $row['d_name'];
-                            echo "<option value=\"$depName\">$depName</option>";
-                          }
-                        } else {
-                          echo "<option value=\"\">No roles found</option>";
-                        }
-                        $link->close();
-
-                        ?>
-                      </select>
+                      <div class="image-container" id="displayContainer">
+                        <img id="displayImage" alt="profile Image" src="<?php echo $profile_image; ?>">
+                      </div>
                     </div>
                   </div>
-
-                  <div div class="row">
-
-                    <div class="col-md-3 mb-3">
-                      <label for="DateOfBirth">Date of Birth</label>
-                      <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="DateOfJoining">Date of Joining</label>
-                      <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
-                       </div>
-                    
-                    <div class="col-md-3 mb-3">
-                      <label for="Address">Address</label>
-                      <input type="text" class="form-control" id="Address" name="Address" autocomplete="off" required>
-                      </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="City">City</label>
-                      <input type="text" class="form-control" id="City" name="City" autocomplete="off" required>
-                      </div>
-                      </div>
-                      </div>
-                      </div>
-
-                  <div class="row">
-                    <div class="col-md-3 mb-3">
-                      <label for="State">State</label>
-                      <input type="text" class="form-control" id="State" name="State" autocomplete="off" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Pincode">Pincode</label>
-                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Country">Country</label>
-                      <input type="text" class="form-control" id="Country" name="Country" autocomplete="off" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Role">Role</label>
-                      <select class="form-control" id="Role" name="Role">
-                        <option value="0" disabled selected hidden>Select Role</option>
-                        
-                        <?php
-                        include 'layouts/config.php';
-
-                        // Assuming you have a connection to your database
-                        $sql = "SELECT r_name FROM role";
-                        $result = $link->query($sql);
-
-                        if ($result->num_rows > 0) {
-                          while ($row = $result->fetch_assoc()) {
-                            $roleName = $row['r_name'];
-                            echo "<option value=\"$roleName\">$roleName</option>";
-                          }
-                        } else {
-                          echo "<option value=\"\">No roles found</option>";
-                        }
-                        $link->close();
-
-                        ?>
-                      </select>
-                      </div>
-                      </div>
-
-                      <div class="row">
-                    <div class="col-md-3 mb-3">
-                      <label for="State">Password</label>
-                      <input type="text" class="form-control" id="State" name="State" autocomplete="off" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                      <label for="Pincode">Confirm Password</label>
-                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
-                    </div>
-                <!--  <div class="row">
-                    <div class="col-md-3 mb-3">
-                      <label for="Department">Department</label>
-                      <select class="form-control" id="Department" name="Department">
-                        <option value="0" disabled selected hidden>Select Department</option>
-                       // <?php
-                        //include 'layouts/config.php';
-
-                        // Assuming you have a connection to your database
-                       // $sql = "SELECT d_name FROM department";
-                       // $result = $link->query($sql);
-
-                        //if ($result->num_rows > 0) {
-                          //while ($row = $result->fetch_assoc()) {
-                           // $depName = $row['d_name'];
-                           // echo "<option value=\"$depName\">$depName</option>";
-                       //   }
-                       // }// else {
-                         // echo "<option value=\"\">No roles found</option>";
-                      //  }
-                      //  $link->close();
-
-                        ?>
-                      </select>
-                    </div>-->
-                   <!-- <div class="col-md-3 mb-3">
-                      <label for="DateOfJoining">Date of Joining</label>
-                      <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
-                    </div>
-                  <!--  <div class="col-md-3 mb-3">
-                      <label for="Salary">Salary</label>
-                      <input type="text" class="form-control" id="Salary" name="Salary" autocomplete="off" required>
-                    </div>-->
-
+                  <br><br>
+                  <div class="basic">
                     <div class="row">
-                      <div class="col-md-3 mb-3">
-                        <div>
-                          <br>
-                          <label for="imageInput" class="btn btn-primary form-control" id="button2" style="margin-top: 8px;">Select Image</label>
-                          <input type="file" id="imageInput" name="imageInput" style="display:none;" onchange="displayProfileImage()">
+                      <strong>
+                        <h3>Basic Information</h3>
+                      </strong>
+                      <br><br><br>
+                      <div class="col-md-6 mb-3">
+                        <div class="row">
+                          <div class="col-md-3 mb-3">
+                            <h5>ID: </h5>
+                            <h5>Name: </h5>
+                            <h5>Department: </h5>
+                            <h5>Role: </h5>
+                            <h5>Email: </h5>
+                            <h5>D.O.B.: </h5>
+                          </div>
+                          <div class="col-md-3 mb-3">
+                            <h5><strong><?php echo $u_id; ?></strong></h5>
+                            <h5><strong><?php echo $username; ?></strong></h5>
+                            <h5> <strong><?php echo $d_name; ?></strong></h5>
+                            <h5><strong><?php echo $r_name; ?></strong></h5>
+                            <h5><strong><?php echo $email; ?></strong></h5>
+                            <h5><strong><?php echo $dob; ?></strong></h5>
+                          </div>
+
                         </div>
                       </div>
+                    </div>
+                  </div>
+                  <div class="personal">
+                    <div class="row">
+                      <strong>
+                        <h3>Personal Information <span class="edit-icon" id="editBasicInfo"><i data-feather="edit"></i></span><span class="submit-icon" id="submitBasicInfo" style="display:none;"><i data-feather="check-circle"></i></span>
+        </h3>
+                      </strong>
+                      <br><br><br>
+                      <div class="col-md-6 mb-3">
+                        <div class="row">
+                          <div class="col-md-3 mb-3">
+                            <h5>Phone No.: </h5>
+                            <h5>City: </h5>
+                            <h5>State: </h5>
+                            <h5>Country: </h5>
+                            <h5>Address: </h5>
+                          </div>
+                          <div class="col-md-3 mb-3 basic-info-field">
+                            <h5 id="username" class="basic-info-field"><strong><?php echo $phone; ?></strong></h5>
+                            <h5 id="department" class="basic-info-field"><strong><?php echo $city; ?></strong></h5>
+                            <h5 id="role" class="basic-info-field"><strong><?php echo $state; ?></strong></h5>
+                            <h5 id="email" class="basic-info-field"><strong><?php echo $country; ?></strong></h5>
+                            <h5 id="email" class="basic-info-field"><strong><?php echo $address; ?></strong></h5>
+                          </div>
 
-                      <div class="col-md-3 mb-3">
-                        <br>
-                        <button type="submit" class="btn btn-primary form-control" id="button1" style="margin-top: 8px;">Add Employee</button>
+                        </div>
+
                       </div>
                     </div>
-                    <div class="row">
-
-                    </div>
+                  </div>
                 </form>
-                       </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-
-                       </div>
-            <!-- end form -->
-
-                       </div>
-        </div> <!-- container-fluid -->
       </div>
-      <!-- End Page-content -->
-
-      <?php include 'layouts/footer.php'; ?>
     </div>
-    <!-- end main content-->
 
+    <?php include 'layouts/footer.php'; ?>
   </div>
-  <!-- END layout-wrapper -->
+</div>
 
-  <!-- Right Sidebar -->
-  <?php include 'layouts/right-sidebar.php'; ?>
-  <!-- /Right-bar -->
+<!-- Right Sidebar -->
+<?php include 'layouts/right-sidebar.php'; ?>
+<!-- /Right-bar -->
 
-  <!-- JAVASCRIPT -->
-  <?php include 'layouts/vendor-scripts.php'; ?>
+<!-- JAVASCRIPT -->
+<?php include 'layouts/vendor-scripts.php'; ?>
 
-  <script src="assets/js/app.js"></script>
-  <!-- App js -->
-  <script src="assets/js/app.js"></script>
-  <!-- Add this script at the end of your HTML, just before the closing </body> tag -->
-  <script>
-    function displayProfileImage() {
-      var input = document.getElementById('imageInput');
-      var container = document.getElementById('displayContainer');
-      var image = document.getElementById('displayImage');
+<script src="assets/js/app.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('editBasicInfo').addEventListener('click', function(e) {
+        e.preventDefault();
+        var basicInfoFields = document.querySelectorAll('.basic-info-field');
+        basicInfoFields.forEach(function(field) {
+            field.setAttribute('contenteditable', 'true');
+            field.style.border = '1px solid #ccc';
+        });
+        document.getElementById('submitBasicInfo').style.display = 'inline'; // Show the Submit button
+    });
 
-      var file = input.files[0];
+    document.getElementById('submitBasicInfo').addEventListener('click', function(e) {
+        e.preventDefault();
+        var basicInfoFields = document.querySelectorAll('.basic-info-field');
+        var updatedFields = {};
+        basicInfoFields.forEach(function(field) {
+            field.setAttribute('contenteditable', 'false');
+            field.style.border = 'none';
+            updatedFields[field.id] = field.innerText;
+        });
+        document.getElementById('submitBasicInfo').style.display = 'none'; // Hide the Submit button
 
-      if (file) {
-        var reader = new FileReader();
+        // Send AJAX request to update details
+        updatePersonalInfo(updatedFields);
+    });
 
-        reader.onload = function(e) {
-          image.src = e.target.result;
-          image.style.objectFit = 'cover';
-          image.style.width = '100%';
-          image.style.height = '100%';
-          container.style.display = 'block'; // Show the image container
-        };
-
-        reader.readAsDataURL(file);
-      } else {
-        // If no file is selected, display the default image
-        image.src =
-          'profile_images/user_default_img.jpg'; // Replace with the actual path to your default image
-        image.style.objectFit = 'cover';
-        image.style.width = '100%';
-        image.style.height = '100%';
-        container.style.display = 'block'; // Show the image container
-      }
+    function updatePersonalInfo(updatedFields) {
+        // Assuming you have included jQuery
+        $.ajax({
+            type: 'POST',
+            url: 'update_personal_info.php',
+            data: updatedFields,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    console.log('Details updated successfully!');
+                    // You can provide feedback to the user if needed
+                } else {
+                    console.error('Error updating details:', response.error);
+                    // Handle error, show an error message, etc.
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+                // Handle error, show an error message, etc.
+            }
+        });
     }
-  </script>
+});
 
-  </body>
+  document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('editBasicInfo').addEventListener('click', function(e) {
+      e.preventDefault();
+      var basicInfoFields = document.querySelectorAll('.basic-info-field');
+      basicInfoFields.forEach(function(field) {
+        field.setAttribute('contenteditable', 'true');
+        field.style.border = '1px solid #ccc';
+      });
+    });
+  });
+</script>
 
-  </html>
+</body>
+
+</html>
