@@ -4,74 +4,75 @@ if ($_SESSION['role'] == 1 ||  $_SESSION['role'] == 2) {
   include 'layouts/head-main.php';
 ?>
 
-  <head>
-    <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
+<head>
+  <title><?php echo $language["Dashboard"]; ?> | Employee Management System</title>
 
-    <?php include 'layouts/head.php'; ?>
-    <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <?php include 'layouts/head-style.php'; ?>
-  </head>
+  <?php include 'layouts/head.php'; ?>
+  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
+  <link href="assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <?php include 'layouts/head-style.php'; ?>
+</head>
 
-  <?php include 'layouts/body.php'; ?>
+<?php include 'layouts/body.php'; ?>
 
-  <!-- Begin page -->
-  <div id="layout-wrapper">
+<!-- Begin page -->
+<div id="layout-wrapper">
 
-    <?php include 'layouts/menu.php'; ?>
-    <div class="main-content">
+  <?php include 'layouts/menu.php'; ?>
+  <div class="main-content">
 
-      <div class="page-content">
-        <div class="container-fluid">
+    <div class="page-content">
+      <div class="container-fluid">
 
-          <!-- start page title -->
-          <div class="row">
-            <div class="col-12">
-              <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0 font-size-18">Leave History</h4>
+        <!-- start page title -->
+        <div class="row">
+          <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+              <h4 class="mb-sm-0 font-size-18">Leave History</h4>
 
-                <div class="page-title-right">
-                  <ol class="breadcrumb m-0">
-                    <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
-                    <li class="breadcrumb-item active">Leave History</li>
-                  </ol>
-                </div>
+              <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
+                  <li class="breadcrumb-item active">Leave History</li>
+                </ol>
               </div>
             </div>
           </div>
-          <!-- end page title -->
-          <!-- Content Header -->
+        </div>
+        <!-- end page title -->
+        <!-- Content Header -->
 
-          <!-- Main Content -->
-          <section class="content">
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="box box-info">
-                  <div class="box-header">
-                  </div>
-                  <div class="box-body">
-                    <div class="table-responsive">
-                      <div class="row">
+        <!-- Main Content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box box-info">
+                <div class="box-header">
+                </div>
+                <div class="box-body">
+                  <div class="table-responsive">
+                    <div class="row">
 
-                      </div>
-                      <!-- DataTable -->
-                      <table id="example1" class="table table-bordered table-striped dataTable no-footer">
-                        <thead>
-                          <tr role="row">
-                            <!-- Table Headers -->
-                            <th>#</th>
-                            <th>Emp ID</th>
-                            <th>Reason</th>
-                            <th>From</th>
-                            <th>To</th>
-                            <th>Status</th>
-                            <th>Applied On</th>
-                            <th>Description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php
+                    </div>
+                    <!-- DataTable -->
+                    <table id="example1" class="table table-bordered table-striped dataTable no-footer">
+                      <thead>
+                        <tr role="row">
+                          <!-- Table Headers -->
+                          <th>#</th>
+                          <th>Emp ID</th>
+                          <th>Reason</th>
+                          <th>From</th>
+                          <th>To</th>
+                          <th>Status</th>
+                          <th>Applied On</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
                           // Include database connection or configuration file
                           include 'layouts/config.php';
 
@@ -114,68 +115,71 @@ if ($_SESSION['role'] == 1 ||  $_SESSION['role'] == 2) {
                           mysqli_close($link);
                           ?>
 
-                        </tbody>
-                      </table>
-                    </div>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-        </div>
-
-
-
+          </div>
+        </section>
       </div>
 
+
+
     </div>
-    <!-- End Page-content -->
 
-    <?php include 'layouts/footer.php'; ?>
   </div>
-  <!-- end main content-->
-  </div>
-  <!-- END layout-wrapper -->
+  <!-- End Page-content -->
 
-  <!-- Right Sidebar -->
-  <?php include 'layouts/right-sidebar.php'; ?>
-  <!-- /Right-bar -->
+  <?php include 'layouts/footer.php'; ?>
+</div>
+<!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
 
-  <!-- JAVASCRIPT -->
-  <?php include 'layouts/vendor-scripts.php'; ?>
+<!-- Right Sidebar -->
+<?php include 'layouts/right-sidebar.php'; ?>
+<!-- /Right-bar -->
 
-  <!-- apexcharts -->
-  <script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
+<!-- JAVASCRIPT -->
+<?php include 'layouts/vendor-scripts.php'; ?>
 
-  <!-- Plugins js-->
-  <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-  <script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+<!-- apexcharts -->
+<script src="http://localhost/EMS-CI/assets/libs/apexcharts/apexcharts.min.js"></script>
 
-  <!-- DataTables js -->
-  <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-  <!-- DataTables js -->
-  <script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-  <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-  <!-- App js -->
-  <script src="assets/js/app.js"></script>
-  <!-- Datatable -->
-  <script>
-    $(document).ready(function() {
-      $('#example1').DataTable({
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true
-      });
-    });
-  </script>
+<!-- Plugins js-->
+<script src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js">
+</script>
+<script
+  src="http://localhost/EMS-CI/assets/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js">
+</script>
+
+<!-- DataTables js -->
+<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<!-- DataTables js -->
+<script src="assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+<!-- Datatable -->
+<script>
+$(document).ready(function() {
+  $('#example1').DataTable({
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": false,
+    "responsive": true
+  });
+});
+</script>
 <?php  } else {
-  header("Location: auth-login.php");
+  header("Location: login.php");
   exit(); // Stop further execution
 }
 ?>

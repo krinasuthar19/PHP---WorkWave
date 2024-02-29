@@ -41,7 +41,7 @@ if ($_SESSION['role'] == 3 || $_SESSION['role'] == 4) {
 
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                  <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Previous Leave Status</a></li>-->
+                  <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">Previous Leave Status</a></li> -->
                   <li class="breadcrumb-item active">Previous Leave Status</li>
                 </ol>
               </div>
@@ -188,7 +188,7 @@ $(document).ready(function() {
 });
 </script>
 <?php } else {
-  header("Location: auth-login.php");
+  header("Location: login.php");
   exit(); // Stop further execution
 }
 ?>

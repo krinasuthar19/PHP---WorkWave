@@ -1,8 +1,7 @@
 <?php
 session_start();
-// require "layouts/session_check.php";
 if (!(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)) {
-  header("location: auth-login.php");
+  header("location: login.php");
 }
 include 'layouts/head-main.php';
 ?>
@@ -10,7 +9,9 @@ include 'layouts/head-main.php';
 
 <head>
 
-  <title><?php echo $language["Dashboard"]; ?> | Minia - Admin & Dashboard Template</title>
+  <title>
+    <?php echo $language["Dashboard"]; ?> | Minia - Admin & Dashboard Template
+  </title>
 
   <?php include 'layouts/head.php'; ?>
 
@@ -58,7 +59,8 @@ include 'layouts/head-main.php';
               <div class="card bg-c-blue order-card">
                 <div class="card-body">
                   <h5 class="m-b-20">Total Numbers of Employees</h5>
-                  <h2 class="text-right"><i data-feather="users" class="icon-big"></i><span class="numbers">486</span></h2>
+                  <h2 class="text-right"><i data-feather="users" class="icon-big"></i><span class="numbers">486</span>
+                  </h2>
                 </div>
               </div>
             </div>
@@ -66,7 +68,8 @@ include 'layouts/head-main.php';
               <div class="card bg-c-green order-card">
                 <div class="card-body">
                   <h5 class="m-b-20">Total Number of Department</h5>
-                  <h2 class="text-right"><i data-feather="user-plus" class="icon-big"></i><span class="numbers">486</span></h2>
+                  <h2 class="text-right"><i data-feather="user-plus" class="icon-big"></i><span
+                      class="numbers">486</span></h2>
                 </div>
               </div>
             </div>
@@ -74,7 +77,8 @@ include 'layouts/head-main.php';
               <div class="card bg-c-yellow order-card">
                 <div class="card-body">
                   <h5 class="m-b-20">Total Employees Present Today</h5>
-                  <h2 class="text-right"><i data-feather="calendar" class="icon-big"></i><span class="numbers">486</span></h2>
+                  <h2 class="text-right"><i data-feather="calendar" class="icon-big"></i><span
+                      class="numbers">486</span></h2>
                 </div>
               </div>
             </div>
@@ -82,7 +86,8 @@ include 'layouts/head-main.php';
               <div class="card bg-c-pink order-card">
                 <div class="card-body">
                   <h5 class="m-b-20">Total Amount of Salary Given</h5>
-                  <h2 class="text-right"><i class='fas fa-wallet' style='font-size:30px'></i><span class="numbers">486</span></h2>
+                  <h2 class="text-right"><i class='fas fa-wallet' style='font-size:30px'></i><span
+                      class="numbers">486</span></h2>
                 </div>
               </div>
             </div>
@@ -177,9 +182,10 @@ include 'layouts/head-main.php';
   </script>
 
   <style>
-    .numbers{
+    .numbers {
       margin-left: 15px;
     }
+
     .bg-c-blue {
       background-color: #007bff;
       color: #fff;

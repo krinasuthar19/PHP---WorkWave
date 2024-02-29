@@ -9,7 +9,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
       break;
 
     default:
-      header("location: auth-login.php");
+      header("location: login.php");
       break;
   }
   exit;

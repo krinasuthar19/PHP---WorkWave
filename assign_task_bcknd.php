@@ -1,4 +1,5 @@
 <?php
+include 'layouts/check_pm.php';
 include 'layouts/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

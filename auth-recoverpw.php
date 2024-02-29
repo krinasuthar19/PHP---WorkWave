@@ -56,9 +56,9 @@ if (isset($_POST['submit'])) {
 
       $mail->send();
       $msg = "We have emailed your password reset link!";
-      // header("location:auth-login.php");
+      // header("location:login.php");
     } catch (Exception $e) {
-      $useremail_err =  "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
+      $useremail_err = "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
     }
   } else {
     $useremail_err = "No Email Found";
@@ -103,21 +103,27 @@ if (isset($_POST['submit'])) {
                   <div class="mb-3 <?php echo (!empty($useremail_err)) ? 'has-error' : ''; ?>">
                     <label class="form-label">Email</label>
                     <input type="text" class="form-control" name="email" id="email" placeholder="Enter email">
-                    <span class="text-danger"><?php echo $useremail_err; ?></span>
+                    <span class="text-danger">
+                      <?php echo $useremail_err; ?>
+                    </span>
                   </div>
                   <div class="mb-3 mt-4">
-                    <button class="btn btn-primary w-100 waves-effect waves-light" type='submit' name='submit' value='Submit'>Reset</button>
+                    <button class="btn btn-primary w-100 waves-effect waves-light" type='submit' name='submit'
+                      value='Submit'>Reset</button>
                   </div>
                 </form>
 
                 <div class="mt-5 text-center">
-                  <p class="text-muted mb-0">Remember It ? <a href="auth-login.php" class="text-primary fw-semibold"> Sign In </a> </p>
+                  <p class="text-muted mb-0">Remember It ? <a href="login.php" class="text-primary fw-semibold"> Sign In
+                    </a> </p>
                 </div>
               </div>
               <div class="mt-4 mt-md-5 text-center">
-                <p class="mb-0">© <script>
+                <p class="mb-0">©
+                  <script>
                     document.write(new Date().getFullYear())
-                  </script> Minia. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                  </script> Minia. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                </p>
               </div>
             </div>
           </div>
@@ -146,9 +152,12 @@ if (isset($_POST['submit'])) {
               <div class="p-0 p-sm-4 px-xl-0">
                 <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0">
-                    <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active"
+                      aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2"
+                      aria-label="Slide 3"></button>
                   </div>
                   <!-- end carouselIndicators -->
                   <div class="carousel-inner">
@@ -166,7 +175,8 @@ if (isset($_POST['submit'])) {
                         <div class="mt-4 pt-3 pb-5">
                           <div class="d-flex align-items-start">
                             <div class="flex-shrink-0">
-                              <img src="assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
+                              <img src="assets/images/users/avatar-1.jpg" class="avatar-md img-fluid rounded-circle"
+                                alt="...">
                             </div>
                             <div class="flex-grow-1 ms-3 mb-4">
                               <h5 class="font-size-18 text-white">Richard Drews
@@ -191,7 +201,8 @@ if (isset($_POST['submit'])) {
                         <div class="mt-4 pt-3 pb-5">
                           <div class="d-flex align-items-start">
                             <div class="flex-shrink-0">
-                              <img src="assets/images/users/avatar-2.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
+                              <img src="assets/images/users/avatar-2.jpg" class="avatar-md img-fluid rounded-circle"
+                                alt="...">
                             </div>
                             <div class="flex-grow-1 ms-3 mb-4">
                               <h5 class="font-size-18 text-white">Rosanna French
@@ -215,7 +226,8 @@ if (isset($_POST['submit'])) {
                           feel.”</h4>
                         <div class="mt-4 pt-3 pb-5">
                           <div class="d-flex align-items-start">
-                            <img src="assets/images/users/avatar-3.jpg" class="avatar-md img-fluid rounded-circle" alt="...">
+                            <img src="assets/images/users/avatar-3.jpg" class="avatar-md img-fluid rounded-circle"
+                              alt="...">
                             <div class="flex-1 ms-3 mb-4">
                               <h5 class="font-size-18 text-white">Ilse R. Eaton</h5>
                               <p class="mb-0 text-white-50">Manager

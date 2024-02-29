@@ -1,4 +1,8 @@
-<?php include 'layouts/head-main.php'; ?>
+<?php
+session_start();
+include 'layouts/check_hr.php';
+include 'layouts/head-main.php';
+?>
 
 <head>
 
@@ -10,7 +14,8 @@
   <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
 
   <!-- Responsive datatable examples -->
-  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
+    type="text/css" />
 
   <?php include 'layouts/head-style.php'; ?>
 
@@ -63,7 +68,7 @@
 
               </div>
               <div class="card-body">
-              <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
                   <thead>
                     <tr>
                       <th>Sr no.</th>
@@ -85,7 +90,7 @@
                     $result = mysqli_query($link, $query);
                     $i = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
-                        $sql = "SELECT d_name FROM department WHERE d_id={$row['d_id']}";
+                      $sql = "SELECT d_name FROM department WHERE d_id={$row['d_id']}";
                       $resultRole = $link->query($sql);
                       if ($resultRole->num_rows > 0) {
                         while ($rowRole = $resultRole->fetch_assoc()) {
@@ -113,8 +118,8 @@
                       echo "<td>{$depName}</td>";
                       // Displaying action buttons based on the status
                       echo '<td>';
-                          echo '<a href="hr_salary_confirm.php?u_id=' . $row['u_id'] . '" class="btn btn-primary"><i data-feather="check"></i></a>';
-                      
+                      echo '<a href="hr_salary_confirm.php?u_id=' . $row['u_id'] . '" class="btn btn-primary"><i data-feather="check"></i></a>';
+
                       echo '</td>';
                       echo "</tr>";
                       $i++;
