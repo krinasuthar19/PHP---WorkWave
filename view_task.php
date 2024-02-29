@@ -1,5 +1,8 @@
 <?php
+include 'layouts/config.php';
 session_start(); // Start session to get user role
+// require 'layouts/check_admin.php';
+// require 'layouts/check_emp.php';
 // Redirect to login page if user is not logged in or is an employee
 if (!(isset($_SESSION['loggedin'])) || $_SESSION['role'] == 2) {
   header("Location: login.php");
@@ -8,7 +11,6 @@ if (!(isset($_SESSION['loggedin'])) || $_SESSION['role'] == 2) {
 include 'layouts/head-main.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
-  include 'layouts/config.php';
 
   $task_id = $_GET['task_id'];
 
@@ -197,7 +199,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                         <tbody>
                           <?php
                           // Include database connection or configuration file
-                          include 'layouts/config.php';
                           $u_id = $_SESSION['u_id'];
                           $role = $_SESSION['role'];
 
@@ -333,7 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                                     // Action buttons for employee only if the task is in working phase(started)
                                     // Action Button for employee to end the task
                                     echo '<td>';
-                                    echo '<a href="?task_id=' . $row['t_id'] . '&action=end" class="btn btn-warning">End</a>';
+                                    echo '<a href="?task_id=' . $row['t_id'] . '&action=End" class="btn btn-warning">End</a>';
                                     echo '</td>';
                                   } elseif ($status == 3) {
                                     // Action buttons for employee only if the task completed
@@ -351,7 +352,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           }
 
                           // Close the database connection
-                          mysqli_close($link);
                           ?>
 
                         </tbody>
@@ -388,19 +388,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
   <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
   <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
   <script>
-    $.fn.dataTable.ext.errMode = 'none';
+  $.fn.dataTable.ext.errMode = 'none';
 
-    $(document).ready(function () {
-      $('#example1').DataTable({
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false,
-        "responsive": true,
-      });
+  $(document).ready(function() {
+    $('#example1').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
     });
+  });
   </script>
   <!-- Datatable -->
 </body>
