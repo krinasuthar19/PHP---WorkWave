@@ -6,7 +6,7 @@ include 'layouts/head-main.php';
 
 <head>
 
-  <title>DataTables | Minia - Admin & Dashboard Template</title>
+  <title>DataTables | WorkWave Admin & Dashboard Template</title>
   <?php include 'layouts/head.php'; ?>
 
   <!-- DataTables -->
