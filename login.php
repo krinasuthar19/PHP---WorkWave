@@ -84,14 +84,15 @@ require "layouts/session.php";
             <div class="col-xl-7">
               <div class="p-0 p-sm-4 px-xl-0">
                 <div id="reviewcarouselIndicators" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0">
+                  <!-- <div class="carousel-indicators carousel-indicators-rounded justify-content-start ms-0 mb-0" style="margin-top:30px;">
                     <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="0" class="active"
                       aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="1"
                       aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2"
                       aria-label="Slide 3"></button>
-                  </div>
+                  </div> -->
+                  
                   <!-- end carouselIndicators -->
                   <div class="carousel-inner">
                     <div class="carousel-item active">
