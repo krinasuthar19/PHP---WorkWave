@@ -2,18 +2,23 @@
 include 'layouts/session.php';
 include 'layouts/head-main.php';
 
-// Assuming you have a database connection
-include "layouts/config.php";
+// Assuming you have a database linkection
+include 'layouts/config.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Check linkection status
+if ($link->connect_error) {
+    die("linkection failed: " . $link->connect_error);
 }
 
 // Fetch user data from the database
-$sql = "SELECT username, u_id, profile FROM users";
-$result = $conn->query($sql);
+$sql = "SELECT username, u_id, profile_image FROM users";
+$result = $link->query($sql);
+
+// Check if query execution was successful
+if (!$result) {
+    die("Query execution failed: " . $link->error);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -44,11 +49,11 @@ $result = $conn->query($sql);
                                                 <a class="text-muted dropdown-toggle font-size-16" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"></a>
                                             </div>
                                             <div class="mx-auto mb-4">
-                                                <img src="assets/images/users/avatar-2.jpg" alt="" class="avatar-xl rounded-circle img-thumbnail">
+                                                <img src="' . $row['profile_image'] . '" alt="Profile Image" class="avatar-xl rounded-circle img-thumbnail">
                                             </div>
                                             <h5 class="font-size-16 mb-1"><a href="#" class="text-body">' . $row['username'] . '</a></h5>
-                                            <p class="text-muted mb-2">' . $row['profile'] . '</p>
-                                            <a href="profile.php?id=' . $row['u_id'] . '">
+                                            <p class="text-muted mb-2">' . $row['u_id'] . '</p>
+                                            <a href="emp_profile.php?id=' . $row['u_id'] . '">
                                                 <div class="btn-group" role="group">
                                                     <button type="button" class="btn btn-outline-light text-truncate"><i class="uil uil-user me-1"></i> Profile</button>
                                                 </div>
@@ -61,7 +66,7 @@ $result = $conn->query($sql);
                         echo "No records found";
                     }
 
-                    $conn->close();
+                    $link->close();
                     ?>
                 </div>
             </div>

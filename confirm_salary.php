@@ -46,12 +46,11 @@ include 'layouts/head-main.php';
         <div class="row">
           <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 class="mb-sm-0 font-size-18">confim Salary</h4>
+              <h4 class="mb-sm-0 font-size-18">Confirm Salary</h4>
 
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                  <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>-->
-                  <li class="breadcrumb-item active">confirm salary</li>
+                  <li class="breadcrumb-item active">Confirm Salary</li>
                 </ol>
               </div>
 
@@ -85,9 +84,18 @@ include 'layouts/head-main.php';
                     <?php
                     // Assuming you have a database connection established
                     include 'layouts/config.php';
-
-                    $query = "SELECT u_id, username, role, profile_image, d_id FROM users";
+                    
+                    $query = "SELECT u.u_id, u.username, u.role, u.profile_image, u.d_id 
+                              FROM users u
+                              LEFT JOIN salaries s ON u.u_id = s.u_id AND s.hr_status = 1
+                              WHERE s.u_id IS NULL";
+                    
                     $result = mysqli_query($link, $query);
+                    
+                    if (!$result) {
+                        die('Error executing query: ' . mysqli_error($link));
+                    }
+                    
                     $i = 1;
                     while ($row = mysqli_fetch_assoc($result)) {
                       $sql = "SELECT d_name FROM department WHERE d_id={$row['d_id']}";

@@ -2,6 +2,7 @@
 session_start(); // Start session to get user role
 // require 'layouts/check_admin.php';
 // require 'layouts/check_emp.php';
+
 if (!(isset($_SESSION['loggedin']))) {
   header("Location: login.php");
 }
@@ -10,11 +11,14 @@ if ($_SESSION['role'] == 2) {
 }
 include 'layouts/head-main.php';
 
+include 'layouts/config.php';
+
+
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
   $task_id = $_GET['task_id'];
 
   // Include database connection or configuration file
-  include 'layouts/config.php';
+
 
   // Fetch task data from the database
 
@@ -25,6 +29,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
   if ($result && mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
     $status = $row['status'];
+    $end_date = strtotime($row['end_date']);
+    $current_date = time();
+
+    // Check if end date is passed
+    if ($current_date > $end_date && $status != 3 && $status != 4) {
+      $updateQuery = "UPDATE task SET status = 4 WHERE t_id = $task_id";
+      if (mysqli_query($link, $updateQuery)) {
+        // Task status updated to 'Overdue'
+        header("Location: view_task.php"); // Redirect back to view_tasks.php
+        exit();
+      } else {
+        // Error updating task status
+        echo "Error updating task status: " . mysqli_error($link);
+        exit();
+      }
+    }
 
     // Start Task
     if ($status == 1) {
@@ -154,7 +174,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                         <tbody>
                           <?php
                           // Include database connection or configuration file
-                          include 'layouts/config.php';
+
                           $u_id = $_SESSION['u_id'];
                           $role = $_SESSION['role'];
 
@@ -188,10 +208,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 
                               //status column
                               $status = $row['status'];
-                              $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
-                              echo '<td style="color: ' . $statusColor . ';">';
-                              echo ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
-                              echo '</td>';
+                              if ($status == 4) {
+                                $statusText = 'Overdue';
+                                $statusColor = 'red';
+                              } else {
+                                $statusText = ($status == 0) ? 'Not Assigned' : (($status == 1) ? 'Not Started' : (($status == 2) ? 'Working' : 'Completed'));
+                                $statusColor = ($status == 0) ? 'blue' : (($status == 1) ? 'red' : 'green');
+                              }
+                              echo '<td style="color: ' . $statusColor . ';">' . $statusText . '</td>';
 
                               //Action column
                               if ($role == 1 || $role == 3) {

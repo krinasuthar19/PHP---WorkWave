@@ -1,6 +1,6 @@
 <?php
 session_start(); // Start session to get user role
-if ($_SESSION['role'] == 3) {
+if ($_SESSION['role'] == 1) {
   // Redirect user to another page or show access denied message
   include 'layouts/head-main.php';
   ?>
