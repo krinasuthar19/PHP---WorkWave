@@ -160,7 +160,7 @@ $link->close();
           <div class="row">
             <div class="col-md-12">
               <div class="row">
-                <form action="" method="POST" enctype="multipart/form-data">
+                
                   <div class="row">
                     <div class="col-md-3 mb-3">
                       <div class="image-container" id="displayContainer">
@@ -198,11 +198,11 @@ $link->close();
                       </div>
                     </div>
                   </div>
+                  <form action="" method="POST" enctype="multipart/form-data">
                   <div class="personal">
                     <div class="row">
                       <strong>
-                        <h3>Personal Information <span class="edit-icon" id="editBasicInfo"><i data-feather="edit"></i></span><span class="submit-icon" id="submitBasicInfo" style="display:none;"><i data-feather="check-circle"></i></span>
-        </h3>
+                        <h3>Personal Information <span class="edit-icon" id="editBasicInfo"><i data-feather="edit"></i></span><span class="submit-icon" id="submitBasicInfo" style="display:none;"><i data-feather="check-circle"></i></span></h3>
                       </strong>
                       <br><br><br>
                       <div class="col-md-6 mb-3">

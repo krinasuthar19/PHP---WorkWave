@@ -48,12 +48,6 @@ echo '<li>
         </a>
       </li>
       <li>
-          <a href="profile.php">
-            <i data-feather="check-circle"></i>
-            <span data-key="t-dashboard">Profile</span>
-          </a>
-      </li>
-      <li>
           <a href="emp_payslip.php">
             <i data-feather="file-text"></i>
             <span data-key="t-dashboard">My Payslip</span>
