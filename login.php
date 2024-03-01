@@ -36,18 +36,18 @@ require "layouts/session.php";
                   <!-- for email -->
                   <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="Enter email" name="email"
-                      autocomplete="off" required>
+                    <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" autocomplete="off" required>
                   </div>
                   <!-- for password -->
                   <div class="mb-3">
                     <label class="form-label" for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password"
-                      name="password" autocomplete="off" required>
+                    <div class="d-flex align-items-start">
+                      <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" autocomplete="off" required>
+                      <button class="btn btn-light ms-0" type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+                    </div>
                   </div>
                   <div class="mb-3">
-                    <button id="loginBtn" class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log
-                      In</button>
+                    <button id="loginBtn" class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
                   </div>
                 </form>
               </div>
@@ -92,7 +92,7 @@ require "layouts/session.php";
                     <button type="button" data-bs-target="#reviewcarouselIndicators" data-bs-slide-to="2"
                       aria-label="Slide 3"></button>
                   </div> -->
-                  
+
                   <!-- end carouselIndicators -->
                   <div class="carousel-inner">
                     <div class="carousel-item active">
@@ -140,10 +140,10 @@ require "layouts/session.php";
 <!-- password addon init -->
 <script src="assets/js/pages/pass-addon.init.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
 
-    loginForm.addEventListener('submit', function (event) {
+    loginForm.addEventListener('submit', function(event) {
       event.preventDefault();
 
       const email = document.getElementById('email').value;
@@ -162,7 +162,7 @@ require "layouts/session.php";
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
       // Define what happens on successful data submission
-      xhr.onload = function () {
+      xhr.onload = function() {
         if (xhr.status === 200) {
           // Parse the response
           const response = JSON.parse(xhr.responseText);
@@ -182,7 +182,7 @@ require "layouts/session.php";
       };
 
       // Define what happens in case of an error
-      xhr.onerror = function () {
+      xhr.onerror = function() {
         console.error('Request failed.');
       };
 
