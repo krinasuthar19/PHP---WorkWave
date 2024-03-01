@@ -130,10 +130,15 @@ include 'layouts/head-main.php';
                   </div>
                   <div class="row">
                     <div class="col-md-3 mb-3">
-                      <label for="Pincode">City</label>
-                      <select class="form-control" id="City" name="City" required disabled>
-                        <option value="" selected>Select City</option>
+                      <label for="Area">Area</label>
+                      <select class="form-control" id="Area" name="Area" required disabled>
+                        <option value="" selected>Select Area</option>
                       </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                      <label for="City">City</label>
+                      <input type="text" class="form-control" id="City" name="City" autocomplete="off" required disabled>
                     </div>
 
                     <div class="col-md-3 mb-3">
@@ -145,6 +150,8 @@ include 'layouts/head-main.php';
                       <label for="Country">Country</label>
                       <input type="text" class="form-control" id="Country" name="Country" autocomplete="off" required disabled>
                     </div>
+                  </div>
+                  <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="Role">Role</label>
                       <select class="form-control" id="Role" name="Role">
@@ -165,8 +172,6 @@ include 'layouts/head-main.php';
                         ?>
                       </select>
                     </div>
-                  </div>
-                  <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="Department">Department</label>
                       <select class="form-control" id="Department" name="Department">
@@ -239,77 +244,79 @@ include 'layouts/head-main.php';
     document.getElementById('Pincode').addEventListener('input', function() {
       var pincode = this.value.trim();
       if (pincode.length === 6) {
-        fetchCityStateCountry(pincode);
+        fetchAreaStateCountry(pincode);
       } else {
-        // Reset city, state, and country fields if pincode is empty
+        // Reset area, state, and country fields if pincode is empty
         resetFields();
       }
     });
   });
 
-  function fetchCityStateCountry(pincode) {
+  function fetchAreaStateCountry(pincode) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           var response = JSON.parse(xhr.responseText);
-          if (response && response.cities && response.cities.length > 0) {
-            populateCityDropdown(response.cities);
+          if (response && response.areas && response.areas.length > 0) {
+            populateAreaDropdown(response.areas);
+            document.getElementById('City').value = response.cities[0]; // Assuming only one state per pincode
             document.getElementById('State').value = response.states[0]; // Assuming only one state per pincode
             document.getElementById('Country').value = response.countries[0]; // Assuming only one country per pincode
             enableFields();
           } else {
-            displayNoCityStateCountry();
+            displayNoAreaStateCountry();
           }
         } else {
-          console.error('Error fetching city, state, and country.');
+          console.error('Error fetching area, state, and country.');
         }
       }
     };
-    xhr.open('POST', 'fetch_cities.php', true);
+    xhr.open('POST', 'fetch_cities.php', true); // Update PHP file name
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('pincode=' + pincode);
   }
 
-  function populateCityDropdown(cities) {
-    var cityDropdown = document.getElementById('City');
-    cityDropdown.innerHTML = '<option value="" selected>Select City</option>';
-    cities.forEach(function(city) {
+  function populateAreaDropdown(areas) {
+    var areaDropdown = document.getElementById('Area');
+    areaDropdown.innerHTML = '<option value="" selected>Select Area</option>';
+    areas.forEach(function(area) {
       var option = document.createElement('option');
-      option.value = city;
-      option.textContent = city;
-      cityDropdown.appendChild(option);
+      option.value = area;
+      option.textContent = area;
+      areaDropdown.appendChild(option);
     });
   }
 
   function resetFields() {
-    document.getElementById('City').innerHTML = '<option value="" selected>No City Found</option>';
+    document.getElementById('Area').innerHTML = '<option value="" selected>No Area Found</option>';
+    document.getElementById('City').value = 'No City Found';
     document.getElementById('State').value = 'No State Found';
     document.getElementById('Country').value = 'No Country Found';
     disableFields();
   }
 
-  function displayNoCityStateCountry() {
-    document.getElementById('City').innerHTML = '<option value="" selected>No City Found</option>';
+  function displayNoAreaStateCountry() {
+    document.getElementById('Area').innerHTML = '<option value="" selected>No Area Found</option>';
+    document.getElementById('City').value = 'No City Found';
     document.getElementById('State').value = 'No State Found';
     document.getElementById('Country').value = 'No Country Found';
   }
 
   function enableFields() {
-    document.getElementById('City').disabled = false;
+    document.getElementById('Area').disabled = false;
     // document.getElementById('State').disabled = false;
     // document.getElementById('Country').disabled = false;
   }
 
   function disableFields() {
+    document.getElementById('Area').disabled = true;
     document.getElementById('City').disabled = true;
     document.getElementById('State').disabled = true;
     document.getElementById('Country').disabled = true;
   }
 
-
   document.addEventListener('DOMContentLoaded', function() {
-
     //! ----------START-firstname and lastname validator-START---------- 
     document.getElementById('FirstName').addEventListener('input', function() {
       var firstName = this.value.trim();
@@ -340,11 +347,8 @@ include 'layouts/head-main.php';
       }
     });
     //! ----------END-firstname and lastname validator-END---------- 
-
   });
-</script>
 
-<script>
   function displayProfileImage() {
     var input = document.getElementById('imageInput');
     var container = document.getElementById('displayContainer');

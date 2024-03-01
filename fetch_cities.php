@@ -31,27 +31,31 @@ if (isset($_POST['pincode'])) {
   // Parse the JSON response
   $data = json_decode($response, true);
 
-  // Create arrays to store cities, states, and countries
+  // Create arrays to store areas, states, and countries
+  $areas = array();
   $cities = array();
   $states = array();
   // $countries = array();
 
   // Check if data is available and contains postalCodes
   if ($data && isset($data['postalCodes'])) {
-    // Iterate over postalCodes and extract city names
+    // Iterate over postalCodes and extract area names
     foreach ($data['postalCodes'] as $location) {
-      $city = $location['placeName'];
-      $state = $location['adminName2'];
+      $area = $location['placeName'];
+      $city=$location['adminName2'];
+      $state = $location['adminName1'];
       // $country = $location['countryCode'];
-      // Add city, state, and country to the respective arrays
-      $cities[] = $city;
+      // Add area, state, and country to the respective arrays
+      $areas[] = $area;
+      $cities[]=$city;
       $states[] = $state;
       $countries[] = "India";
     }
   }
 
-  // Create an associative array to hold cities, states, and countries
+  // Create an associative array to hold areas, states, and countries
   $result = array(
+    'areas' => $areas,
     'cities' => $cities,
     'states' => $states,
     'countries' => $countries
