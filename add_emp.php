@@ -124,22 +124,26 @@ include 'layouts/head-main.php';
                       <input type="text" class="form-control" id="Address" name="Address" autocomplete="off" required>
                     </div>
                     <div class="col-md-3 mb-3">
-                      <label for="City">City</label>
-                      <input type="text" class="form-control" id="City" name="City" autocomplete="off" required>
+                      <label for="Pincode">Pincode</label>
+                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-3 mb-3">
-                      <label for="State">State</label>
-                      <input type="text" class="form-control" id="State" name="State" autocomplete="off" required>
+                      <label for="Pincode">City</label>
+                      <select class="form-control" id="City" name="City" required disabled>
+                        <option value="" selected>Select City</option>
+                      </select>
                     </div>
+
                     <div class="col-md-3 mb-3">
-                      <label for="Pincode">Pincode</label>
-                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
+                      <label for="State">State</label>
+                      <input type="text" class="form-control" id="State" name="State" autocomplete="off" required disabled>
                     </div>
+
                     <div class="col-md-3 mb-3">
                       <label for="Country">Country</label>
-                      <input type="text" class="form-control" id="Country" name="Country" autocomplete="off" required>
+                      <input type="text" class="form-control" id="Country" name="Country" autocomplete="off" required disabled>
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="Role">Role</label>
@@ -193,7 +197,7 @@ include 'layouts/head-main.php';
 
                     <div class="col-md-3 mb-3">
                       <label for="Salary">Salary</label>
-                      <input type="text" class="form-control" id="Salary" name="Salary" autocomplete="off" required>
+                      <input type="number" class="form-control" id="Salary" name="Salary" autocomplete="off" required>
                     </div>
                     <div class="row">
                       <div class="col-md-3 mb-3">
@@ -231,6 +235,79 @@ include 'layouts/head-main.php';
 <?php include 'layouts/vendor-scripts.php'; ?>
 <script src="assets/js/app.js"></script>
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('Pincode').addEventListener('input', function() {
+      var pincode = this.value.trim();
+      if (pincode.length === 6) {
+        fetchCityStateCountry(pincode);
+      } else {
+        // Reset city, state, and country fields if pincode is empty
+        resetFields();
+      }
+    });
+  });
+
+  function fetchCityStateCountry(pincode) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          if (response && response.cities && response.cities.length > 0) {
+            populateCityDropdown(response.cities);
+            document.getElementById('State').value = response.states[0]; // Assuming only one state per pincode
+            document.getElementById('Country').value = response.countries[0]; // Assuming only one country per pincode
+            enableFields();
+          } else {
+            displayNoCityStateCountry();
+          }
+        } else {
+          console.error('Error fetching city, state, and country.');
+        }
+      }
+    };
+    xhr.open('POST', 'fetch_cities.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('pincode=' + pincode);
+  }
+
+  function populateCityDropdown(cities) {
+    var cityDropdown = document.getElementById('City');
+    cityDropdown.innerHTML = '<option value="" selected>Select City</option>';
+    cities.forEach(function(city) {
+      var option = document.createElement('option');
+      option.value = city;
+      option.textContent = city;
+      cityDropdown.appendChild(option);
+    });
+  }
+
+  function resetFields() {
+    document.getElementById('City').innerHTML = '<option value="" selected>No City Found</option>';
+    document.getElementById('State').value = 'No State Found';
+    document.getElementById('Country').value = 'No Country Found';
+    disableFields();
+  }
+
+  function displayNoCityStateCountry() {
+    document.getElementById('City').innerHTML = '<option value="" selected>No City Found</option>';
+    document.getElementById('State').value = 'No State Found';
+    document.getElementById('Country').value = 'No Country Found';
+  }
+
+  function enableFields() {
+    document.getElementById('City').disabled = false;
+    // document.getElementById('State').disabled = false;
+    // document.getElementById('Country').disabled = false;
+  }
+
+  function disableFields() {
+    document.getElementById('City').disabled = true;
+    document.getElementById('State').disabled = true;
+    document.getElementById('Country').disabled = true;
+  }
+
+
   document.addEventListener('DOMContentLoaded', function() {
 
     //! ----------START-firstname and lastname validator-START---------- 
@@ -303,7 +380,7 @@ include 'layouts/head-main.php';
         changeMonth: true,
         changeYear: true,
         yearRange: "-100:+0",
-        maxDate: new Date(currentDate.getFullYear() - 19, currentDate.getMonth(), currentDate.getDate()),
+        maxDate: new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()),
 
         onChange: function(selectedDates, dateStr, instance) {
           var selectedDate = selectedDates[0];
@@ -315,9 +392,6 @@ include 'layouts/head-main.php';
           var age = Math.floor((currentDate - selectedDate) / (365 * 24 * 60 * 60 * 1000));
           if (age < 18) {
             $("#ageError").text("Age must be at least 18.");
-            instance.clear();
-          } else if (age < 19) {
-            $("#ageError").text("Age must be at least 19.");
             instance.clear();
           } else {
             $("#ageError").text("");
