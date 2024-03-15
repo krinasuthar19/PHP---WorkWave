@@ -1,6 +1,10 @@
 <?php
 include 'layouts/config.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $firstName = $_POST['FirstName'];
   $lastName = $_POST['LastName'];
@@ -11,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $dateOfJoining = date('Y-m-d', strtotime($_POST['DateOfJoining']));
   $gender = $_POST['Gender'];
   $address = $_POST['Address'];
+  $area = $_POST['Area'];
   $city = $_POST['City'];
   $state = $_POST['State'];
   $pincode = $_POST['Pincode'];
