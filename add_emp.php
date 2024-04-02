@@ -136,7 +136,15 @@ include 'layouts/head-main.php';
                   <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="Area">Area</label>
+<<<<<<< Updated upstream
                       <select class="form-control" id="Area" name="Area" required>
+=======
+<<<<<<< HEAD
+                      <select class="form-control" id="Area" name="Area" autocomplete="off" required disabled>
+=======
+                      <select class="form-control" id="Area" name="Area" required>
+>>>>>>> 69713822dd9fbb83c34f0b18a70ba92857f52d28
+>>>>>>> Stashed changes
                         <option value="" selected>Select Area</option>
                       </select>
                     </div>

@@ -62,9 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "
 <script>alert('user already exist')</script>";
     } else {
-      $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, city, state, pincode,
+      $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, area, city, state, pincode,
 country, role, d_id, password, date_of_joining, profile_image,salary)
-VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address',
+VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address','$area'
 '$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath','$salary')";
     }
   }
@@ -80,4 +80,3 @@ VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$date
   header("Location: add_emp.php");
   exit();
 }
-?>
