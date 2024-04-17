@@ -8,7 +8,7 @@ if (isset($_POST['pincode'])) {
   $username = "jeelviradiya";
 
   // URL for the GeoNames API
-  $url = "http://api.geonames.org/postalCodeSearchJSON?postalcode={$pincode}&maxRows=10&country={$country}";
+  $url = "http://api.geonames.org/postalCodeSearchJSON?postalcode={$pincode}&maxRows=10&username={$username}&country={$country}";
 
   // Initialize cURL session
   $curl = curl_init();

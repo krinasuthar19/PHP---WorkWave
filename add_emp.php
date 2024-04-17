@@ -81,8 +81,7 @@ include 'layouts/head-main.php';
                   <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="FirstName">First Name</label>
-                      <input type="text" class="form-control" id="FirstName" name="FirstName" autocomplete="off"
-                        required>
+                      <input type="text" class="form-control" id="FirstName" name="FirstName" autocomplete="off" required>
                       <span id="firstNameError" style="color: red;"></span>
                     </div>
                     <div class="col-md-3 mb-3">
@@ -92,16 +91,14 @@ include 'layouts/head-main.php';
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="Email">Email</label>
-                      <input type="email" class="form-control" id="Email" name="Email" autocomplete="off"
-                        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+                      <input type="email" class="form-control" id="Email" name="Email" autocomplete="off" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
                       <span id="emailError" style="color: red;"></span>
                       <!-- Add this span element for displaying email error -->
 
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="MobileNumber">Mobile Number</label>
-                      <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber" autocomplete="off"
-                        pattern="[0-9]{10}" required title="Please enter a 10-digit number">
+                      <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber" autocomplete="off" pattern="[0-9]{10}" required title="Please enter a 10-digit number">
                     </div>
                   </div>
                   <div class="row">
@@ -109,8 +106,7 @@ include 'layouts/head-main.php';
                     <!-- dob code start -->
                     <div class="col-md-3 mb-3">
                       <label for="DateOfBirth">Date of Birth</label>
-                      <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" autocomplete="off"
-                        required>
+                      <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" autocomplete="off" required>
                       <span id="ageError" style="color: red;"></span>
                     </div>
                     <!-- dob code end -->
@@ -129,22 +125,13 @@ include 'layouts/head-main.php';
                     </div>
                     <div class="col-md-3 mb-3">
                       <label for="Pincode">Pincode</label>
-                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off"
-                        pattern="[0-9]{6}" required>
+                      <input type="text" class="form-control" id="Pincode" name="Pincode" autocomplete="off" pattern="[0-9]{6}" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-3 mb-3">
                       <label for="Area">Area</label>
-<<<<<<< Updated upstream
                       <select class="form-control" id="Area" name="Area" required>
-=======
-<<<<<<< HEAD
-                      <select class="form-control" id="Area" name="Area" autocomplete="off" required disabled>
-=======
-                      <select class="form-control" id="Area" name="Area" required>
->>>>>>> 69713822dd9fbb83c34f0b18a70ba92857f52d28
->>>>>>> Stashed changes
                         <option value="" selected>Select Area</option>
                       </select>
                     </div>
@@ -221,16 +208,13 @@ include 'layouts/head-main.php';
                       <div class="col-md-3 mb-3">
                         <div>
                           <br>
-                          <label for="imageInput" class="btn btn-primary form-control" id="button2"
-                            style="margin-top: 8px;">Select Image</label>
-                          <input type="file" id="imageInput" name="imageInput" style="display:none;"
-                            onchange="displayProfileImage()">
+                          <label for="imageInput" class="btn btn-primary form-control" id="button2" style="margin-top: 8px;">Select Image</label>
+                          <input type="file" id="imageInput" name="imageInput" style="display:none;" onchange="displayProfileImage()">
                         </div>
                       </div>
                       <div class="col-md-3 mb-3">
                         <br>
-                        <button type="submit" class="btn btn-primary form-control" id="button1"
-                          style="margin-top: 8px;">Add Employee</button>
+                        <button type="submit" class="btn btn-primary form-control" id="button1" style="margin-top: 8px;">Add Employee</button>
                       </div>
                     </div>
                     <div class="row">
@@ -256,8 +240,8 @@ include 'layouts/head-main.php';
 <?php include 'layouts/vendor-scripts.php'; ?>
 <script src="assets/js/app.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('Pincode').addEventListener('input', function () {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('Pincode').addEventListener('input', function() {
       var pincode = this.value.trim();
       if (pincode.length === 6) {
         fetchAreaStateCountry(pincode);
@@ -270,7 +254,7 @@ include 'layouts/head-main.php';
 
   function fetchAreaStateCountry(pincode) {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           var response = JSON.parse(xhr.responseText);
@@ -296,7 +280,7 @@ include 'layouts/head-main.php';
   function populateAreaDropdown(areas) {
     var areaDropdown = document.getElementById('Area');
     areaDropdown.innerHTML = '<option value="" selected>Select Area</option>';
-    areas.forEach(function (area) {
+    areas.forEach(function(area) {
       var option = document.createElement('option');
       option.value = area;
       option.textContent = area;
@@ -332,22 +316,22 @@ include 'layouts/head-main.php';
     document.getElementById('Country').disabled = true;
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     //! ----------START-firstname and lastname validator-START---------- 
-    document.getElementById('FirstName').addEventListener('input', function () {
+    document.getElementById('FirstName').addEventListener('input', function() {
       var firstName = this.value.trim();
       var errorSpan = document.getElementById('firstNameError');
       errorSpan.textContent = (/[^a-zA-Z]/.test(firstName)) ? 'First name should contain only letters.' : '';
     });
 
-    document.getElementById('LastName').addEventListener('input', function () {
+    document.getElementById('LastName').addEventListener('input', function() {
       var lastName = this.value.trim();
       var errorSpan = document.getElementById('lastNameError');
       errorSpan.textContent = (/[^a-zA-Z]/.test(lastName)) ? 'Last name should contain only letters.' : '';
     });
 
     const form = document.getElementById('employeeForm');
-    form.addEventListener('submit', function (event) {
+    form.addEventListener('submit', function(event) {
       const firstName = document.getElementById('FirstName').value;
       const lastName = document.getElementById('LastName').value;
       const lettersOnly = /^[a-zA-Z]+$/;
@@ -372,7 +356,7 @@ include 'layouts/head-main.php';
     var file = input.files[0];
     if (file) {
       var reader = new FileReader();
-      reader.onload = function (e) {
+      reader.onload = function(e) {
         image.src = e.target.result;
         image.style.objectFit = 'cover';
         image.style.width = '100%';
@@ -392,7 +376,7 @@ include 'layouts/head-main.php';
 <div>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
       var currentDate = new Date();
 
       flatpickr("#DateOfBirth", {
@@ -402,7 +386,7 @@ include 'layouts/head-main.php';
         yearRange: "-100:+0",
         maxDate: new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate()),
 
-        onChange: function (selectedDates, dateStr, instance) {
+        onChange: function(selectedDates, dateStr, instance) {
           var selectedDate = selectedDates[0];
           if (!selectedDate) {
             // Handle invalid date
@@ -425,7 +409,7 @@ include 'layouts/head-main.php';
 <!-- Add this <div> containing the script for the Date of Joining date picker -->
 <div>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
       var today = new Date();
       var maxDate = new Date(today.getFullYear(), today.getMonth() + 2, 0);
 
