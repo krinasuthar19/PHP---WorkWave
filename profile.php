@@ -118,7 +118,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
   .image-container img {
     width: 100%;
-    height: auto;
+    height: 100%;
   }
 
   .edit-icon {

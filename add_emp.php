@@ -49,7 +49,7 @@ include 'layouts/head-main.php';
 
     .image-container img {
       width: 100%;
-      height: auto;
+      height: 100%;
     }
   </style>
 
