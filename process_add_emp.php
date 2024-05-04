@@ -62,10 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "
 <script>alert('user already exist')</script>";
     } else {
-      $sql = "INSERT INTO users (username, firstname, lastname, email, phone, dob, gender, address, area, city, state, pincode,
-country, role, d_id, password, date_of_joining, profile_image,salary)
-VALUES ('$username','$firstName', '$lastName', '$email', '$mobileNumber', '$dateOfBirth', '$gender', '$address','$area'
-'$city', '$state', '$pincode', '$country', $roleId, $depId, '$password', '$dateOfJoining', '$imagePath','$salary')";
+      $sql = "INSERT INTO users (username, password, profile_image, firstname, lastname, email, phone, dob, role, d_id, salary,total_salary_paid, address, area, city, state, pincode, country, gender,date_of_joining)
+VALUES ('$username','$password','$imagePath','$firstName', '$lastName','$email', '$mobileNumber', '$dateOfBirth',$roleId, $depId,'$salary',0,'$address','$area','$city', '$state','$pincode','$country','$gender','$dateOfJoining')";
     }
   }
   if ($link->query($sql) === TRUE) {
