@@ -36,7 +36,7 @@ include 'layouts/head-main.php';
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                   <li class="breadcrumb-item"><a href="javascript: void(0);">Employee Leave</a></li>
-                 <!-- <li class="breadcrumb-item active">Dashboard</li>-->
+                  <!-- <li class="breadcrumb-item active">Dashboard</li>-->
                 </ol>
               </div>
             </div>
@@ -76,8 +76,19 @@ include 'layouts/head-main.php';
                           <!-- Leave Data Goes Here -->
                           <?php
                           // include 'layouts/config.php';
-                          // Fetch leave records with pending status
-                          $sql = "SELECT * FROM leave_tbl WHERE status = 2";
+                          
+                          // Fetch HR's department
+                          $hr_id = $_SESSION['u_id'];
+                          $hr_department_query = "SELECT d_id FROM users WHERE u_id = $hr_id";
+                          $hr_department_result = mysqli_query($link, $hr_department_query);
+                          $hr_department_row = mysqli_fetch_assoc($hr_department_result);
+                          $hr_department = $hr_department_row['d_id'];
+
+                          // Fetch leave records with pending status for employees in the same department as HR
+                          $sql = "SELECT l.* 
+        FROM leave_tbl l
+        INNER JOIN users u ON l.emp_id = u.u_id
+        WHERE l.status = 2 AND u.d_id = $hr_department";
                           $result = $link->query($sql);
 
                           // Check if there are any leave records
@@ -123,7 +134,7 @@ include 'layouts/head-main.php';
 
 
       </div>
-      <?php include 'layouts/footer.php'; ?>4
+      <?php include 'layouts/footer.php'; ?>
       <!-- Right Sidebar -->
       <?php include 'layouts/right-sidebar.php'; ?>
       <!-- /Right-bar -->

@@ -16,69 +16,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Perform database update
   $sql = "UPDATE users SET phone = '$newPhone', city = '$newCity', state = '$newState', country = '$newCountry', address = '$newAddress' WHERE u_id = $user_id";
   if (mysqli_query($link, $sql)) {
-      echo json_encode(array("success" => true));
+    echo json_encode(array("success" => true));
   } else {
-      echo json_encode(array("success" => false, "error" => mysqli_error($link)));
+    echo json_encode(array("success" => false, "error" => mysqli_error($link)));
   }
 } else {
   // If the request method is not POST, return an error
   echo json_encode(array("success" => false, "message" => "Invalid request method."));
 }
 
-if (isset($_GET['id']) && !empty($_GET['id'])) {
-$user_id = $_GET['id']  ;
-$query = "SELECT * FROM users WHERE u_id = $user_id";
-$result = mysqli_query($link, $query);
-
-if ($result && mysqli_num_rows($result) > 0) {
-  $row = mysqli_fetch_assoc($result);
-
-  // Assign fetched values to variables
-  $u_id = $row['u_id'];
-  $username = $row['username'];
-  $email = $row['email'];
-  $phone = $row['phone'];
-  $dob = $row['dob'];
-  $address = $row['address'];
-  $city = $row['city'];
-  $state = $row['state'];
-  $pincode = $row['pincode'];
-  $country = $row['country'];
-  $role = $row['role'];
-  $d_id = $row['d_id'];
-  $date_of_joining = $row['date_of_joining'];
-  $profile_image = $row['profile_image'];
-
-  $query3 = "SELECT d_name FROM department WHERE d_id = $d_id";
-  $result3 = mysqli_query($link, $query3);
-
-  if ($result3 && mysqli_num_rows($result3) > 0) {
-    $row2 = mysqli_fetch_assoc($result3);
-    $d_name = $row2['d_name'];
-  } else {
-    echo "d_name not found or error in fetching data.";
-  }
-
-  $query3 = "SELECT r_name FROM role WHERE r_id = $role";
-  $result3 = mysqli_query($link, $query3);
-
-  if ($result3 && mysqli_num_rows($result3) > 0) {
-    $row3 = mysqli_fetch_assoc($result3);
-    $r_name = $row3['r_name'];
-  } else {
-    echo "d_name not found or error in fetching data.";
-  }
-} else {
-  echo "User not found or error in fetching data.";
-  exit;
-}
-
-$link->close();
-}
 ?>
 
 <head>
   <title>Profile</title>
+  <link rel="shortcut icon" href="assets/images/favicon.ico">
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
   <style>
@@ -95,6 +46,7 @@ $link->close();
       margin: 10px;
       box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
     }
+
     .personal {
       padding: 25px;
       border-radius: 15px;
@@ -122,7 +74,7 @@ $link->close();
 
     .image-container img {
       width: 100%;
-      height: auto;
+      height: 100%;
     }
 
     .edit-icon {
@@ -137,7 +89,9 @@ $link->close();
 <!-- Begin page -->
 <div id="layout-wrapper">
 
-  <?php include 'layouts/menu.php'; ?>
+  <?php
+  include 'layouts/menu.php';
+  ?>
 
   <div class="main-content">
 
@@ -187,6 +141,58 @@ $link->close();
                             <h5>D.O.B.: </h5>
                           </div>
                           <div class="col-md-3 mb-3">
+                            <?php
+                            if (isset($_GET['id']) && !empty($_GET['id'])) {
+                              $user_id = $_GET['id'];
+                              $query = "SELECT * FROM users WHERE u_id = $user_id";
+                              $result = mysqli_query($link, $query);
+
+                              if ($result && mysqli_num_rows($result) > 0) {
+                                $row = mysqli_fetch_assoc($result);
+
+                                // Assign fetched values to variables
+                                $u_id = $row['u_id'];
+                                $username = $row['username'];
+                                $email = $row['email'];
+                                $phone = $row['phone'];
+                                $dob = $row['dob'];
+                                $address = $row['address'];
+                                $city = $row['city'];
+                                $state = $row['state'];
+                                $pincode = $row['pincode'];
+                                $country = $row['country'];
+                                $role = $row['role'];
+                                $d_id = $row['d_id'];
+                                $date_of_joining = $row['date_of_joining'];
+                                $profile_image = $row['profile_image'];
+
+                                $query3 = "SELECT d_name FROM department WHERE d_id = $d_id";
+                                $result3 = mysqli_query($link, $query3);
+
+                                if ($result3 && mysqli_num_rows($result3) > 0) {
+                                  $row2 = mysqli_fetch_assoc($result3);
+                                  $d_name = $row2['d_name'];
+                                } else {
+                                  echo "d_name not found or error in fetching data.";
+                                }
+
+                                $query3 = "SELECT r_name FROM role WHERE r_id = $role";
+                                $result3 = mysqli_query($link, $query3);
+
+                                if ($result3 && mysqli_num_rows($result3) > 0) {
+                                  $row3 = mysqli_fetch_assoc($result3);
+                                  $r_name = $row3['r_name'];
+                                } else {
+                                  echo "d_name not found or error in fetching data.";
+                                }
+                              } else {
+                                echo "User not found or error in fetching data.";
+                                exit;
+                              }
+
+                            }
+                            ?>
+
                             <h5><strong><?php echo $u_id; ?></strong></h5>
                             <h5><strong><?php echo $username; ?></strong></h5>
                             <h5> <strong><?php echo $d_name; ?></strong></h5>
@@ -245,7 +251,10 @@ $link->close();
 <!-- /Right-bar -->
 
 <!-- JAVASCRIPT -->
-<?php include 'layouts/vendor-scripts.php'; ?>
+<?php
+$link->close();
+
+include 'layouts/vendor-scripts.php'; ?>
 
 <script src="assets/js/app.js"></script>
 
