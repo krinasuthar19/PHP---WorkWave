@@ -203,9 +203,21 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
                           $role = $_SESSION['role'];
 
                           // Fetch task data from the database based on user role
-                          if ($role == 1 || $role == 3) {
+                          if ($role == 1) {
                             // Query for admin
                             $query = "SELECT * FROM task";
+                          } elseif ($role == 3) {
+                            // Fetch the PM's department
+                            $DEPquery = "SELECT d_id FROM users WHERE u_id=$u_id";
+                            $DEPresult = mysqli_query($link, $DEPquery);
+
+                            if ($DEPresult && mysqli_num_rows($DEPresult) > 0) {
+                              $DEProw = mysqli_fetch_assoc($DEPresult);
+                              $PMdepartment = $DEProw['d_id'];
+                            }
+
+                            // Query to select tasks based on the PM's department
+                            $query = "SELECT * FROM task WHERE department='$PMdepartment'";
                           } elseif ($role == 4) {
                             // Query for employee
                             $query = "SELECT t.* FROM task t JOIN assign_task a ON t.t_id = a.t_id WHERE a.u_id = '$u_id'";
@@ -388,19 +400,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
   <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
   <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
   <script>
-  $.fn.dataTable.ext.errMode = 'none';
+    $.fn.dataTable.ext.errMode = 'none';
 
-  $(document).ready(function() {
-    $('#example1').DataTable({
-      "paging": true,
-      "lengthChange": true,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
+    $(document).ready(function () {
+      $('#example1').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+      });
     });
-  });
   </script>
   <!-- Datatable -->
 </body>

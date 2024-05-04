@@ -21,9 +21,9 @@ include 'layouts/head-main.php';
   <?php include 'layouts/head-style.php'; ?>
 
   <style>
-    td {
-      text-align: center;
-    }
+  td {
+    text-align: center;
+  }
   </style>
 
 </head>
@@ -86,19 +86,29 @@ include 'layouts/head-main.php';
                     // Assuming you have a database connection established
                     // include 'layouts/config.php';
                     
+                    // Fetch HR's department
+                    $hr_id = $_SESSION['u_id'];
+                    $hr_department_query = "SELECT d_id FROM users WHERE u_id = $hr_id";
+                    $hr_department_result = mysqli_query($link, $hr_department_query);
+                    $hr_department_row = mysqli_fetch_assoc($hr_department_result);
+                    $hr_department = $hr_department_row['d_id'];
+
+                    // Query to select employees from the same department as HR
                     $query = "SELECT u.u_id, u.username, u.role, u.profile_image, u.d_id 
                               FROM users u
-                              LEFT JOIN salaries s ON u.u_id = s.u_id AND s.hr_status = 1
-                              WHERE s.u_id IS NULL";
-                    
+                              WHERE u.d_id = $hr_department";
+
                     $result = mysqli_query($link, $query);
-                    
+
+
                     if (!$result) {
-                        die('Error executing query: ' . mysqli_error($link));
+                      die('Error executing query: ' . mysqli_error($link));
                     }
-                    
+
                     $i = 1;
-                    while ($row = mysqli_fetch_assoc($result)) {
+                    while ($row = mysqli_fetch_assoc($result))
+                    // if(!($row['u_id']==$hr_id)){{  //! To prevent HR itself from displaying
+                    {
                       $sql = "SELECT d_name FROM department WHERE d_id={$row['d_id']}";
                       $resultRole = $link->query($sql);
                       if ($resultRole->num_rows > 0) {
