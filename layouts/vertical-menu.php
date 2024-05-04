@@ -90,7 +90,6 @@
             <?php
 
             echo $username;
-            $link->close();
 
             ?>
           </span>
@@ -100,11 +99,11 @@
           <!-- item-->
           <!-- <a class="dropdown-item" href="apps-contacts-profile.php"><i
               class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i>
-               <?php // echo $language["Profile"];                                  ?>
+               <?php // echo $language["Profile"];                                   ?>
               </a>
           <a class="dropdown-item" href="auth-lock-screen.php"><i
               class="mdi mdi-lock font-size-16 align-middle me-1"></i>
-               <?php // echo $language["Lock_screen"];                                  ?>
+               <?php // echo $language["Lock_screen"];                                   ?>
                </a>
           <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="profile.php">
