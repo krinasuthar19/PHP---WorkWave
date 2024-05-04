@@ -1,5 +1,7 @@
 <header id="page-topbar">
-  <?php if (session_status() === PHP_SESSION_NONE) {
+  <?php
+
+  if (session_status() === PHP_SESSION_NONE) {
     session_start();
   } ?>
   <div class="navbar-header">
@@ -12,21 +14,21 @@
           </span>
           <span class="logo-lg">
             <img src="assets/images/wwlogo.jpeg" alt="" height="26"> <span class="logo-txt">Work Wave (<?php
-                                                                                                        switch ($_SESSION['role']) {
-                                                                                                          case 1:
-                                                                                                            echo "admin";
-                                                                                                            break;
-                                                                                                          case 2:
-                                                                                                            echo "hr";
-                                                                                                            break;
-                                                                                                          case 3:
-                                                                                                            echo "pm";
-                                                                                                            break;
-                                                                                                          case 4:
-                                                                                                            echo "emp";
-                                                                                                            break;
-                                                                                                        }
-                                                                                                        ?>)</span>
+            switch ($_SESSION['role']) {
+              case 1:
+                echo "admin";
+                break;
+              case 2:
+                echo "hr";
+                break;
+              case 3:
+                echo "pm";
+                break;
+              case 4:
+                echo "emp";
+                break;
+            }
+            ?>)</span>
           </span>
         </a>
 
@@ -58,23 +60,59 @@
       </div> -->
 
       <div class="dropdown d-inline-block">
-        <button type="button" class="btn header-item bg-light-subtle border-start border-end" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+        <?php
+
+
+        $u_id = $_SESSION['u_id'];
+
+        // Fetch user data from the database
+        $sql1 = "SELECT * FROM users WHERE u_id=$u_id";
+        $result1 = mysqli_query($link, $sql1);
+
+        // Check if query execution was successful
+        if ($result1 && mysqli_num_rows($result1) > 0) {
+          $row = mysqli_fetch_assoc($result1);
+          $profile_image = $row['profile_image']; // Assign profile image path
+          $username = $row['username']; // Assign username
+        } else {
+          // Handle error or provide default values
+          $profile_image = 'assets/images/users/default.jpg'; // Provide default profile image path
+          $username = 'Unknown'; // Provide default username
+        }
+
+        ?>
+        <button type="button" class="btn header-item bg-light-subtle border-start border-end"
+          id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+          <?php echo "<img class='rounded-circle header-profile-user' src=" . $profile_image . " alt='Profile Image'>"; ?>
+
           <span class="d-none d-xl-inline-block ms-1 fw-medium">
-            <?php echo $language["Shawn_L"]; ?>.
+            <?php
+
+            echo $username;
+            $link->close();
+
+            ?>
           </span>
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
           <!-- item-->
-          <!-- <a class="dropdown-item" href="apps-contacts-profile.php"><i class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i> <?php echo $language["Profile"]; ?></a> -->
-          <!-- <a class="dropdown-item" href="auth-lock-screen.php"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> <?php echo $language["Lock_screen"]; ?> </a> -->
-          <div class="dropdown-divider"></div>
+          <!-- <a class="dropdown-item" href="apps-contacts-profile.php"><i
+              class="mdi mdi mdi-face-man font-size-16 align-middle me-1"></i>
+               <?php // echo $language["Profile"];                                  ?>
+              </a>
+          <a class="dropdown-item" href="auth-lock-screen.php"><i
+              class="mdi mdi-lock font-size-16 align-middle me-1"></i>
+               <?php // echo $language["Lock_screen"];                                  ?>
+               </a>
+          <div class="dropdown-divider"></div> -->
           <a class="dropdown-item" href="profile.php">
             <i data-feather="user" class="icon-sm" style=" font-size: 16px;"></i>
-            <?php echo "Profile"; ?>
+            <?php echo $language["Profile"]; ?>
           </a>
-          <a class="dropdown-item" href="logout.php"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i>
+          <a class="dropdown-item" href="logout.php">
+            <i class="mdi mdi-logout font-size-16 align-middle me-1"></i>
             <?php echo $language["Logout"]; ?>
           </a>
         </div>

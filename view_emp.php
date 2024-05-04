@@ -7,7 +7,7 @@ include 'layouts/config.php';
 
 // Check linkection status
 if ($link->connect_error) {
-    die("linkection failed: " . $link->connect_error);
+  die("linkection failed: " . $link->connect_error);
 }
 
 // Fetch user data from the database
@@ -16,42 +16,43 @@ $result = $link->query($sql);
 
 // Check if query execution was successful
 if (!$result) {
-    die("Query execution failed: " . $link->error);
+  die("Query execution failed: " . $link->error);
 }
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <title>User Grid | Minia - Admin & Dashboard Template</title>
-    <?php include 'layouts/head.php'; ?>
-    <?php include 'layouts/head-style.php'; ?>
+  <title>User Grid | Minia - Admin & Dashboard Template</title>
+  <?php include 'layouts/head.php'; ?>
+  <?php include 'layouts/head-style.php'; ?>
 </head>
 
 <body>
 
-<?php include 'layouts/body.php'; ?>
+  <?php include 'layouts/body.php'; ?>
 
-<div id="layout-wrapper">
+  <div id="layout-wrapper">
     <?php include 'layouts/menu.php'; ?>
     <div class="main-content">
-        <div class="page-content">
-            <div class="container-fluid">
-            <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0 font-size-18">View Employees</h4>
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
-                                        <li class="breadcrumb-item active">View Employees</li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            <!--<div class="row mb-3">
+      <div class="page-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0 font-size-18">View Employees</h4>
+                <div class="page-title-right">
+                  <ol class="breadcrumb m-0">
+                    <!--<li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>-->
+                    <li class="breadcrumb-item active">View Employees</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="row mb-3">
                         <div class="col-md-4">
                             <label for="department">Select Department:</label>
                             <select class="form-control" id="department" name="department">
@@ -70,11 +71,11 @@ if (!$result) {
                             </select>
                         </div>
                     </div>-->
-                <div class="row">
-                    <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<div class="col-xl-3 col-sm-6">
+          <div class="row">
+            <?php
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                echo '<div class="col-xl-3 col-sm-6">
                                     <div class="card text-center">
                                         <div class="card-body">
                                             <div class="dropdown text-end">
@@ -93,29 +94,29 @@ if (!$result) {
                                         </div>
                                     </div>
                                 </div>';
-                        }
-                    } else {
-                        echo "No records found";
-                    }
+              }
+            } else {
+              echo "No records found";
+            }
 
-                    $link->close();
-                    ?>
-                </div>
-            </div>
+            ?>
+          </div>
         </div>
+      </div>
 
-        <!-- Rest of your HTML content -->
+      <!-- Rest of your HTML content -->
 
-        <?php include 'layouts/footer.php'; ?>
+      <?php include 'layouts/footer.php'; ?>
     </div>
-</div>
+  </div>
 
-<!-- Right Sidebar -->
-<?php include 'layouts/right-sidebar.php'; ?>
-<!-- /Right-bar -->
+  <!-- Right Sidebar -->
+  <?php include 'layouts/right-sidebar.php'; ?>
+  <!-- /Right-bar -->
 
-<!-- JAVASCRIPT -->
-<?php include 'layouts/vendor-scripts.php'; ?>
-<script src="assets/js/app.js"></script>
+  <!-- JAVASCRIPT -->
+  <?php include 'layouts/vendor-scripts.php'; ?>
+  <script src="assets/js/app.js"></script>
 </body>
+
 </html>

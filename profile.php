@@ -70,7 +70,6 @@ if ($result && mysqli_num_rows($result) > 0) {
   exit;
 }
 
-$link->close();
 ?>
 
 <head>
@@ -78,53 +77,53 @@ $link->close();
   <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
   <style>
-    .form-content {
-      padding: 25px;
-      border-radius: 15px;
-      margin: 10px;
-      box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
-    }
+  .form-content {
+    padding: 25px;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 0 20px 15px rgba(0, 0, 0, 0.1);
+  }
 
-    .basic {
-      padding: 25px;
-      border-radius: 15px;
-      margin: 10px;
-      box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
-    }
+  .basic {
+    padding: 25px;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+  }
 
-    .personal {
-      padding: 25px;
-      border-radius: 15px;
-      margin: 10px;
-      box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
-    }
+  .personal {
+    padding: 25px;
+    border-radius: 15px;
+    margin: 10px;
+    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+  }
 
-    table {
-      border-collapse: collapse;
-      margin-top: 20px;
-      padding: 20px;
-    }
+  table {
+    border-collapse: collapse;
+    margin-top: 20px;
+    padding: 20px;
+  }
 
-    th {
-      border-bottom: 2px solid #ddd;
-    }
+  th {
+    border-bottom: 2px solid #ddd;
+  }
 
-    .image-container {
-      width: 150px;
-      height: 150px;
-      border-radius: 15px;
-      overflow: hidden;
-      border: 1px solid #ccc;
-    }
+  .image-container {
+    width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+  }
 
-    .image-container img {
-      width: 100%;
-      height: auto;
-    }
+  .image-container img {
+    width: 100%;
+    height: auto;
+  }
 
-    .edit-icon {
-      cursor: pointer;
-    }
+  .edit-icon {
+    cursor: pointer;
+  }
   </style>
 
 </head>
@@ -247,55 +246,55 @@ $link->close();
 
 <script src="assets/js/app.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('editBasicInfo').addEventListener('click', function (e) {
-            e.preventDefault();
-            var basicInfoFields = document.querySelectorAll('.basic-info-field');
-            basicInfoFields.forEach(function (field) {
-                var value = field.innerText.trim();
-                field.innerHTML = '<input type="text" value="' + value + '">';
-            });
-            document.getElementById('submitBasicInfo').style.display = 'inline'; // Show the Submit button
-        });
-
-        document.getElementById('submitBasicInfo').addEventListener('click', function (e) {
-            e.preventDefault();
-            var basicInfoFields = document.querySelectorAll('.basic-info-field');
-            var updatedFields = {};
-            basicInfoFields.forEach(function (field) {
-                var newValue = field.querySelector('input').value;
-                updatedFields[field.id] = newValue;
-                field.innerHTML = '<strong>' + newValue + '</strong>';
-            });
-            document.getElementById('submitBasicInfo').style.display = 'none'; // Hide the Submit button
-
-            // Send AJAX request to update details
-            updatePersonalInfo(updatedFields);
-        });
-
-        function updatePersonalInfo(updatedFields) {
-            // Assuming you have included jQuery
-            $.ajax({
-                type: 'POST',
-                url: 'profile.php',
-                data: updatedFields,
-                dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        console.log('Details updated successfully!');
-                        // You can provide feedback to the user if needed
-                    } else {
-                        console.error('Error updating details:', response.error);
-                        // Handle error, show an error message, etc.
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                    // Handle error, show an error message, etc.
-                }
-            });
-        }
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById('editBasicInfo').addEventListener('click', function(e) {
+    e.preventDefault();
+    var basicInfoFields = document.querySelectorAll('.basic-info-field');
+    basicInfoFields.forEach(function(field) {
+      var value = field.innerText.trim();
+      field.innerHTML = '<input type="text" value="' + value + '">';
     });
+    document.getElementById('submitBasicInfo').style.display = 'inline'; // Show the Submit button
+  });
+
+  document.getElementById('submitBasicInfo').addEventListener('click', function(e) {
+    e.preventDefault();
+    var basicInfoFields = document.querySelectorAll('.basic-info-field');
+    var updatedFields = {};
+    basicInfoFields.forEach(function(field) {
+      var newValue = field.querySelector('input').value;
+      updatedFields[field.id] = newValue;
+      field.innerHTML = '<strong>' + newValue + '</strong>';
+    });
+    document.getElementById('submitBasicInfo').style.display = 'none'; // Hide the Submit button
+
+    // Send AJAX request to update details
+    updatePersonalInfo(updatedFields);
+  });
+
+  function updatePersonalInfo(updatedFields) {
+    // Assuming you have included jQuery
+    $.ajax({
+      type: 'POST',
+      url: 'profile.php',
+      data: updatedFields,
+      dataType: 'json',
+      success: function(response) {
+        if (response.success) {
+          console.log('Details updated successfully!');
+          // You can provide feedback to the user if needed
+        } else {
+          console.error('Error updating details:', response.error);
+          // Handle error, show an error message, etc.
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error('AJAX Error:', error);
+        // Handle error, show an error message, etc.
+      }
+    });
+  }
+});
 </script>
 
 
