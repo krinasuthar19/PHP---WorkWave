@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2024 at 09:08 AM
+-- Generation Time: May 04, 2024 at 10:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -34,6 +34,42 @@ CREATE TABLE `assign_task` (
   `d_id` int(20) NOT NULL,
   `status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assign_task`
+--
+
+INSERT INTO `assign_task` (`id`, `u_id`, `t_id`, `d_id`, `status`) VALUES
+(18, 4, 2, 1, '1'),
+(19, 4, 3, 1, '2'),
+(20, 4, 4, 1, '3'),
+(21, 8, 6, 2, '1'),
+(22, 8, 7, 2, '2'),
+(23, 8, 8, 2, '3'),
+(24, 12, 10, 3, '1'),
+(25, 12, 11, 3, '2'),
+(26, 12, 12, 3, '3'),
+(27, 16, 14, 4, '1'),
+(28, 16, 15, 4, '2'),
+(29, 16, 16, 4, '3'),
+(30, 20, 18, 5, '1'),
+(31, 20, 19, 5, '2'),
+(32, 20, 20, 5, '3'),
+(33, 24, 22, 6, '1'),
+(34, 24, 23, 6, '2'),
+(35, 24, 24, 6, '3'),
+(36, 28, 26, 7, '1'),
+(37, 28, 27, 7, '2'),
+(38, 28, 28, 7, '3'),
+(39, 32, 30, 8, '1'),
+(40, 32, 31, 8, '2'),
+(41, 32, 32, 8, '3'),
+(42, 36, 34, 9, '1'),
+(43, 36, 35, 9, '2'),
+(44, 36, 36, 9, '3'),
+(45, 40, 38, 10, '1'),
+(46, 40, 39, 10, '2'),
+(47, 40, 40, 10, '3');
 
 -- --------------------------------------------------------
 
@@ -12163,45 +12199,45 @@ CREATE TABLE `task` (
 
 INSERT INTO `task` (`t_id`, `t_title`, `t_description`, `department`, `start_date`, `end_date`, `status`) VALUES
 (1, 'Project Planning', 'Plan the upcoming project tasks', 1, '2024-05-04', '2024-06-20', '0'),
-(2, 'Client Meeting Preparation', 'Prepare materials for client meeting', 1, '2024-05-04', '2024-07-09', '0'),
-(3, 'Report Generation', 'Generate monthly report for the department', 1, '2024-05-04', '2024-05-16', '0'),
-(4, 'Website Development', 'Develop new features for the company website', 1, '2024-05-04', '2024-06-14', '0'),
+(2, 'Client Meeting Preparation', 'Prepare materials for client meeting', 1, '2024-05-04', '2024-07-09', '1'),
+(3, 'Report Generation', 'Generate monthly report for the department', 1, '2024-05-04', '2024-05-16', '2'),
+(4, 'Website Development', 'Develop new features for the company website', 1, '2024-05-04', '2024-06-14', '3'),
 (5, 'Employee Training Session', 'Conduct training session for new employees', 2, '2024-05-04', '2024-07-23', '0'),
-(6, 'Data Analysis', 'Analyze sales data for the past quarter', 2, '2024-05-04', '2024-05-10', '0'),
-(7, 'Marketing Campaign Planning', 'Plan marketing campaign for upcoming product launch', 2, '2024-05-04', '2024-07-02', '0'),
-(8, 'Product Testing', 'Test new product prototypes for quality assurance', 2, '2024-05-04', '2024-05-12', '0'),
+(6, 'Data Analysis', 'Analyze sales data for the past quarter', 2, '2024-05-04', '2024-05-10', '1'),
+(7, 'Marketing Campaign Planning', 'Plan marketing campaign for upcoming product launch', 2, '2024-05-04', '2024-07-02', '2'),
+(8, 'Product Testing', 'Test new product prototypes for quality assurance', 2, '2024-05-04', '2024-05-12', '3'),
 (9, 'Inventory Management', 'Manage inventory for upcoming sales event', 3, '2024-05-04', '2024-06-17', '0'),
-(10, 'Meeting with Stakeholders', 'Conduct meeting with project stakeholders', 3, '2024-05-04', '2024-05-19', '0'),
-(11, 'Content Creation', 'Create content for social media platforms', 3, '2024-05-04', '2024-06-05', '0'),
-(12, 'Budget Planning', 'Plan budget for the upcoming fiscal year', 3, '2024-05-04', '2024-05-30', '0'),
+(10, 'Meeting with Stakeholders', 'Conduct meeting with project stakeholders', 3, '2024-05-04', '2024-05-19', '1'),
+(11, 'Content Creation', 'Create content for social media platforms', 3, '2024-05-04', '2024-06-05', '2'),
+(12, 'Budget Planning', 'Plan budget for the upcoming fiscal year', 3, '2024-05-04', '2024-05-30', '3'),
 (13, 'Software Development', 'Develop new software features as per client requirements', 4, '2024-05-04', '2024-06-08', '0'),
-(14, 'Customer Support', 'Provide customer support for product-related queries', 4, '2024-05-04', '2024-05-12', '0'),
-(15, 'Project Review Meeting', 'Review project progress with team members', 4, '2024-05-04', '2024-05-28', '0'),
-(16, 'Training Material Development', 'Develop training materials for new software release', 4, '2024-05-04', '2024-05-11', '0'),
+(14, 'Customer Support', 'Provide customer support for product-related queries', 4, '2024-05-04', '2024-05-12', '1'),
+(15, 'Project Review Meeting', 'Review project progress with team members', 4, '2024-05-04', '2024-05-28', '2'),
+(16, 'Training Material Development', 'Develop training materials for new software release', 4, '2024-05-04', '2024-05-11', '3'),
 (17, 'Market Research', 'Conduct market research for new product launch', 5, '2024-05-04', '2024-06-26', '0'),
-(18, 'Recruitment Drive', 'Organize recruitment drive for hiring new employees', 5, '2024-05-04', '2024-07-05', '0'),
-(19, 'Website Maintenance', 'Perform maintenance tasks on company website', 5, '2024-05-04', '2024-07-07', '0'),
-(20, 'Sales Strategy Planning', 'Plan sales strategy for upcoming quarter', 5, '2024-05-04', '2024-06-15', '0'),
+(18, 'Recruitment Drive', 'Organize recruitment drive for hiring new employees', 5, '2024-05-04', '2024-07-05', '1'),
+(19, 'Website Maintenance', 'Perform maintenance tasks on company website', 5, '2024-05-04', '2024-07-07', '2'),
+(20, 'Sales Strategy Planning', 'Plan sales strategy for upcoming quarter', 5, '2024-05-04', '2024-06-15', '3'),
 (21, 'Technical Support', 'Provide technical support to clients for software issues', 6, '2024-05-04', '2024-05-23', '0'),
-(22, 'Product Launch Event Organization', 'Organize event for product launch', 6, '2024-05-04', '2024-07-02', '0'),
-(23, 'Content Marketing', 'Implement content marketing strategy for brand promotion', 6, '2024-05-04', '2024-06-29', '0'),
-(24, 'Quality Assurance Testing', 'Perform QA testing for software release', 6, '2024-05-04', '2024-05-17', '0'),
+(22, 'Product Launch Event Organization', 'Organize event for product launch', 6, '2024-05-04', '2024-07-02', '1'),
+(23, 'Content Marketing', 'Implement content marketing strategy for brand promotion', 6, '2024-05-04', '2024-06-29', '2'),
+(24, 'Quality Assurance Testing', 'Perform QA testing for software release', 6, '2024-05-04', '2024-05-17', '3'),
 (25, 'Training Session Coordination', 'Coordinate training sessions for employees', 7, '2024-05-04', '2024-07-20', '0'),
-(26, 'Market Analysis', 'Analyze market trends for product positioning', 7, '2024-05-04', '2024-07-21', '0'),
-(27, 'Database Management', 'Manage databases for efficient data storage', 7, '2024-05-04', '2024-07-09', '0'),
-(28, 'Project Management', 'Manage project timelines and resources', 7, '2024-05-04', '2024-05-13', '0'),
+(26, 'Market Analysis', 'Analyze market trends for product positioning', 7, '2024-05-04', '2024-07-21', '1'),
+(27, 'Database Management', 'Manage databases for efficient data storage', 7, '2024-05-04', '2024-07-09', '2'),
+(28, 'Project Management', 'Manage project timelines and resources', 7, '2024-05-04', '2024-05-13', '3'),
 (29, 'Social Media Management', 'Manage company social media accounts', 8, '2024-05-04', '2024-05-31', '0'),
-(30, 'Event Planning', 'Plan and organize company events', 8, '2024-05-04', '2024-05-21', '0'),
-(31, 'Product Development', 'Develop new product prototypes', 8, '2024-05-04', '2024-05-07', '0'),
-(32, 'Market Expansion Strategy', 'Develop strategy for market expansion', 8, '2024-05-04', '2024-06-29', '0'),
+(30, 'Event Planning', 'Plan and organize company events', 8, '2024-05-04', '2024-05-21', '1'),
+(31, 'Product Development', 'Develop new product prototypes', 8, '2024-05-04', '2024-05-07', '2'),
+(32, 'Market Expansion Strategy', 'Develop strategy for market expansion', 8, '2024-05-04', '2024-06-29', '3'),
 (33, 'Customer Feedback Analysis', 'Analyze customer feedback for product improvements', 9, '2024-05-04', '2024-07-31', '0'),
-(34, 'Supply Chain Management', 'Manage supply chain for efficient production', 9, '2024-05-04', '2024-05-08', '0'),
-(35, 'Employee Performance Review', 'Conduct performance reviews for employees', 9, '2024-05-04', '2024-05-28', '0'),
-(36, 'Strategic Partnerships', 'Establish strategic partnerships for business growth', 9, '2024-05-04', '2024-05-24', '0'),
+(34, 'Supply Chain Management', 'Manage supply chain for efficient production', 9, '2024-05-04', '2024-05-08', '1'),
+(35, 'Employee Performance Review', 'Conduct performance reviews for employees', 9, '2024-05-04', '2024-05-28', '2'),
+(36, 'Strategic Partnerships', 'Establish strategic partnerships for business growth', 9, '2024-05-04', '2024-05-24', '3'),
 (37, 'Risk Assessment', 'Conduct risk assessment for project planning', 10, '2024-05-04', '2024-06-20', '0'),
-(38, 'Brand Identity Development', 'Develop brand identity for marketing purposes', 10, '2024-05-04', '2024-06-01', '0'),
-(39, 'Financial Analysis', 'Analyze financial data for business decisions', 10, '2024-05-04', '2024-07-30', '0'),
-(40, 'Team Building Activities', 'Organize team building activities for employees', 10, '2024-05-04', '2024-07-23', '0');
+(38, 'Brand Identity Development', 'Develop brand identity for marketing purposes', 10, '2024-05-04', '2024-06-01', '1'),
+(39, 'Financial Analysis', 'Analyze financial data for business decisions', 10, '2024-05-04', '2024-07-30', '2'),
+(40, 'Team Building Activities', 'Organize team building activities for employees', 10, '2024-05-04', '2024-07-23', '3');
 
 -- --------------------------------------------------------
 
@@ -12250,10 +12286,10 @@ INSERT INTO `users` (`u_id`, `username`, `password`, `profile_image`, `firstname
 (12, 'Riya Sharma', '123', 'profile_images/34.jpg', 'Riya', 'Sharma', 'riya.sharma@example.com', 2147483647, '2005-05-14', 4, 3, 81132, 0, '888 Elm St', 'Sector 12', 'Kanpur', 'Uttar Pradesh', 208001, 'India', 'Female', '2024-05-04'),
 (14, 'Pooja Gupta', '123', 'profile_images/36.jpg', 'Pooja', 'Gupta', 'pooja.gupta@example.com', 4567890123, '2005-05-16', 2, 4, 63466, 0, '111 Main St', 'Sector 14', 'Mumbai', 'Maharashtra', 400014, 'India', 'Female', '2024-05-04'),
 (15, 'Sanjay Singh', '123', 'profile_images/24.jpg', 'Sanjay', 'Singh', 'sanjay.singh@example.com', 5678901234, '2005-05-17', 3, 4, 61277, 0, '222 Maple St', 'Sector 15', 'Kolkata', 'West Bengal', 700015, 'India', 'Male', '2024-05-04'),
-(16, 'Aarti Sharma', '123', 'profile_images/13.jpg', 'Aarti', 'Sharma', 'aarti.sharma@example.com', 6789012345, '2005-05-18', 4, 4, 93069, 0, '333 Pine St', 'Sector 16', 'Chennai', 'Tamil Nadu', 600016, 'India', 'Female', '2024-05-04'),
+(16, 'Aarti Sharma', '123', 'profile_images/13.jpg', 'Aarti', 'Sharma', 'aarti@example.com', 6789012345, '2005-05-18', 4, 4, 93069, 0, '333 Pine St', 'Sector 16', 'Chennai', 'Tamil Nadu', 600016, 'India', 'Female', '2024-05-04'),
 (18, 'Nisha Patel', '123', 'profile_images/21.jpg', 'Nisha', 'Patel', 'nisha.patel@example.com', 8901234567, '2005-05-20', 2, 5, 81933, 0, '555 Maple St', 'Sector 18', 'Hyderabad', 'Telangana', 500018, 'India', 'Female', '2024-05-04'),
 (19, 'Rahul Sharma', '123', 'profile_images/24.jpg', 'Rahul', 'Sharma', 'rahul.sharma@example.com', 9012345678, '2005-05-21', 3, 5, 55364, 0, '666 Pine St', 'Sector 19', 'Pune', 'Maharashtra', 411019, 'India', 'Male', '2024-05-04'),
-(20, 'Anjali Gupta', '123', 'profile_images/28.jpg', 'Anjali', 'Gupta', 'anjali.gupta@example.com', 123456789, '2005-05-22', 4, 5, 64519, 0, '777 Cedar St', 'Sector 20', 'Ahmedabad', 'Gujarat', 380020, 'India', 'Female', '2024-05-04'),
+(20, 'Anjali Gupta', '123', 'profile_images/28.jpg', 'Anjali', 'Gupta', 'anjali@example.com', 123456789, '2005-05-22', 4, 5, 64519, 0, '777 Cedar St', 'Sector 20', 'Ahmedabad', 'Gujarat', 380020, 'India', 'Female', '2024-05-04'),
 (22, 'Shreya Singh', '123', 'profile_images/35.jpg', 'Shreya', 'Singh', 'shreya.singh@example.com', 2345678901, '2005-05-24', 2, 6, 93317, 0, '999 Oak St', 'Sector 22', 'Surat', 'Gujarat', 395022, 'India', 'Female', '2024-05-04'),
 (23, 'Amita Patel', '123', 'profile_images/25.jpg', 'Amita', 'Patel', 'amita.patel@example.com', 3456789012, '2005-05-25', 3, 6, 74820, 0, '101 Main St', 'Sector 23', 'Lucknow', 'Uttar Pradesh', 226023, 'India', 'Female', '2024-05-04'),
 (24, 'Vijay Sharma', '123', 'profile_images/25.jpg', 'Vijay', 'Sharma', 'vijay.sharma@example.com', 4567890123, '2005-05-26', 4, 6, 81725, 0, '202 Maple St', 'Sector 24', 'Kanpur', 'Uttar Pradesh', 208024, 'India', 'Male', '2024-05-04'),
@@ -12345,7 +12381,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assign_task`
 --
 ALTER TABLE `assign_task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `department`
