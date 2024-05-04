@@ -1,4 +1,5 @@
 <?php
+include "layouts/config.php";
 session_start();
 require 'layouts/check_pm.php';
 include 'layouts/head-main.php';
@@ -114,7 +115,7 @@ include 'layouts/head-main.php';
                             <option value="select" disabled selected hidden>Select Employee
                             </option>
                             <?php
-                            include 'layouts/config.php';
+                            // include 'layouts/config.php';
                             $d_id = $_SESSION['d_id'];
 
                             // Assuming you have a connection to your database
