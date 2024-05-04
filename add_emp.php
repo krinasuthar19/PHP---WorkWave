@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "layouts/config.php";
 require "layouts/check_admin.php";
 include 'layouts/head-main.php';
 ?>

@@ -3,7 +3,7 @@ include 'layouts/config.php';
 
 //!code for inserting holidays of 2024
 //!START OF HOLIDAYS AUTO INSERTION
-// Define an array of holidays
+//! Define an array of holidays
 // $holidays_2024 = array(
 //     '2024-01-01', // New Year's Day
 //     '2024-01-15', // Makar Sankranti

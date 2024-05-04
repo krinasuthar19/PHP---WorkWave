@@ -1,4 +1,5 @@
 <?php
+include "layouts/config.php";
 session_start(); // Start session to get user role
 require 'layouts/check_hr.php';
 include 'layouts/head-main.php';
@@ -74,7 +75,7 @@ include 'layouts/head-main.php';
                         <tbody>
                           <!-- Leave Data Goes Here -->
                           <?php
-                          include 'layouts/config.php';
+                          // include 'layouts/config.php';
                           // Fetch leave records with pending status
                           $sql = "SELECT * FROM leave_tbl WHERE status = 2";
                           $result = $link->query($sql);

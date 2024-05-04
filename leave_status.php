@@ -1,4 +1,5 @@
 <?php
+include "layouts/config.php";
 session_start(); // Start session to get user role
 if ($_SESSION['role'] == 3 || $_SESSION['role'] == 4) {
 
@@ -81,7 +82,7 @@ if ($_SESSION['role'] == 3 || $_SESSION['role'] == 4) {
                       <tbody>
                         <?php
                           // Include database connection or configuration file
-                          include 'layouts/config.php';
+                          // include 'layouts/config.php';
                           $u_id = $_SESSION['u_id'];
 
                           // Fetch leave data from the database

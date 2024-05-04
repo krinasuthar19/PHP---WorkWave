@@ -1,4 +1,5 @@
 <?php
+include "layouts/config.php";
 session_start();
 if ($_SESSION['role'] == 3 || $_SESSION['role'] == 4) {
   include 'layouts/head-main.php';

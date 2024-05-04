@@ -1,4 +1,5 @@
 <?php
+include "layouts/config.php";
 session_start();
 include 'layouts/check_hr.php';
 include 'layouts/head-main.php';
@@ -83,7 +84,7 @@ include 'layouts/head-main.php';
 
                     <?php
                     // Assuming you have a database connection established
-                    include 'layouts/config.php';
+                    // include 'layouts/config.php';
                     
                     $query = "SELECT u.u_id, u.username, u.role, u.profile_image, u.d_id 
                               FROM users u

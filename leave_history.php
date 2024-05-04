@@ -1,4 +1,5 @@
 <?php
+include "layouts/config.php";
 session_start(); // Start session to get user role
 if ($_SESSION['role'] == 1 ||  $_SESSION['role'] == 2) {
   include 'layouts/head-main.php';
@@ -74,7 +75,7 @@ if ($_SESSION['role'] == 1 ||  $_SESSION['role'] == 2) {
                       <tbody>
                         <?php
                           // Include database connection or configuration file
-                          include 'layouts/config.php';
+                          // include 'layouts/config.php';
 
                           // Fetch leave data from the database
                           $query = "SELECT * FROM leave_tbl";

@@ -1,4 +1,5 @@
 <?php
+include "layouts/config.php";
 session_start(); // Start session to get user role
 if ($_SESSION['role'] == 3) {
   // Redirect user to another page or show access denied message
@@ -73,7 +74,7 @@ if ($_SESSION['role'] == 3) {
                         <tbody>
                           <?php
                           // Include database connection or configuration file
-                          include 'layouts/config.php';
+                          // include 'layouts/config.php';
                           $d_id = $_SESSION['d_id'];
 
                           // Fetch task data from the database where status is not 0 (not assigned)
