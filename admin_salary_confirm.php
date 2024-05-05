@@ -3,6 +3,7 @@ session_start(); // Start session to get user role
 include 'layouts/check_admin.php';
 include 'layouts/head-main.php';
 include 'layouts/config.php';
+include 'layouts/head.php';
 if (isset($_GET['id'])) {
   $record_id = $_GET['id'];
   $today_date = date('Y-m-d');
@@ -30,7 +31,6 @@ if (isset($_GET['id'])) {
   <title>
     <?php echo $language["Dashboard"]; ?> | Employee Management System
   </title>
-  <?php include 'layouts/head.php'; ?>
   <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet"
     type="text/css" />
   <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"

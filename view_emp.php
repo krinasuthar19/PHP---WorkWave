@@ -1,23 +1,21 @@
 <?php
 include 'layouts/session.php';
 include 'layouts/head-main.php';
-
-// Assuming you have a database linkection
 include 'layouts/config.php';
 
+/// Assuming you have a linkection to the database
 // Check linkection status
 if ($link->connect_error) {
   die("linkection failed: " . $link->connect_error);
 }
 
-// Fetch user data from the database
-$sql = "SELECT username, u_id, profile_image FROM users";
-$result = $link->query($sql);
+// Get logged-in user's department ID from session
+session_start();
+$user_department_id = $_SESSION['d_id'];
 
-// Check if query execution was successful
-if (!$result) {
-  die("Query execution failed: " . $link->error);
-}
+// Fetch users belonging to the same department as the logged-in user
+$sql = "SELECT username, u_id, profile_image FROM users WHERE d_id = $user_department_id";
+$result = $link->query($sql);
 
 ?>
 

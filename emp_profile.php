@@ -3,6 +3,8 @@ session_start();
 //require "layouts/check_admin.php";
 include 'layouts/head-main.php';
 include 'layouts/config.php';
+include 'layouts/head.php';
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -29,8 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
   <title>Profile</title>
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
-  <?php include 'layouts/head.php'; ?>
   <?php include 'layouts/head-style.php'; ?>
   <style>
     .form-content {
@@ -93,78 +93,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   include 'layouts/menu.php';
   ?>
 
-  <div class="main-content">
 
-    <div class="page-content">
-      <div class="container-fluid">
+  <?php
+  if (isset($_GET['id']) && !empty($_GET['id'])) {
+    $user_id = $_GET['id'];
+    $query = "SELECT * FROM users WHERE u_id = $user_id";
+    $result = mysqli_query($link, $query);
 
-        <div class="row">
-          <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-              <h4 class="mb-sm-0 font-size-18">Profile</h4>
-              <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="javascript: void(0);">Profile</a></li>
-                </ol>
+    if ($result && mysqli_num_rows($result) > 0) {
+      $row = mysqli_fetch_assoc($result);
+
+      // Assign fetched values to variables
+      $u_id = $row['u_id'];
+      $username = $row['username'];
+      $email = $row['email'];
+      $phone = $row['phone'];
+      $dob = $row['dob'];
+      $address = $row['address'];
+      $city = $row['city'];
+      $state = $row['state'];
+      $pincode = $row['pincode'];
+      $country = $row['country'];
+      $role = $row['role'];
+      $d_id = $row['d_id'];
+      $date_of_joining = $row['date_of_joining'];
+      $profile_image = $row['profile_image'];
+
+      ?>
+      <div class="main-content">
+
+        <div class="page-content">
+          <div class="container-fluid">
+
+            <div class="row">
+              <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                  <h4 class="mb-sm-0 font-size-18">Profile</h4>
+                  <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                      <li class="breadcrumb-item"><a href="javascript: void(0);">Profile</a></li>
+                    </ol>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="form-content">
-          <div class="row">
-            <div class="col-md-12">
+            <div class="form-content">
               <div class="row">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <div class="col-md-12">
                   <div class="row">
-                    <div class="col-md-3 mb-3">
-                      <div class="image-container" id="displayContainer">
-                        <img id="displayImage" alt="profile Image" src="<?php echo $profile_image; ?>">
-                      </div>
-                    </div>
-                  </div>
-                  <br><br>
-                  <div class="basic">
-                    <div class="row">
-                      <strong>
-                        <h3>Basic Information</h3>
-                      </strong>
-                      <br><br><br>
-                      <div class="col-md-6 mb-3">
-                        <div class="row">
-                          <div class="col-md-3 mb-3">
-                            <h5>ID: </h5>
-                            <h5>Name: </h5>
-                            <h5>Department: </h5>
-                            <h5>Role: </h5>
-                            <h5>Email: </h5>
-                            <h5>D.O.B.: </h5>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                      <div class="row">
+                        <div class="col-md-3 mb-3">
+                          <div class="image-container" id="displayContainer">
+                            <img id="displayImage" alt="profile Image" src="<?php echo $profile_image; ?>">
                           </div>
-                          <div class="col-md-3 mb-3">
-                            <?php
-                            if (isset($_GET['id']) && !empty($_GET['id'])) {
-                              $user_id = $_GET['id'];
-                              $query = "SELECT * FROM users WHERE u_id = $user_id";
-                              $result = mysqli_query($link, $query);
-
-                              if ($result && mysqli_num_rows($result) > 0) {
-                                $row = mysqli_fetch_assoc($result);
-
-                                // Assign fetched values to variables
-                                $u_id = $row['u_id'];
-                                $username = $row['username'];
-                                $email = $row['email'];
-                                $phone = $row['phone'];
-                                $dob = $row['dob'];
-                                $address = $row['address'];
-                                $city = $row['city'];
-                                $state = $row['state'];
-                                $pincode = $row['pincode'];
-                                $country = $row['country'];
-                                $role = $row['role'];
-                                $d_id = $row['d_id'];
-                                $date_of_joining = $row['date_of_joining'];
-                                $profile_image = $row['profile_image'];
+                        </div>
+                      </div>
+                      <br><br>
+                      <div class="basic">
+                        <div class="row">
+                          <strong>
+                            <h3>Basic Information</h3>
+                          </strong>
+                          <br><br><br>
+                          <div class="col-md-6 mb-3">
+                            <div class="row">
+                              <div class="col-md-3 mb-3">
+                                <h5>ID: </h5>
+                                <h5>Name: </h5>
+                                <h5>Department: </h5>
+                                <h5>Role: </h5>
+                                <h5>Email: </h5>
+                                <h5>D.O.B.: </h5>
+                              </div>
+                              <div class="col-md-3 mb-3">
+                                <?php
 
                                 $query3 = "SELECT d_name FROM department WHERE d_id = $d_id";
                                 $result3 = mysqli_query($link, $query3);
@@ -185,13 +189,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 } else {
                                   echo "d_name not found or error in fetching data.";
                                 }
-                              } else {
-                                echo "User not found or error in fetching data.";
-                                exit;
-                              }
+    } else {
+      echo "User not found or error in fetching data.";
+      exit;
+    }
 
-                            }
-                            ?>
+  }
+  ?>
 
                             <h5><strong><?php echo $u_id; ?></strong></h5>
                             <h5><strong><?php echo $username; ?></strong></h5>

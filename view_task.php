@@ -9,6 +9,7 @@ if (!(isset($_SESSION['loggedin'])) || $_SESSION['role'] == 2) {
   exit(); // Make sure to exit after redirection
 }
 include 'layouts/head-main.php';
+include 'layouts/head.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
 
@@ -132,7 +133,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['task_id'])) {
   <title>
     <?php echo $language["Dashboard"]; ?> | Employee Management System
   </title>
-  <?php include 'layouts/head.php'; ?>
   <link href="assets/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet"
     type="text/css" />
   <link href="assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet"
