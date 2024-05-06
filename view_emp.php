@@ -12,10 +12,14 @@ if ($link->connect_error) {
 // Get logged-in user's department ID from session
 session_start();
 $user_department_id = $_SESSION['d_id'];
-
-// Fetch users belonging to the same department as the logged-in user
-$sql = "SELECT username, u_id, profile_image FROM users WHERE d_id = $user_department_id";
-$result = $link->query($sql);
+if ($user_department_id == 11) {
+  $sql = "SELECT username, u_id, profile_image FROM users";
+  $result = $link->query($sql);
+} else {
+  // Fetch users belonging to the same department as the logged-in user
+  $sql = "SELECT username, u_id, profile_image FROM users WHERE d_id = $user_department_id";
+  $result = $link->query($sql);
+}
 
 ?>
 
