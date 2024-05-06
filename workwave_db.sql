@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 04, 2024 at 10:38 AM
+-- Generation Time: May 06, 2024 at 07:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -12237,7 +12237,8 @@ INSERT INTO `task` (`t_id`, `t_title`, `t_description`, `department`, `start_dat
 (37, 'Risk Assessment', 'Conduct risk assessment for project planning', 10, '2024-05-04', '2024-06-20', '0'),
 (38, 'Brand Identity Development', 'Develop brand identity for marketing purposes', 10, '2024-05-04', '2024-06-01', '1'),
 (39, 'Financial Analysis', 'Analyze financial data for business decisions', 10, '2024-05-04', '2024-07-30', '2'),
-(40, 'Team Building Activities', 'Organize team building activities for employees', 10, '2024-05-04', '2024-07-23', '3');
+(40, 'Team Building Activities', 'Organize team building activities for employees', 10, '2024-05-04', '2024-07-23', '3'),
+(41, 'qwertyuiopasdfghjklzxcvbnm', 'qwertyuiopasdfghjklzxcvbnm', 4, '2024-05-08', '2024-05-09', '0');
 
 -- --------------------------------------------------------
 
@@ -12423,7 +12424,7 @@ ALTER TABLE `salaries`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `t_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `t_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `users`
